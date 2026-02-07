@@ -2,131 +2,140 @@
 
 ## What This Is
 
-InfluencerFormer takes the MaskFormer/Mask2Former **architecture** — transformer decoder with learned queries producing dense per-pixel mask predictions — and replaces the **training loss**. Instead of Hungarian matching + dice/BCE, we use the Influencer Loss: continuous attractive/repulsive potentials where queries naturally "claim" instances without combinatorial assignment.
-
-The insight: the innovation is not a new architecture or a new paradigm (embedding clustering vs. mask prediction). It's a **loss function replacement** within the existing dominant paradigm. The queries become influencer points. The output is still dense per-pixel class vectors. But the training signal is fully differentiable, with no combinatorial matching.
+InfluencerFormer takes the MaskFormer/Mask2Former **architecture** — transformer decoder with learned queries producing dense mask predictions — and replaces the **training loss**. Instead of Hungarian matching + dice/BCE, we use the Influencer Loss: geometric-mean attractive/repulsive potentials where the loss itself discovers query-to-instance assignments without combinatorial matching.
 
 The repo lives at: https://github.com/murnanedaniel/InfluencerFormer
 
-## The Core Idea
+## The Architecture
 
-**What stays the same as MaskFormer:**
-- Backbone (Swin, ResNet, etc.) + pixel decoder
-- Transformer decoder with N learned queries
-- Each query produces dense per-pixel logits (the "mask")
-- Output format: N masks + N class predictions
+```
+Point Cloud (N, 6)              Learned Queries (M, D)
+       │                                │
+       ▼                                │
+  Point Encoder                         │
+       │                                │
+       ▼                                ▼
+  Point Embeddings (N, D) ──── Cross-Attention ────→ Mask Matrix (N, M)
+                                                           │
+                                                           ▼
+                                                  MaskInfluencerLoss
+```
 
-**What changes:**
-- ~~Hungarian matching~~ → Influencer Loss (continuous potentials)
-- ~~Dice loss + BCE on matched pairs~~ → Attraction/repulsion on dense class vectors
-- Queries are no longer assigned to instances via discrete optimization — they *become* influencer points that attract their instance's pixels and repel others through differentiable operations
+1. **Embed** all N points → (N, D) point embeddings
+2. **Cross-attend** between point embeddings and M learned query vectors
+3. Produce an **N × M mask matrix** — each entry is how strongly point i is claimed by query m
+4. **MaskInfluencerLoss** encourages all points of the same instance to unanimously claim the same query, with repulsion ensuring different instances claim different queries
 
-**Why this matters:**
-- Hungarian matching is non-differentiable — gradients don't flow through the assignment
-- It's O(N³) and causes slow convergence (DETR: ~500 epochs)
-- An entire line of work (DN-DETR, DAB-DETR, DINO, masked attention) exists just to work around matching instability
-- The Influencer Loss has formal global optima guarantees — the correct assignment is provably the unique minimum
+## What Stays the Same as MaskFormer
 
-## What Was Done
+- Backbone encoder for input features
+- Transformer decoder with M learned queries
+- Cross-attention between queries and encoded features
+- Output: M mask predictions (one per query)
+- Deep supervision from intermediate decoder layers
 
-### 1. Repo Creation
+## What Changes
 
-Created `murnanedaniel/InfluencerFormer` on GitHub via the API using credentials from the `me` monorepo. Public repo, initialized on `main`.
+- ~~Hungarian matching~~ → Influencer Loss (no matcher at all)
+- ~~Dice + BCE on matched query-GT pairs~~ → Geometric mean attractive + hinge repulsive on the mask matrix
+- ~~SetCriterion~~ → InfluencerCriterion (drop-in replacement, same interface)
 
-### 2. Literature Review (`docs/literature_review.md`)
+## The Loss: Mask-Matrix Influencer Loss
 
-A comprehensive survey of **25+ instance segmentation methods** organized by paradigm. The review covers:
+### Background
 
-**Embedding/condensation lineage** (where the Influencer Loss originated):
-- Discriminative Loss (2017) → Associative Embedding (2017) → Spatial Embeddings (2019) → Object Condensation (2020) → Influencer Loss (2024)
+The original InfluencerLoss (Murnane 2024, EPJ Web Conf.) operates on two separate embedding spaces — follower and influencer embeddings — with a geometric mean formulation for the attractive loss. See [github.com/murnanedaniel/InfluencerNet](https://github.com/murnanedaniel/InfluencerNet).
 
-**Mask prediction methods** (the architecture InfluencerFormer adopts):
-- MaskFormer, Mask2Former, OneFormer, Mask DINO, Mask R-CNN, HTC, SOLO/SOLOv2, CondInst, QueryInst
+The mask-matrix formulation adapts this to the MaskFormer paradigm: instead of operating on spatial embeddings, the loss operates directly on the (N, M) mask matrix.
 
-**3D point cloud methods** (both mask-based and grouping-based):
-- Mask3D, SPFormer, OneFormer3D, PointGroup, SoftGroup, VoteNet, 3D-BoNet, OccuSeg, SSTNet, MASC, Superpoint Graphs
+### Attractive Loss (Follower-Influencer)
 
-**The key reframing (Section 7–8):** Instead of "embedding vs. mask prediction paradigm comparison," the review focuses on **the Hungarian matching problem** — documenting its non-differentiability, O(N³) cost, slow convergence, and the long line of workarounds — and why the Influencer Loss is a principled replacement. The architecture doesn't change; the loss does.
+For each ground-truth instance k with points P_k:
 
-### 3. Benchmark Selection
+1. Compute the **geometric mean** of mask probabilities per query:
+   `geomean_k[m] = exp(mean_{i ∈ P_k} log(sigmoid(mask[i, m])))`
+2. The best query for this instance is the one with the highest geometric mean
+3. Loss: `-logsumexp(log_geomean[m] / T) * T` (differentiable soft-max)
 
-**Images: MS-COCO**
-- The undisputed standard. 118K train / 5K val / 80 classes / ~860K instances
-- Metric: AP (mAP at IoU 0.50:0.95)
-- Every major method reports COCO numbers
+The geometric mean is the key: it requires **unanimous agreement** from all points. If even one point of instance k assigns low probability to query m, the geometric mean collapses. This mirrors the `exp(mean(log(...)))` formulation in the original InfluencerNet code.
 
-**Point clouds: S3DIS** (primary, frictionless) + **ScanNet v2** (gold standard, requires access agreement)
-- S3DIS: 271 rooms, 13 classes, auto-downloads via PyTorch Geometric (~2 GB)
-- ScanNet v2: 1,513 scenes, 18 classes, requires signing Terms of Use at scan-net.org
-- S3DIS was chosen for the toy model because it has zero friction
+### Repulsive Loss (Influencer-Influencer)
 
-### 4. Data Loading (`influencerformer/data/`)
+Each instance k has a **query profile**: the M-dimensional vector of per-query geometric means.
 
-**`s3dis.py`:**
-- `download_s3dis()` — wraps PyTorch Geometric's `S3DIS` dataset, returns train/test splits
-- `S3DISInstanceDataset` — PyTorch Dataset returning `{coords, colors, sem_labels, instance_labels}` dicts
+For each pair of instances (k, l), apply a hinge loss on the L2 distance between their profiles: `max(0, margin - ||profile_k - profile_l||)`. This ensures different instances claim different queries.
 
-**`coco.py`:**
-- `download_coco()` — auto-downloads via `fiftyone` (supports `max_samples` for quick experiments)
-- `download_coco_torchvision()` — manual download path via torchvision
-- `COCOInstanceDataset` — PyTorch Dataset using `pycocotools`, returns `{image, masks, labels, boxes}`
+### Background Suppression
 
-### 5. Influencer Loss (`influencerformer/losses/influencer_loss.py`)
+Push mask probabilities toward zero for all background points (instance_label == 0).
 
-A simplified, general-purpose implementation of the condensation loss. Note: this current implementation operates on per-point embeddings (the original formulation). **The next step is to adapt it to operate on dense per-pixel class vectors** as produced by MaskFormer-style query outputs. The core attractive/repulsive dynamics are the same; the space they operate in changes from a low-dimensional embedding to the dense mask-logit space.
+### Comparison with Original InfluencerNet
 
-Current implementation:
-- **Soft influencer selection:** Temperature-scaled softmax over β (differentiable alternative to argmax)
-- **Attractive term:** Pulls same-instance embeddings toward their influencer
-- **Repulsive term:** Hinge loss pushing influencers apart (margin = 1.0)
-- **Beta term:** One high-β point per instance + background suppression
+| | Original (InfluencerNet) | Mask-Matrix (InfluencerFormer) |
+|---|---|---|
+| **Representation** | Two embedding spaces (follower + influencer), (N, D) each | (N, M) mask matrix |
+| **Attractive** | Geometric mean of follower-influencer distances | Geometric mean of mask probabilities per query |
+| **Repulsive** | Hinge on influencer-influencer distances | Hinge on instance query profile distances |
+| **Matching** | None (implicit via embedding proximity) | None (implicit via geometric mean query selection) |
+| **Architecture** | Any backbone → two MLP heads | MaskFormer-style: backbone → cross-attention → mask matrix |
 
-### 6. Toy Models (`examples/`)
+## MaskFormer Integration
 
-These are preliminary models using the embedding formulation. They demonstrate the data pipeline and loss function work end-to-end, but don't yet use the MaskFormer architecture or the dense-class-vector formulation.
+### Mask2Former Reference
 
-**`toy_pointcloud.py` — S3DIS:**
-- `PointEmbeddingMLP`: 3-layer MLP, embedding + β heads
-- Greedy clustering at inference
-- Evaluation: IoU-based matching → precision/recall/F1
+Mask2Former is included as a git submodule at `third_party/Mask2Former/` for reference. The key file to compare against is `mask2former/modeling/criterion.py` (SetCriterion).
 
-**`toy_image.py` — COCO:**
-- `PixelEmbeddingCNN`: Encoder-decoder with skip connections, embedding + β heads
-- Subsamples 2048 pixels per image for tractable loss computation
+### InfluencerCriterion
 
-### 7. Project Structure
+`influencerformer/models/criterion.py` provides `InfluencerCriterion`, a drop-in replacement for Mask2Former's `SetCriterion`. It accepts the same `(outputs, targets)` interface:
+
+```python
+# Mask2Former's approach:
+criterion = SetCriterion(matcher=HungarianMatcher(...), ...)
+
+# InfluencerFormer's approach:
+criterion = InfluencerCriterion(attr_weight=1.0, rep_weight=1.0, ...)
+
+# Same calling convention:
+losses = criterion(outputs, targets)
+```
+
+The criterion handles:
+- Point clouds: `pred_masks` as (N, M) or list of (N_i, M)
+- Images: `pred_masks` as (B, M, H, W), flattened to per-pixel
+- Deep supervision via `aux_outputs`
+
+## Project Structure
 
 ```
 InfluencerFormer/
-├── .gitignore
-├── README.md                              # Overview + what changes vs. MaskFormer
-├── setup.py                               # pip install -e ".[pointcloud]"
+├── setup.py
 ├── docs/
-│   ├── first_pass.md                      # This file
-│   └── literature_review.md               # 25+ method survey, loss function focus
+│   ├── first_pass.md               # This file
+│   └── literature_review.md        # 25+ method survey
 ├── examples/
-│   ├── toy_pointcloud.py                  # S3DIS toy model (embedding formulation)
-│   └── toy_image.py                       # COCO toy model (embedding formulation)
+│   ├── toy_pointcloud.py           # S3DIS example (old embedding formulation)
+│   └── toy_image.py                # COCO example (old embedding formulation)
 ├── influencerformer/
-│   ├── __init__.py                        # v0.1.0
+│   ├── __init__.py                 # v0.2.0
 │   ├── data/
-│   │   ├── __init__.py
-│   │   ├── coco.py                        # COCO download + dataset
-│   │   └── s3dis.py                       # S3DIS download + dataset
+│   │   ├── coco.py                 # COCO dataset loader
+│   │   └── s3dis.py                # S3DIS dataset loader
 │   ├── losses/
-│   │   ├── __init__.py
-│   │   └── influencer_loss.py             # Core loss (embedding formulation)
-│   ├── metrics/                           # (placeholder)
-│   ├── models/                            # (placeholder)
-│   ├── networks/                          # (placeholder)
-│   └── utils/                             # (placeholder)
-└── tests/                                 # (empty)
+│   │   └── influencer_loss.py      # MaskInfluencerLoss (mask-matrix formulation)
+│   ├── models/
+│   │   └── criterion.py            # InfluencerCriterion (MaskFormer drop-in)
+│   ├── metrics/                    # (placeholder)
+│   ├── networks/                   # (placeholder)
+│   └── utils/                      # (placeholder)
+└── third_party/
+    └── Mask2Former/                # Git submodule — reference implementation
 ```
 
-### 8. What's Placeholder / Next Steps
+## Next Steps
 
-1. **Adapt the loss to dense class vectors.** The current `influencer_loss.py` operates on per-point embeddings. The real InfluencerFormer loss should operate on the dense per-pixel mask logits that MaskFormer queries produce — the attraction/repulsion dynamics applied to the N × H × W output space.
-2. **MaskFormer integration.** Either fork Mask2Former or use the `mask2former` module from detectron2/mmdetection, swap the loss.
-3. **Head-to-head comparison.** Same backbone (e.g., Swin-L), same data, same training schedule — only the loss changes. Compare AP on COCO val.
-4. **3D extension.** Same loss swap in Mask3D or SPFormer for ScanNet v2 benchmarking.
-5. **Ablations.** Attractive vs. repulsive weight balance, temperature for soft influencer selection, comparison with dice loss properties (scale invariance, class imbalance handling).
+1. **Point cloud backbone + cross-attention model.** Wire up a point encoder (e.g. PointNet, DGCNN) with a cross-attention transformer decoder producing the (N, M) mask matrix. This is the `networks/` and `models/` gap.
+2. **End-to-end training on S3DIS.** Replace the toy embedding model with the mask-matrix pipeline using InfluencerCriterion.
+3. **Hyperparameter exploration.** Attractive/repulsive weights, temperature, margin, number of queries M.
+4. **Image pathway.** Same loss on COCO via Mask2Former backbone, validating against the reference SetCriterion.
+5. **Ablations.** Geometric mean vs arithmetic mean, sigmoid vs softmax mask probabilities, deep supervision impact.
