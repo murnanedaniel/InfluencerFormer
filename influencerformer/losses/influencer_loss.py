@@ -1,110 +1,167 @@
-"""Influencer Loss for instance segmentation via learned condensation.
+"""Mask-matrix Influencer Loss for instance segmentation.
 
-A simplified, general-purpose implementation of the Influencer Loss concept.
-Points are embedded into a latent space where same-instance points cluster
-together around learned "influencer" (representative) points.
+Operates on an (N, M) mask matrix where N = points/pixels and M = queries.
+Uses the geometric mean formulation from the original InfluencerLoss
+(Murnane 2024) to encourage all members of the same instance to unanimously
+assign high mask probability to the same query, with a repulsive term
+pushing different instances to claim different queries.
+
+This replaces Hungarian matching entirely: the loss itself discovers the
+query-to-instance assignment through gradient descent.
+
+Reference:
+    Murnane, D. "Influencer Loss: End-to-end Geometric Representation
+    Learning for Track Reconstruction." EPJ Web Conf. 295, 09016 (2024).
+    https://github.com/murnanedaniel/InfluencerNet
 """
 
 import torch
 import torch.nn as nn
 
 
-class InfluencerLoss(nn.Module):
-    """Influencer Loss: condensation-based instance segmentation loss.
+class MaskInfluencerLoss(nn.Module):
+    """Influencer Loss on an (N, M) mask matrix.
 
-    For each point, the model predicts:
-      - embedding: position in latent clustering space
-      - beta: condensation weight in (0, 1) — high beta = likely influencer
+    Given N points and M learned queries, the model produces an (N, M) matrix
+    of mask logits. Each entry mask[i, m] represents how strongly point i is
+    associated with query m.
 
-    The loss has two components:
-      1. Attractive: pulls same-instance points toward their influencer
-      2. Repulsive: pushes influencers of different instances apart
+    The loss has three components:
+
+    1. **Attractive** (follower-influencer): For each ground-truth instance k,
+       compute the geometric mean of mask probabilities across the instance's
+       points for each query. The best query (highest geometric mean) is the
+       one all points agree on. Minimize the negative log of that geometric
+       mean. The geometric mean is strict: one dissenting point tanks the
+       score, requiring unanimous agreement.
+
+    2. **Repulsive** (influencer-influencer): Each instance's "query profile"
+       is its vector of per-query geometric means. Push profiles of different
+       instances apart with a hinge loss, so different instances claim
+       different queries.
+
+    3. **Background suppression**: Push mask probabilities toward zero for
+       points labeled as background (instance_label == 0).
     """
 
-    def __init__(self, attr_weight=1.0, rep_weight=1.0, beta_weight=1.0, rep_margin=1.0):
+    def __init__(
+        self,
+        attr_weight: float = 1.0,
+        rep_weight: float = 1.0,
+        bg_weight: float = 1.0,
+        rep_margin: float = 1.0,
+        temperature: float = 1.0,
+        eps: float = 1e-6,
+    ):
+        """
+        Args:
+            attr_weight: Weight for the attractive (geometric mean) loss.
+            rep_weight: Weight for the repulsive (hinge) loss.
+            bg_weight: Weight for background suppression.
+            rep_margin: Margin for the repulsive hinge loss. Instance query
+                profiles closer than this are penalized.
+            temperature: Temperature for the soft-max query selection in the
+                attractive loss. Lower = sharper selection.
+            eps: Small constant for numerical stability in log.
+        """
         super().__init__()
         self.attr_weight = attr_weight
         self.rep_weight = rep_weight
-        self.beta_weight = beta_weight
+        self.bg_weight = bg_weight
         self.rep_margin = rep_margin
+        self.temperature = temperature
+        self.eps = eps
 
-    def forward(self, embeddings, betas, instance_labels):
+    def forward(
+        self,
+        mask_logits: torch.Tensor,
+        instance_labels: torch.Tensor,
+    ) -> dict[str, torch.Tensor]:
         """
         Args:
-            embeddings: (N, D) latent coordinates for each point.
-            betas: (N,) condensation weights in (0, 1).
-            instance_labels: (N,) integer instance IDs. 0 = noise/background.
+            mask_logits: (N, M) raw logits from cross-attention between
+                point embeddings and learned queries.
+            instance_labels: (N,) integer instance IDs. 0 = background.
 
         Returns:
-            Dict with total loss and component losses.
+            Dict with keys: loss, attractive, repulsive, background.
         """
-        device = embeddings.device
+        device = mask_logits.device
+        mask_probs = torch.sigmoid(mask_logits)  # (N, M)
+
         unique_instances = instance_labels.unique()
-        # Filter out background (label 0)
         unique_instances = unique_instances[unique_instances > 0]
 
         if len(unique_instances) == 0:
             zero = torch.tensor(0.0, device=device, requires_grad=True)
-            return {"loss": zero, "attractive": zero, "repulsive": zero, "beta": zero}
+            return {
+                "loss": zero,
+                "attractive": zero.detach(),
+                "repulsive": zero.detach(),
+                "background": zero.detach(),
+            }
 
-        # For each instance, find the influencer (highest beta point)
-        influencer_embeddings = []
-        influencer_betas = []
+        # --- Attractive loss: geometric mean per instance per query ---
+        instance_profiles = []  # (K, M) — one profile per instance
         attractive_loss = torch.tensor(0.0, device=device)
-        beta_loss = torch.tensor(0.0, device=device)
 
         for inst_id in unique_instances:
-            mask = instance_labels == inst_id
-            inst_embeddings = embeddings[mask]  # (M, D)
-            inst_betas = betas[mask]  # (M,)
+            inst_mask = instance_labels == inst_id
+            inst_probs = mask_probs[inst_mask]  # (N_k, M)
 
-            # Soft influencer selection: weighted average by beta
-            # (differentiable alternative to argmax)
-            weights = torch.softmax(inst_betas * 10, dim=0)  # temperature-scaled
-            influencer_emb = (weights.unsqueeze(1) * inst_embeddings).sum(dim=0)  # (D,)
-            influencer_embeddings.append(influencer_emb)
+            # Log-geometric-mean per query column:
+            #   log_geomean[m] = mean_i log(prob[i, m])
+            # This is the log of the geometric mean of probabilities for
+            # each query across all points of this instance.
+            log_geomean = torch.log(inst_probs + self.eps).mean(dim=0)  # (M,)
 
-            # Attractive loss: pull all instance points toward influencer
-            dists = torch.norm(inst_embeddings - influencer_emb.unsqueeze(0), dim=1)  # (M,)
-            q = torch.arctanh(inst_betas) ** 2 + 1  # condensation charge
-            attractive_loss = attractive_loss + (q * dists**2).mean()
+            # Attractive loss for this instance: maximize the best query's
+            # geometric mean. Use logsumexp as a differentiable soft-max:
+            #   -logsumexp(log_geomean / T) * T  ≈  -max_m log_geomean[m]
+            # When the model is perfect, the best query has geomean ≈ 1,
+            # log_geomean ≈ 0, and this loss ≈ 0.
+            attractive_loss_k = (
+                -torch.logsumexp(log_geomean / self.temperature, dim=0)
+                * self.temperature
+            )
+            attractive_loss = attractive_loss + attractive_loss_k
 
-            # Beta loss: encourage at least one high-beta point per instance
-            beta_loss = beta_loss + (1 - inst_betas.max())
-
-            influencer_betas.append(inst_betas.max())
+            instance_profiles.append(log_geomean.exp())  # (M,)
 
         attractive_loss = attractive_loss / len(unique_instances)
-        beta_loss = beta_loss / len(unique_instances)
 
-        # Repulsive loss: push influencers of different instances apart
-        if len(influencer_embeddings) > 1:
-            inf_embs = torch.stack(influencer_embeddings)  # (K, D)
-            # Pairwise distances between influencers
-            diff = inf_embs.unsqueeze(0) - inf_embs.unsqueeze(1)  # (K, K, D)
-            pair_dists = torch.norm(diff, dim=2)  # (K, K)
+        # --- Repulsive loss: push instance query profiles apart ---
+        if len(instance_profiles) > 1:
+            profiles = torch.stack(instance_profiles)  # (K, M)
+            # Pairwise L2 distances between profiles
+            diff = profiles.unsqueeze(0) - profiles.unsqueeze(1)  # (K, K, M)
+            dists = torch.norm(diff, dim=2)  # (K, K)
 
-            # Hinge loss: penalize pairs closer than margin
-            K = len(influencer_embeddings)
-            mask = ~torch.eye(K, dtype=torch.bool, device=device)
-            repulsive_loss = torch.clamp(self.rep_margin - pair_dists[mask], min=0).mean()
+            K = len(unique_instances)
+            off_diag = ~torch.eye(K, dtype=torch.bool, device=device)
+            # Hinge: penalize pairs closer than rep_margin
+            repulsive_loss = torch.clamp(
+                self.rep_margin - dists[off_diag], min=0
+            ).mean()
         else:
             repulsive_loss = torch.tensor(0.0, device=device)
 
-        # Background suppression: push background betas toward 0
+        # --- Background suppression ---
         bg_mask = instance_labels == 0
         if bg_mask.any():
-            beta_loss = beta_loss + betas[bg_mask].mean()
+            bg_loss = mask_probs[bg_mask].mean()
+        else:
+            bg_loss = torch.tensor(0.0, device=device)
 
         total = (
             self.attr_weight * attractive_loss
             + self.rep_weight * repulsive_loss
-            + self.beta_weight * beta_loss
+            + self.bg_weight * bg_loss
         )
 
         return {
             "loss": total,
             "attractive": attractive_loss.detach(),
             "repulsive": repulsive_loss.detach(),
-            "beta": beta_loss.detach(),
+            "background": bg_loss.detach(),
         }
