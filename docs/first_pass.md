@@ -2,108 +2,157 @@
 
 ## What This Is
 
-InfluencerFormer takes the MaskFormer/Mask2Former **architecture** — transformer decoder with learned queries producing dense mask predictions — and replaces the **training loss**. Instead of Hungarian matching + dice/BCE, we use the Influencer Loss: geometric-mean attractive/repulsive potentials where the loss itself discovers query-to-instance assignments without combinatorial matching.
+InfluencerFormer replaces Hungarian matching in transformer-based 3D instance segmentation with the Influencer Loss. We build on top of [OneFormer3D](https://github.com/filaPro/oneformer3d) (CVPR 2024), which provides a SpConv backbone + transformer query decoder for point cloud segmentation on S3DIS and ScanNet.
 
 The repo lives at: https://github.com/murnanedaniel/InfluencerFormer
 
-## The Architecture
+## Roadmap
+
+1. **Reproduce** OneFormer3D's published results on S3DIS (Area 5)
+2. **Swap** Hungarian matching + BCE/Dice loss → Influencer Loss
+3. **Evaluate** — same model, same data, only the loss changes
+
+## OneFormer3D Architecture (What We Build On)
 
 ```
-Point Cloud (N, 6)              Learned Queries (M, D)
-       │                                │
-       ▼                                │
-  Point Encoder                         │
-       │                                │
-       ▼                                ▼
-  Point Embeddings (N, D) ──── Cross-Attention ────→ Mask Matrix (N, M)
-                                                           │
-                                                           ▼
-                                                  MaskInfluencerLoss
+Point Cloud (N, 6)
+       │
+       ▼
+  SpConv U-Net Backbone         Learned Queries (M, D)
+       │                              │
+       ▼                              │
+  Superpoint Features (S, D)          │
+       │                              │
+       └──── Cross-Attention ─────────┘
+                    │
+                    ▼
+              Query Features (M, D)
+                    │
+            ┌───────┼───────┐
+            ▼       ▼       ▼
+        cls_preds  masks   scores
+       (M, C+1)  (M, S)   (M, 1)
 ```
 
-1. **Embed** all N points → (N, D) point embeddings
-2. **Cross-attend** between point embeddings and M learned query vectors
-3. Produce an **N × M mask matrix** — each entry is how strongly point i is claimed by query m
-4. **MaskInfluencerLoss** encourages all points of the same instance to unanimously claim the same query, with repulsion ensuring different instances claim different queries
+Key details:
+- **Backbone**: SpConv U-Net (pip-installable, no MinkowskiEngine)
+- **Queries**: 400 instance + 13 semantic (for S3DIS)
+- **Masks**: (n_queries, n_superpoints) — each query's claim over superpoints
+- **Deep supervision**: Iterative prediction at each decoder layer (`iter_pred=True`)
+- **Mask generation**: `pred_mask = einsum('nd,md->nm', query_feats, mask_feats)`
 
-## What Stays the Same as MaskFormer
+## The Hookpoint: InstanceCriterion → InfluencerCriterion
 
-- Backbone encoder for input features
-- Transformer decoder with M learned queries
-- Cross-attention between queries and encoded features
-- Output: M mask predictions (one per query)
-- Deep supervision from intermediate decoder layers
+OneFormer3D's loss lives in `oneformer3d/instance_criterion.py`:
 
-## What Changes
+```
+InstanceCriterion.__call__(pred, insts)
+    │
+    ├── HungarianMatcher(pred_instances, gt_instances)
+    │       builds cost matrix: classification + BCE + Dice
+    │       calls scipy.linear_sum_assignment  ← O(N³), non-differentiable
+    │       returns (query_ids, gt_ids) matched pairs
+    │
+    ├── Cross-entropy on cls_preds (matched queries get GT class, rest → "no object")
+    ├── BCE on pred_masks[matched] vs gt sp_masks[matched]
+    ├── Dice on pred_masks[matched] vs gt sp_masks[matched]
+    ├── MSE on objectness scores vs IoU of matched pairs
+    │
+    └── Repeat for each aux_outputs layer
+```
 
-- ~~Hungarian matching~~ → Influencer Loss (no matcher at all)
-- ~~Dice + BCE on matched query-GT pairs~~ → Geometric mean attractive + hinge repulsive on the mask matrix
-- ~~SetCriterion~~ → InfluencerCriterion (drop-in replacement, same interface)
+Our replacement:
+
+```
+InfluencerCriterion.__call__(pred, insts)
+    │
+    ├── NO MATCHER
+    │
+    ├── MaskInfluencerLoss(masks.T, instance_labels)
+    │       masks.T: (n_superpoints, n_queries) — point-centric view
+    │       Attractive: geometric mean of mask probs per instance per query
+    │       Repulsive: hinge loss pushing instance query profiles apart
+    │       Background suppression: push bg superpoint mask probs → 0
+    │
+    ├── Soft classification: assign queries to instances via mask affinity
+    │       (no discrete matching — argmax of mean activation per GT instance)
+    │
+    └── Repeat for each aux_outputs layer
+```
+
+### Config Change (S3DIS)
+
+```python
+# OneFormer3D default:
+inst_criterion=dict(
+    type='InstanceCriterion',
+    matcher=dict(
+        type='HungarianMatcher',
+        costs=[
+            dict(type='QueryClassificationCost', weight=0.5),
+            dict(type='MaskBCECost', weight=1.0),
+            dict(type='MaskDiceCost', weight=1.0)]),
+    loss_weight=[0.5, 1.0, 1.0, 0.5],
+    num_classes=13,
+    non_object_weight=0.05,
+    fix_dice_loss_weight=True,
+    iter_matcher=True,
+    fix_mean_loss=True)
+
+# InfluencerFormer:
+inst_criterion=dict(
+    type='InfluencerCriterion',
+    loss_weight=[0.5, 1.0, 1.0],
+    num_classes=13,
+    non_object_weight=0.05,
+    attr_weight=1.0,
+    rep_weight=1.0,
+    bg_weight=1.0,
+    rep_margin=1.0,
+    temperature=1.0,
+    iter_matcher=True)
+```
 
 ## The Loss: Mask-Matrix Influencer Loss
 
 ### Background
 
-The original InfluencerLoss (Murnane 2024, EPJ Web Conf.) operates on two separate embedding spaces — follower and influencer embeddings — with a geometric mean formulation for the attractive loss. See [github.com/murnanedaniel/InfluencerNet](https://github.com/murnanedaniel/InfluencerNet).
+The original InfluencerLoss (Murnane 2024, EPJ Web Conf.) operates on two separate embedding spaces — follower and influencer embeddings — with a geometric mean formulation. See [github.com/murnanedaniel/InfluencerNet](https://github.com/murnanedaniel/InfluencerNet).
 
-The mask-matrix formulation adapts this to the MaskFormer paradigm: instead of operating on spatial embeddings, the loss operates directly on the (N, M) mask matrix.
+The mask-matrix formulation adapts this to MaskFormer-style architectures: instead of spatial embeddings, the loss operates on the (N, M) mask matrix directly.
 
 ### Attractive Loss (Follower-Influencer)
 
-For each ground-truth instance k with points P_k:
+For each GT instance k with superpoints S_k:
 
-1. Compute the **geometric mean** of mask probabilities per query:
-   `geomean_k[m] = exp(mean_{i ∈ P_k} log(sigmoid(mask[i, m])))`
-2. The best query for this instance is the one with the highest geometric mean
-3. Loss: `-logsumexp(log_geomean[m] / T) * T` (differentiable soft-max)
+1. Transpose masks: (n_queries, n_superpoints) → (n_superpoints, n_queries)
+2. Compute **geometric mean** of mask probabilities per query:
+   `geomean_k[m] = exp(mean_{s ∈ S_k} log(sigmoid(mask[s, m])))`
+3. Soft-select the best query via logsumexp
+4. Loss: `-logsumexp(log_geomean / T) * T`
 
-The geometric mean is the key: it requires **unanimous agreement** from all points. If even one point of instance k assigns low probability to query m, the geometric mean collapses. This mirrors the `exp(mean(log(...)))` formulation in the original InfluencerNet code.
+The geometric mean requires **unanimous agreement**: one dissenting superpoint tanks the score.
 
 ### Repulsive Loss (Influencer-Influencer)
 
-Each instance k has a **query profile**: the M-dimensional vector of per-query geometric means.
-
-For each pair of instances (k, l), apply a hinge loss on the L2 distance between their profiles: `max(0, margin - ||profile_k - profile_l||)`. This ensures different instances claim different queries.
+Each instance's **query profile** = M-dim vector of per-query geometric means.
+Hinge loss: `max(0, margin - ||profile_k - profile_l||)` for all pairs (k, l).
 
 ### Background Suppression
 
-Push mask probabilities toward zero for all background points (instance_label == 0).
+Mean of sigmoid(mask_logits) for background superpoints → push toward zero.
 
-### Comparison with Original InfluencerNet
+## Tensor Shapes (OneFormer3D Convention)
 
-| | Original (InfluencerNet) | Mask-Matrix (InfluencerFormer) |
-|---|---|---|
-| **Representation** | Two embedding spaces (follower + influencer), (N, D) each | (N, M) mask matrix |
-| **Attractive** | Geometric mean of follower-influencer distances | Geometric mean of mask probabilities per query |
-| **Repulsive** | Hinge on influencer-influencer distances | Hinge on instance query profile distances |
-| **Matching** | None (implicit via embedding proximity) | None (implicit via geometric mean query selection) |
-| **Architecture** | Any backbone → two MLP heads | MaskFormer-style: backbone → cross-attention → mask matrix |
+| Tensor | Shape | Description |
+|--------|-------|-------------|
+| `masks` (pred) | List[(n_queries, n_superpoints)] | Per-query mask logits over superpoints |
+| `cls_preds` | List[(n_queries, n_classes+1)] | Per-query class logits |
+| `scores` | List[(n_queries, 1)] | Per-query objectness |
+| `sp_masks` (GT) | (n_gts, n_superpoints) | Binary GT instance masks |
+| `labels_3d` (GT) | (n_gts,) | GT class labels per instance |
 
-## MaskFormer Integration
-
-### Mask2Former Reference
-
-Mask2Former is included as a git submodule at `third_party/Mask2Former/` for reference. The key file to compare against is `mask2former/modeling/criterion.py` (SetCriterion).
-
-### InfluencerCriterion
-
-`influencerformer/models/criterion.py` provides `InfluencerCriterion`, a drop-in replacement for Mask2Former's `SetCriterion`. It accepts the same `(outputs, targets)` interface:
-
-```python
-# Mask2Former's approach:
-criterion = SetCriterion(matcher=HungarianMatcher(...), ...)
-
-# InfluencerFormer's approach:
-criterion = InfluencerCriterion(attr_weight=1.0, rep_weight=1.0, ...)
-
-# Same calling convention:
-losses = criterion(outputs, targets)
-```
-
-The criterion handles:
-- Point clouds: `pred_masks` as (N, M) or list of (N_i, M)
-- Images: `pred_masks` as (B, M, H, W), flattened to per-pixel
-- Deep supervision via `aux_outputs`
+Our loss transposes `masks` to (n_superpoints, n_queries) and converts `sp_masks` to per-superpoint integer instance IDs.
 
 ## Project Structure
 
@@ -113,9 +162,6 @@ InfluencerFormer/
 ├── docs/
 │   ├── first_pass.md               # This file
 │   └── literature_review.md        # 25+ method survey
-├── examples/
-│   ├── toy_pointcloud.py           # S3DIS example (old embedding formulation)
-│   └── toy_image.py                # COCO example (old embedding formulation)
 ├── influencerformer/
 │   ├── __init__.py                 # v0.2.0
 │   ├── data/
@@ -124,18 +170,19 @@ InfluencerFormer/
 │   ├── losses/
 │   │   └── influencer_loss.py      # MaskInfluencerLoss (mask-matrix formulation)
 │   ├── models/
-│   │   └── criterion.py            # InfluencerCriterion (MaskFormer drop-in)
+│   │   └── criterion.py            # InfluencerCriterion (OneFormer3D drop-in)
 │   ├── metrics/                    # (placeholder)
 │   ├── networks/                   # (placeholder)
 │   └── utils/                      # (placeholder)
-└── third_party/
-    └── Mask2Former/                # Git submodule — reference implementation
+└── examples/
+    ├── toy_pointcloud.py           # S3DIS example (old formulation)
+    └── toy_image.py                # COCO example (old formulation)
 ```
 
 ## Next Steps
 
-1. **Point cloud backbone + cross-attention model.** Wire up a point encoder (e.g. PointNet, DGCNN) with a cross-attention transformer decoder producing the (N, M) mask matrix. This is the `networks/` and `models/` gap.
-2. **End-to-end training on S3DIS.** Replace the toy embedding model with the mask-matrix pipeline using InfluencerCriterion.
-3. **Hyperparameter exploration.** Attractive/repulsive weights, temperature, margin, number of queries M.
-4. **Image pathway.** Same loss on COCO via Mask2Former backbone, validating against the reference SetCriterion.
-5. **Ablations.** Geometric mean vs arithmetic mean, sigmoid vs softmax mask probabilities, deep supervision impact.
+1. **Set up OneFormer3D** — Docker or conda environment, preprocess S3DIS, download pretrained backbone
+2. **Reproduce baseline** — Train/eval OneFormer3D on S3DIS Area 5 with InstanceCriterion (Hungarian)
+3. **Swap criterion** — Register InfluencerCriterion, modify config, train from same pretrained backbone
+4. **Compare** — AP, mAP at IoU 0.25/0.50/0.75 on S3DIS Area 5
+5. **Ablate** — Temperature, margin, attractive/repulsive weight balance, number of queries
