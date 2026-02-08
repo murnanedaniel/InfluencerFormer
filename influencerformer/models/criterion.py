@@ -1,67 +1,100 @@
-"""InfluencerCriterion: drop-in replacement for Mask2Former's SetCriterion.
+"""InfluencerCriterion: drop-in replacement for OneFormer3D's InstanceCriterion.
 
-Mask2Former's SetCriterion does:
-    1. HungarianMatcher to assign queries to GT instances
-    2. CE loss on matched class predictions
-    3. Dice + BCE on matched mask predictions
-    4. Repeat for each auxiliary decoder layer (deep supervision)
+OneFormer3D's InstanceCriterion (oneformer3d/instance_criterion.py) does:
+    1. HungarianMatcher to assign queries to GT instances (scipy linear_sum_assignment)
+    2. Cross-entropy on matched class predictions
+    3. BCE + Dice on matched mask predictions
+    4. Objectness score loss (MSE on IoU)
+    5. Repeat for each auxiliary decoder layer (deep supervision)
 
-InfluencerCriterion replaces ALL of this with MaskInfluencerLoss. No matcher
-is needed — the loss itself discovers query-to-instance assignments through
-the geometric mean attractive/repulsive formulation.
+InfluencerCriterion replaces the matcher + mask losses with MaskInfluencerLoss.
+No HungarianMatcher, no bipartite assignment. The loss itself discovers
+query-to-instance assignments via geometric mean attractive/repulsive potentials.
 
-Usage with Mask2Former's MaskFormer model:
-    # In MaskFormer.from_config(), replace:
-    #   criterion = SetCriterion(matcher=HungarianMatcher(...), ...)
-    # with:
-    #   criterion = InfluencerCriterion(...)
+Integration:
+    In the OneFormer3D config, replace the inst_criterion block:
 
-    # The forward interface is the same:
-    #   losses = criterion(outputs, targets)
+    # Before (Hungarian matching):
+    inst_criterion=dict(
+        type='InstanceCriterion',
+        matcher=dict(
+            type='HungarianMatcher',
+            costs=[
+                dict(type='QueryClassificationCost', weight=0.5),
+                dict(type='MaskBCECost', weight=1.0),
+                dict(type='MaskDiceCost', weight=1.0)]),
+        loss_weight=[0.5, 1.0, 1.0, 0.5],
+        num_classes=num_instance_classes,
+        non_object_weight=0.05,
+        fix_dice_loss_weight=True,
+        iter_matcher=True,
+        fix_mean_loss=True)
 
-Usage standalone (point clouds):
-    criterion = InfluencerCriterion()
-    outputs = {"pred_masks": mask_logits}      # (N, M)
-    targets = [{"instance_labels": labels}]    # (N,)
-    losses = criterion(outputs, targets)
+    # After (Influencer Loss):
+    inst_criterion=dict(
+        type='InfluencerCriterion',
+        loss_weight=[0.5, 1.0, 1.0],
+        num_classes=num_instance_classes,
+        non_object_weight=0.05,
+        attr_weight=1.0,
+        rep_weight=1.0,
+        bg_weight=1.0,
+        rep_margin=1.0,
+        temperature=1.0,
+        iter_matcher=True)
 """
 
 import torch
-import torch.nn as nn
+import torch.nn.functional as F
 
 from ..losses.influencer_loss import MaskInfluencerLoss
 
+try:
+    from mmdet3d.registry import MODELS
+    HAS_MMDET3D = True
+except ImportError:
+    HAS_MMDET3D = False
 
-class InfluencerCriterion(nn.Module):
-    """Criterion wrapping MaskInfluencerLoss for MaskFormer-style models.
 
-    Accepts the same (outputs, targets) interface as Mask2Former's
-    SetCriterion, but computes the Influencer Loss instead of
-    Hungarian-matched CE + dice + BCE.
+def _build_instance_labels(sp_masks):
+    """Convert per-instance binary superpoint masks to per-superpoint instance IDs.
+
+    OneFormer3D stores GT as sp_masks: (n_gts, n_superpoints) binary masks.
+    MaskInfluencerLoss expects instance_labels: (n_superpoints,) with integer IDs.
+
+    Args:
+        sp_masks: (n_gts, n_superpoints) boolean tensor. Each row is one
+            ground-truth instance's mask over superpoints.
+
+    Returns:
+        (n_superpoints,) integer tensor. 0 = background (no instance),
+        1..n_gts = instance IDs.
+    """
+    n_superpoints = sp_masks.shape[1]
+    instance_labels = sp_masks.new_zeros(n_superpoints, dtype=torch.long)
+    for inst_id, mask in enumerate(sp_masks):
+        instance_labels[mask.bool()] = inst_id + 1  # 1-indexed, 0 = background
+    return instance_labels
+
+
+class InfluencerCriterion:
+    """Drop-in replacement for OneFormer3D's InstanceCriterion.
+
+    Same __call__(pred, insts) interface. Same config structure (minus the
+    matcher). Returns {'inst_loss': scalar} just like InstanceCriterion.
+
+    The key difference: no HungarianMatcher. Instead of matching queries to
+    GT instances and then computing BCE+Dice on matched pairs, we transpose
+    the mask matrix and compute the Influencer Loss directly.
+
+    OneFormer3D's masks are (n_queries, n_superpoints) — query-centric.
+    MaskInfluencerLoss expects (N, M) — point-centric, N=superpoints, M=queries.
+    So we transpose: masks.T gives (n_superpoints, n_queries).
     """
 
-    def __init__(
-        self,
-        attr_weight: float = 1.0,
-        rep_weight: float = 1.0,
-        bg_weight: float = 1.0,
-        rep_margin: float = 1.0,
-        temperature: float = 1.0,
-        deep_supervision: bool = True,
-        aux_weight: float = 1.0,
-    ):
-        """
-        Args:
-            attr_weight: Weight for the attractive loss.
-            rep_weight: Weight for the repulsive loss.
-            bg_weight: Weight for background suppression.
-            rep_margin: Margin for repulsive hinge loss.
-            temperature: Temperature for soft query selection.
-            deep_supervision: Whether to compute losses on auxiliary
-                (intermediate decoder layer) outputs.
-            aux_weight: Weight multiplier for auxiliary losses.
-        """
-        super().__init__()
+    def __init__(self, loss_weight, num_classes, non_object_weight,
+                 attr_weight=1.0, rep_weight=1.0, bg_weight=1.0,
+                 rep_margin=1.0, temperature=1.0, iter_matcher=True):
         self.loss_fn = MaskInfluencerLoss(
             attr_weight=attr_weight,
             rep_weight=rep_weight,
@@ -69,97 +102,141 @@ class InfluencerCriterion(nn.Module):
             rep_margin=rep_margin,
             temperature=temperature,
         )
-        self.deep_supervision = deep_supervision
-        self.aux_weight = aux_weight
+        # loss_weight[0] = classification, [1] = influencer attractive,
+        # [2] = influencer repulsive. (BCE and Dice are replaced.)
+        self.loss_weight = loss_weight
+        self.num_classes = num_classes
+        class_weight = [1] * num_classes + [non_object_weight]
+        self.class_weight = class_weight
+        self.iter_matcher = iter_matcher
 
-    def forward(
-        self,
-        outputs: dict[str, torch.Tensor],
-        targets: list[dict[str, torch.Tensor]],
-    ) -> dict[str, torch.Tensor]:
-        """
+    def _get_influencer_loss(self, pred_masks, insts):
+        """Compute MaskInfluencerLoss across a batch.
+
         Args:
-            outputs: Model output dict. Must contain:
-                - "pred_masks": Either (N, M) for a single point cloud, or
-                  (B, M, H, W) for batched images (Mask2Former format).
-                  For point clouds, can also be a list of (N_i, M) tensors.
-                Optionally:
-                - "aux_outputs": List of dicts with the same format,
-                  one per intermediate decoder layer.
-
-            targets: List of dicts (one per batch element), each containing:
-                - "instance_labels": (N_i,) integer instance IDs for point
-                  clouds, or (H, W) instance label map for images.
-                  0 = background.
+            pred_masks: List of len batch_size, each (n_queries, n_superpoints).
+            insts: List of len batch_size, each InstanceData_ with
+                sp_masks (n_gts, n_superpoints).
 
         Returns:
-            Dict of named losses. All losses that should be backpropagated
-            have requires_grad=True.
+            dict of averaged loss components.
         """
-        losses = {}
+        batch_losses = []
+        for mask, inst in zip(pred_masks, insts):
+            # Transpose: (n_queries, n_superpoints) → (n_superpoints, n_queries)
+            mask_logits = mask.T
+            instance_labels = _build_instance_labels(inst.sp_masks)
+            batch_losses.append(self.loss_fn(mask_logits, instance_labels))
 
-        # Main output
-        main_losses = self._compute_loss(outputs["pred_masks"], targets)
-        losses.update(main_losses)
+        # Average across batch
+        keys = batch_losses[0].keys()
+        return {
+            k: torch.stack([d[k] for d in batch_losses]).mean() for k in keys
+        }
 
-        # Auxiliary losses (deep supervision)
-        if self.deep_supervision and "aux_outputs" in outputs:
-            for i, aux in enumerate(outputs["aux_outputs"]):
-                aux_losses = self._compute_loss(aux["pred_masks"], targets)
-                for k, v in aux_losses.items():
-                    losses[f"{k}_{i}"] = v * self.aux_weight
+    def _get_cls_loss(self, cls_preds, pred_masks, insts):
+        """Classification loss using soft query-instance assignment.
 
-        # Total
-        total = sum(v for v in losses.values() if v.requires_grad)
-        losses["total_loss"] = total
-        return losses
+        Without Hungarian matching, we assign each query to the instance
+        whose superpoints it most strongly activates (argmax over mean mask
+        logit per GT instance). Unmatched queries get the no-object label.
 
-    def _compute_loss(
-        self,
-        pred_masks: torch.Tensor | list[torch.Tensor],
-        targets: list[dict[str, torch.Tensor]],
-    ) -> dict[str, torch.Tensor]:
-        """Compute loss for one set of mask predictions.
+        Args:
+            cls_preds: List of (n_queries, n_classes + 1) per batch element.
+            pred_masks: List of (n_queries, n_superpoints) per batch element.
+            insts: List of InstanceData_ with labels_3d and sp_masks.
 
-        Handles three input formats:
-        1. Point cloud, single:  pred_masks is (N, M)
-        2. Point cloud, batched: pred_masks is a list of (N_i, M)
-        3. Image, batched:       pred_masks is (B, M, H, W)
+        Returns:
+            Scalar classification loss.
         """
-        # Single point cloud tensor with one target
-        if isinstance(pred_masks, torch.Tensor) and pred_masks.dim() == 2:
-            return self.loss_fn(pred_masks, targets[0]["instance_labels"])
+        cls_losses = []
+        for cls_pred, mask, inst in zip(cls_preds, pred_masks, insts):
+            n_queries = cls_pred.shape[0]
+            n_classes = cls_pred.shape[1] - 1
+            # Default: all queries predict "no object"
+            cls_target = cls_pred.new_full(
+                (n_queries,), n_classes, dtype=torch.long)
 
-        # List of per-sample point cloud tensors
-        if isinstance(pred_masks, list):
-            batch_losses = [
-                self.loss_fn(m, t["instance_labels"])
-                for m, t in zip(pred_masks, targets)
-            ]
-            return self._average_loss_dicts(batch_losses)
+            if len(inst) > 0:
+                # (n_queries, n_gts): mean mask logit per GT instance
+                sp_masks = inst.sp_masks.float()  # (n_gts, n_superpoints)
+                # For each query, compute its average activation on each GT
+                # instance's superpoints
+                query_inst_affinity = torch.mm(
+                    mask, sp_masks.T  # (n_queries, n_superpoints) @ (n_superpoints, n_gts)
+                )  # (n_queries, n_gts)
+                # Normalize by instance size
+                inst_sizes = sp_masks.sum(dim=1).clamp(min=1)  # (n_gts,)
+                query_inst_affinity = query_inst_affinity / inst_sizes.unsqueeze(0)
 
-        # Batched image tensor (B, M, H, W) → flatten to per-pixel
-        if isinstance(pred_masks, torch.Tensor) and pred_masks.dim() == 4:
-            B, M, H, W = pred_masks.shape
-            batch_losses = []
-            for b in range(B):
-                # (M, H, W) → (H*W, M)
-                masks_b = pred_masks[b].permute(1, 2, 0).reshape(-1, M)
-                labels_b = targets[b]["instance_labels"].reshape(-1)
-                batch_losses.append(self.loss_fn(masks_b, labels_b))
-            return self._average_loss_dicts(batch_losses)
+                # Each query claims its best GT instance (if affinity > 0)
+                best_affinity, best_gt = query_inst_affinity.max(dim=1)
+                matched = best_affinity > 0
+                cls_target[matched] = inst.labels_3d[best_gt[matched]]
 
-        raise ValueError(
-            f"Unsupported pred_masks format: type={type(pred_masks)}, "
-            f"shape={getattr(pred_masks, 'shape', 'N/A')}"
+            cls_losses.append(F.cross_entropy(
+                cls_pred, cls_target,
+                cls_pred.new_tensor(self.class_weight)))
+
+        return torch.mean(torch.stack(cls_losses))
+
+    def get_layer_loss(self, aux_outputs, insts):
+        """Auxiliary (intermediate decoder layer) loss.
+
+        Args:
+            aux_outputs: Dict with cls_preds, scores, masks.
+            insts: List of InstanceData_.
+
+        Returns:
+            Scalar loss.
+        """
+        cls_loss = self._get_cls_loss(
+            aux_outputs['cls_preds'], aux_outputs['masks'], insts)
+        influencer_losses = self._get_influencer_loss(
+            aux_outputs['masks'], insts)
+
+        loss = (
+            self.loss_weight[0] * cls_loss
+            + self.loss_weight[1] * influencer_losses['attractive']
+            + self.loss_weight[2] * influencer_losses['repulsive']
+        )
+        return loss
+
+    def __call__(self, pred, insts):
+        """Loss main function.
+
+        Matches OneFormer3D's InstanceCriterion.__call__ interface exactly.
+
+        Args:
+            pred: Dict with:
+                - cls_preds: List of (n_queries, n_classes+1) per batch element
+                - scores: List of (n_queries, 1) per batch element
+                - masks: List of (n_queries, n_superpoints) per batch element
+                - aux_outputs (optional): List of dicts with same keys
+            insts: List of InstanceData_ with sp_masks, labels_3d.
+
+        Returns:
+            Dict: {'inst_loss': scalar} — same key as InstanceCriterion.
+        """
+        # Main loss
+        cls_loss = self._get_cls_loss(
+            pred['cls_preds'], pred['masks'], insts)
+        influencer_losses = self._get_influencer_loss(pred['masks'], insts)
+
+        loss = (
+            self.loss_weight[0] * cls_loss
+            + self.loss_weight[1] * influencer_losses['attractive']
+            + self.loss_weight[2] * influencer_losses['repulsive']
         )
 
-    @staticmethod
-    def _average_loss_dicts(
-        loss_dicts: list[dict[str, torch.Tensor]],
-    ) -> dict[str, torch.Tensor]:
-        """Average corresponding entries across a list of loss dicts."""
-        keys = loss_dicts[0].keys()
-        return {
-            k: torch.stack([d[k] for d in loss_dicts]).mean() for k in keys
-        }
+        # Auxiliary losses (deep supervision)
+        if 'aux_outputs' in pred:
+            for aux_outputs in pred['aux_outputs']:
+                loss += self.get_layer_loss(aux_outputs, insts)
+
+        return {'inst_loss': loss}
+
+
+# Register with mmdet3d if available (for config-based instantiation)
+if HAS_MMDET3D:
+    MODELS.register_module()(InfluencerCriterion)
