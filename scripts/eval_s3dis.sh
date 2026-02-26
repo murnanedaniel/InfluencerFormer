@@ -65,10 +65,19 @@ fi
 # ── Ensure influencerformer is importable ─────────────────────────────────────
 export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
+# ── GPU / distributed setup ───────────────────────────────────────────────────
+GPUS="${GPUS:-1}"
+DIST_TEST="$ONEFORMER3D_ROOT/tools/dist_test.sh"
+
 # ── Run ───────────────────────────────────────────────────────────────────────
 echo "OneFormer3D root : $ONEFORMER3D_ROOT"
 echo "Config           : $CONFIG"
 echo "Checkpoint       : $CHECKPOINT"
+echo "GPUs             : $GPUS"
 echo ""
 
-python "$TEST_SCRIPT" "$CONFIG" "$CHECKPOINT" "$@"
+if [[ "$GPUS" -gt 1 ]] && [[ -f "$DIST_TEST" ]]; then
+    bash "$DIST_TEST" "$CONFIG" "$CHECKPOINT" "$GPUS" "$@"
+else
+    python "$TEST_SCRIPT" "$CONFIG" "$CHECKPOINT" "$@"
+fi

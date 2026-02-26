@@ -65,10 +65,23 @@ esac
 # The configs already contain custom_imports to trigger the MODELS registration.
 export PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
+# ── GPU / distributed setup ───────────────────────────────────────────────────
+# Set GPUS=<n> to use distributed training (torchrun / dist_train.sh).
+# Defaults to single-GPU if unset.
+GPUS="${GPUS:-1}"
+DIST_TRAIN="$ONEFORMER3D_ROOT/tools/dist_train.sh"
+
 # ── Run ───────────────────────────────────────────────────────────────────────
 echo "OneFormer3D root : $ONEFORMER3D_ROOT"
 echo "Config           : $CONFIG"
+echo "GPUs             : $GPUS"
 echo "PYTHONPATH       : $PYTHONPATH"
 echo ""
 
-python "$TRAIN_SCRIPT" "$CONFIG" "$@"
+if [[ "$GPUS" -gt 1 ]] && [[ -f "$DIST_TRAIN" ]]; then
+    # Multi-GPU: use OneFormer3D's dist_train.sh wrapper (torchrun-based)
+    bash "$DIST_TRAIN" "$CONFIG" "$GPUS" "$@"
+else
+    # Single-GPU
+    python "$TRAIN_SCRIPT" "$CONFIG" "$@"
+fi

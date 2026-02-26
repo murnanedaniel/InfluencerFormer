@@ -90,39 +90,58 @@ model = dict(
 # ── Training schedule ─────────────────────────────────────────────────────────
 max_epochs = 512
 
+_train_pipeline = [
+    dict(type='LoadPointsFromFile', coord_type='DEPTH',
+         use_dim=[0, 1, 2, 3, 4, 5]),
+    dict(type='LoadAnnotations3D', with_bbox_3d=False,
+         with_label_3d=False, with_mask_3d=True,
+         with_seg_3d=True, with_sp_mask_3d=True),
+    dict(type='PointSegClassMapping'),
+    dict(type='RandomFlip3D', flip_ratio_bev_horizontal=0.5,
+         flip_ratio_bev_vertical=0.5),
+    dict(type='GlobalRotScaleTrans', rot_range=[-3.14159, 3.14159],
+         scale_ratio_range=[0.8, 1.2],
+         translation_std=[0.1, 0.1, 0.1]),
+    dict(type='NormalizePointsColor', color_mean=[127.5, 127.5, 127.5]),
+    dict(type='Pack3DDetInputs',
+         keys=['points', 'gt_labels_3d', 'pts_semantic_mask',
+               'pts_instance_mask', 'sp_pts_mask', 'gt_sp_masks'],
+         meta_keys=['box_type_3d', 'lidar_path', 'num_pts_feats',
+                    'num_views'])]
+
+_data_prefix = dict(
+    pts='points',
+    pts_instance_mask='instance_mask',
+    pts_semantic_mask='semantic_mask',
+    sp_pts_mask='super_points')
+
+# S3DIS Area-5 eval: train on Areas 1, 2, 3, 4, 6 (all except 5).
+# OneFormer3D's data-prep script produces one pkl per area.
+# We concatenate them here via ConcatDataset.
 train_dataloader = dict(
     batch_size=4,
     num_workers=4,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='s3dis_infos_Area_1.pkl',  # all areas except 5 for training
-        metainfo=metainfo,
-        data_prefix=dict(
-            pts='points',
-            pts_instance_mask='instance_mask',
-            pts_semantic_mask='semantic_mask',
-            sp_pts_mask='super_points'),
-        pipeline=[
-            dict(type='LoadPointsFromFile', coord_type='DEPTH',
-                 use_dim=[0, 1, 2, 3, 4, 5]),
-            dict(type='LoadAnnotations3D', with_bbox_3d=False,
-                 with_label_3d=False, with_mask_3d=True,
-                 with_seg_3d=True, with_sp_mask_3d=True),
-            dict(type='PointSegClassMapping'),
-            dict(type='RandomFlip3D', flip_ratio_bev_horizontal=0.5,
-                 flip_ratio_bev_vertical=0.5),
-            dict(type='GlobalRotScaleTrans', rot_range=[-3.14159, 3.14159],
-                 scale_ratio_range=[0.8, 1.2],
-                 translation_std=[0.1, 0.1, 0.1]),
-            dict(type='NormalizePointsColor', color_mean=[127.5, 127.5, 127.5]),
-            dict(type='Pack3DDetInputs',
-                 keys=['points', 'gt_labels_3d', 'pts_semantic_mask',
-                       'pts_instance_mask', 'sp_pts_mask', 'gt_sp_masks'],
-                 meta_keys=['box_type_3d', 'lidar_path', 'num_pts_feats',
-                            'num_views'])]))
+        type='ConcatDataset',
+        datasets=[
+            dict(type=dataset_type, data_root=data_root, metainfo=metainfo,
+                 ann_file='s3dis_infos_Area_1.pkl', data_prefix=_data_prefix,
+                 pipeline=_train_pipeline),
+            dict(type=dataset_type, data_root=data_root, metainfo=metainfo,
+                 ann_file='s3dis_infos_Area_2.pkl', data_prefix=_data_prefix,
+                 pipeline=_train_pipeline),
+            dict(type=dataset_type, data_root=data_root, metainfo=metainfo,
+                 ann_file='s3dis_infos_Area_3.pkl', data_prefix=_data_prefix,
+                 pipeline=_train_pipeline),
+            dict(type=dataset_type, data_root=data_root, metainfo=metainfo,
+                 ann_file='s3dis_infos_Area_4.pkl', data_prefix=_data_prefix,
+                 pipeline=_train_pipeline),
+            dict(type=dataset_type, data_root=data_root, metainfo=metainfo,
+                 ann_file='s3dis_infos_Area_6.pkl', data_prefix=_data_prefix,
+                 pipeline=_train_pipeline),
+        ]))
 
 val_dataloader = dict(
     batch_size=1,
