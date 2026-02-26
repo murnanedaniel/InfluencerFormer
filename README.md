@@ -83,29 +83,54 @@ See [docs/literature_review.md](docs/literature_review.md) for a comprehensive s
 
 ## OneFormer3D Integration (3D Instance Segmentation)
 
-InfluencerFormer v0.2.0 adds a drop-in `InfluencerCriterion` for
-[OneFormer3D](https://github.com/filaPro/oneformer3d), enabling training on
-S3DIS and ScanNet without modifying any OneFormer3D source files.
+`InfluencerCriterion` is a drop-in replacement for OneFormer3D's `InstanceCriterion` on S3DIS / ScanNet — no changes to OneFormer3D source required.
 
-**Quick summary:**
+### Install
 
-1. Install OneFormer3D + this package (`pip install -e ".[mmdet3d]"`)
-2. Both config files already include the `custom_imports` hook — no manual steps
-3. Train the baseline: `./scripts/train_s3dis.sh baseline`
-4. Train InfluencerFormer: `./scripts/train_s3dis.sh influencerformer`
-5. Verify registry: `python scripts/register_criterion.py --verify`
+```bash
+# 1. PyTorch + mmdet3d stack (order matters)
+pip install mmengine>=0.10.0 mmdet>=3.0.0
+pip install mmcv>=2.0.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.0/index.html
 
-To swap from Hungarian matching to Influencer Loss in any OneFormer3D config,
-replace the `inst_criterion` block:
+# 2. OneFormer3D (not on PyPI)
+git clone https://github.com/filaPro/oneformer3d && pip install -e oneformer3d/
 
-```python
-# Before:
-inst_criterion=dict(type='InstanceCriterion', matcher=dict(...), loss_weight=[0.5, 1.0, 1.0, 0.5], ...)
+# 3. spconv — pick the wheel matching your CUDA version
+#    CUDA 11.3/11.6/11.8/12.x → spconv-cu113 / cu116 / cu118 / cu120
+pip install spconv-cu118
 
-# After:
-inst_criterion=dict(type='InfluencerCriterion', loss_weight=[0.5, 1.0],
-                    attr_weight=1.0, rep_weight=1.0, bg_weight=0.1, ...)
+# 4. This package
+pip install -e ".[mmdet3d]"
+
+# 5. Verify
+python scripts/register_criterion.py --verify
+# → PASS: InfluencerCriterion is registered in the MODELS registry.
 ```
 
-Full installation instructions, hyperparameter guide, and troubleshooting:
-[docs/integration_guide.md](docs/integration_guide.md)
+### Data
+
+Run OneFormer3D's S3DIS data prep scripts (`oneformer3d/data/s3dis/`). They produce superpoint `.pth` files and per-area `.pkl` annotation files. Then set `data_root` in `configs/s3dis/oneformer3d_1xb4_s3dis-area-5.py` to point to your processed data directory.
+
+### Train and evaluate
+
+```bash
+# Single GPU
+./scripts/train_s3dis.sh baseline            # Reproduce OneFormer3D (expected mAP 59.8)
+./scripts/train_s3dis.sh influencerformer    # InfluencerFormer
+
+# Multi-GPU (uses OneFormer3D's dist_train.sh automatically)
+GPUS=4 ./scripts/train_s3dis.sh influencerformer
+
+# Evaluate
+./scripts/eval_s3dis.sh influencerformer work_dirs/influencerformer/epoch_512.pth
+GPUS=4 ./scripts/eval_s3dis.sh influencerformer work_dirs/influencerformer/epoch_512.pth
+
+# Resume (auto-resumes from latest.pth in work_dir)
+./scripts/train_s3dis.sh influencerformer --resume
+```
+
+### Key hyperparameter
+
+`bg_weight` in `configs/s3dis/influencerformer_1xb4_s3dis-area-5.py` defaults to `0.1`, not `1.0`. S3DIS rooms are ~75% background superpoints — `bg_weight=1.0` destabilises early training by pushing all mask logits negative before the attractive term can compensate. Increase gradually after ~50–100 epochs if background superpoints are still being activated.
+
+Full details, hyperparameter guide, and troubleshooting: [docs/integration_guide.md](docs/integration_guide.md)
