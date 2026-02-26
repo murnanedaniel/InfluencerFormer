@@ -29,25 +29,26 @@ Originally developed for particle physics track reconstruction, the Influencer L
 
 ```
 influencerformer/
-├── data/           # Dataset download and loading (COCO, S3DIS)
-├── losses/         # Influencer Loss implementation
-├── models/         # Lightning training modules
-├── networks/       # Backbone architectures
-├── metrics/        # Evaluation metrics
-└── utils/          # Visualization, clustering
+├── data/     # Dataset download and loading (COCO, S3DIS)
+├── losses/   # InfluencerLoss (condensation) + MaskInfluencerLoss (mask-matrix)
+└── models/   # InfluencerCriterion — drop-in for OneFormer3D's InstanceCriterion
 
 examples/
-├── toy_pointcloud.py   # Toy model on S3DIS (point cloud)
-└── toy_image.py        # Toy model on COCO (images)
+├── toy_pointcloud.py   # MLP on S3DIS with InfluencerLoss (condensation approach)
+└── toy_image.py        # CNN on COCO with InfluencerLoss (condensation approach)
 
 docs/
-├── literature_review.md    # Comprehensive survey of related work
+├── literature_review.md    # Survey of related work
 ├── first_pass.md           # Development log
 └── integration_guide.md    # OneFormer3D integration (S3DIS / ScanNet)
 
-configs/s3dis/
-├── oneformer3d_1xb4_s3dis-area-5.py      # Baseline: Hungarian matching
-└── influencerformer_1xb4_s3dis-area-5.py # InfluencerFormer: Influencer Loss
+configs/
+├── s3dis/
+│   ├── oneformer3d_1xb4_s3dis-area-5.py       # Baseline: Hungarian matching
+│   └── influencerformer_1xb4_s3dis-area-5.py  # InfluencerFormer: Influencer Loss
+└── scannet/
+    ├── oneformer3d_1xb2_scannet.py             # Baseline: Hungarian matching
+    └── influencerformer_1xb2_scannet.py        # InfluencerFormer: Influencer Loss
 
 scripts/
 ├── train_s3dis.sh        # Training wrapper (auto-detects OneFormer3D)

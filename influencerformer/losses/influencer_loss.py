@@ -17,6 +17,140 @@ Reference:
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+
+
+class InfluencerLoss(nn.Module):
+    """Original condensation-network Influencer Loss (InfluencerNet formulation).
+
+    For models that output per-point embedding coordinates and condensation
+    weights (betas). Distinct from MaskInfluencerLoss, which operates on
+    transformer mask logits.
+
+    Three components:
+
+    1. **Attractive**: For each ground-truth instance, find the influencer
+       (highest-beta point). Minimize MSE distance from all other instance
+       points to that influencer's embedding. Requires instance points to
+       cluster tightly in embedding space.
+
+    2. **Repulsive**: Push the influencer embeddings of different instances
+       apart with a hinge loss. Prevents all instances from collapsing to the
+       same cluster in embedding space.
+
+    3. **Beta**: Binary cross-entropy — instance points should have high beta
+       (beta → 1), background points should have low beta (beta → 0). Trains
+       the model to identify its own condensation points.
+
+    Reference:
+        Murnane, D. "Influencer Loss: End-to-end Geometric Representation
+        Learning for Track Reconstruction." EPJ Web Conf. 295, 09016 (2024).
+        https://github.com/murnanedaniel/InfluencerNet
+    """
+
+    def __init__(
+        self,
+        attr_weight: float = 1.0,
+        rep_weight: float = 1.0,
+        beta_weight: float = 1.0,
+        rep_margin: float = 1.0,
+        eps: float = 1e-6,
+    ):
+        """
+        Args:
+            attr_weight: Weight for the attractive (MSE clustering) loss.
+            rep_weight: Weight for the repulsive (hinge) loss.
+            beta_weight: Weight for the beta (condensation weight) BCE loss.
+            rep_margin: Minimum distance between influencers of different
+                instances. Pairs closer than this are penalised.
+            eps: Small constant for numerical stability.
+        """
+        super().__init__()
+        self.attr_weight = attr_weight
+        self.rep_weight = rep_weight
+        self.beta_weight = beta_weight
+        self.rep_margin = rep_margin
+        self.eps = eps
+
+    def forward(
+        self,
+        embeddings: torch.Tensor,
+        betas: torch.Tensor,
+        instance_labels: torch.Tensor,
+    ) -> dict[str, torch.Tensor]:
+        """
+        Args:
+            embeddings: (N, D) coordinates in embedding space.
+            betas: (N,) condensation weights in [0, 1].
+            instance_labels: (N,) integer instance IDs. 0 = background.
+
+        Returns:
+            Dict with keys: loss, attractive, repulsive, beta.
+        """
+        device = embeddings.device
+
+        # --- Beta loss: instance points → 1, background → 0 ---
+        beta_target = (instance_labels > 0).float()
+        beta_loss = F.binary_cross_entropy(betas, beta_target)
+
+        unique_instances = instance_labels.unique()
+        unique_instances = unique_instances[unique_instances > 0]
+
+        if len(unique_instances) == 0:
+            total = self.beta_weight * beta_loss
+            zero = torch.tensor(0.0, device=device)
+            return {
+                "loss": total,
+                "attractive": zero,
+                "repulsive": zero,
+                "beta": beta_loss.detach(),
+            }
+
+        # --- Attractive + find influencers ---
+        influencer_embeddings = []
+        attractive_loss = torch.tensor(0.0, device=device)
+
+        for inst_id in unique_instances:
+            inst_mask = instance_labels == inst_id
+            inst_embs = embeddings[inst_mask]   # (N_k, D)
+            inst_betas = betas[inst_mask]        # (N_k,)
+
+            # Influencer = highest-beta point in this instance
+            inf_idx = inst_betas.argmax()
+            influencer = inst_embs[inf_idx]      # (D,)
+            influencer_embeddings.append(influencer)
+
+            # MSE distance from all instance points to their influencer
+            dists_sq = ((inst_embs - influencer.unsqueeze(0)) ** 2).sum(dim=1)
+            attractive_loss = attractive_loss + dists_sq.mean()
+
+        attractive_loss = attractive_loss / len(unique_instances)
+
+        # --- Repulsive: push influencers of different instances apart ---
+        if len(influencer_embeddings) > 1:
+            infs = torch.stack(influencer_embeddings)   # (K, D)
+            diff = infs.unsqueeze(0) - infs.unsqueeze(1)  # (K, K, D)
+            dists = torch.norm(diff, dim=2)              # (K, K)
+            K = len(unique_instances)
+            off_diag = ~torch.eye(K, dtype=torch.bool, device=device)
+            repulsive_loss = torch.clamp(
+                self.rep_margin - dists[off_diag], min=0
+            ).mean()
+        else:
+            repulsive_loss = torch.tensor(0.0, device=device)
+
+        total = (
+            self.attr_weight * attractive_loss
+            + self.rep_weight * repulsive_loss
+            + self.beta_weight * beta_loss
+        )
+
+        return {
+            "loss": total,
+            "attractive": attractive_loss.detach(),
+            "repulsive": repulsive_loss.detach(),
+            "beta": beta_loss.detach(),
+        }
 
 
 class MaskInfluencerLoss(nn.Module):

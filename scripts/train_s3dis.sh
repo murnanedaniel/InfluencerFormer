@@ -4,7 +4,8 @@
 # Usage:
 #   ./scripts/train_s3dis.sh baseline [EXTRA_ARGS...]
 #   ./scripts/train_s3dis.sh influencerformer [EXTRA_ARGS...]
-#   ./scripts/train_s3dis.sh influencerformer --resume work_dirs/run1/epoch_256.pth
+#   ./scripts/train_s3dis.sh influencerformer --resume
+#   ./scripts/train_s3dis.sh influencerformer --cfg-options load_from=work_dirs/run1/epoch_256.pth
 #
 # Environment:
 #   ONEFORMER3D_ROOT   Path to OneFormer3D repo root (auto-detected if unset)
