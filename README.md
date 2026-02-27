@@ -29,20 +29,31 @@ Originally developed for particle physics track reconstruction, the Influencer L
 
 ```
 influencerformer/
-├── data/           # Dataset download and loading (COCO, S3DIS)
-├── losses/         # Influencer Loss implementation
-├── models/         # Lightning training modules
-├── networks/       # Backbone architectures
-├── metrics/        # Evaluation metrics
-└── utils/          # Visualization, clustering
+├── data/     # Dataset download and loading (COCO, S3DIS)
+├── losses/   # InfluencerLoss (condensation) + MaskInfluencerLoss (mask-matrix)
+└── models/   # InfluencerCriterion — drop-in for OneFormer3D's InstanceCriterion
 
 examples/
-├── toy_pointcloud.py   # Toy model on S3DIS (point cloud)
-└── toy_image.py        # Toy model on COCO (images)
+├── toy_pointcloud.py   # MLP on S3DIS with InfluencerLoss (condensation approach)
+└── toy_image.py        # CNN on COCO with InfluencerLoss (condensation approach)
 
 docs/
-├── literature_review.md  # Comprehensive survey of related work
-└── first_pass.md         # Development log
+├── literature_review.md    # Survey of related work
+├── first_pass.md           # Development log
+└── integration_guide.md    # OneFormer3D integration (S3DIS / ScanNet)
+
+configs/
+├── s3dis/
+│   ├── oneformer3d_1xb4_s3dis-area-5.py       # Baseline: Hungarian matching
+│   └── influencerformer_1xb4_s3dis-area-5.py  # InfluencerFormer: Influencer Loss
+└── scannet/
+    ├── oneformer3d_1xb2_scannet.py             # Baseline: Hungarian matching
+    └── influencerformer_1xb2_scannet.py        # InfluencerFormer: Influencer Loss
+
+scripts/
+├── train_s3dis.sh        # Training wrapper (auto-detects OneFormer3D)
+├── eval_s3dis.sh         # Evaluation wrapper
+└── register_criterion.py # Registry verification / integration helper
 ```
 
 ## Quick Start
@@ -70,3 +81,57 @@ Hungarian matching is the universal training loss for query-based segmentation (
 The Influencer Loss replaces all of this with continuous potentials: queries attract their instance's pixels and repel others, with formal optimality guarantees that the correct assignment is the unique global minimum.
 
 See [docs/literature_review.md](docs/literature_review.md) for a comprehensive survey.
+
+## OneFormer3D Integration (3D Instance Segmentation)
+
+`InfluencerCriterion` is a drop-in replacement for OneFormer3D's `InstanceCriterion` on S3DIS / ScanNet — no changes to OneFormer3D source required.
+
+### Install
+
+```bash
+# 1. PyTorch + mmdet3d stack (order matters)
+pip install mmengine>=0.10.0 mmdet>=3.0.0
+pip install mmcv>=2.0.0 -f https://download.openmmlab.com/mmcv/dist/cu118/torch2.0/index.html
+
+# 2. OneFormer3D (not on PyPI)
+git clone https://github.com/filaPro/oneformer3d && pip install -e oneformer3d/
+
+# 3. spconv — pick the wheel matching your CUDA version
+#    CUDA 11.3/11.6/11.8/12.x → spconv-cu113 / cu116 / cu118 / cu120
+pip install spconv-cu118
+
+# 4. This package
+pip install -e ".[mmdet3d]"
+
+# 5. Verify
+python scripts/register_criterion.py --verify
+# → PASS: InfluencerCriterion is registered in the MODELS registry.
+```
+
+### Data
+
+Run OneFormer3D's S3DIS data prep scripts (`oneformer3d/data/s3dis/`). They produce superpoint `.pth` files and per-area `.pkl` annotation files. Then set `data_root` in `configs/s3dis/oneformer3d_1xb4_s3dis-area-5.py` to point to your processed data directory.
+
+### Train and evaluate
+
+```bash
+# Single GPU
+./scripts/train_s3dis.sh baseline            # Reproduce OneFormer3D (expected mAP 59.8)
+./scripts/train_s3dis.sh influencerformer    # InfluencerFormer
+
+# Multi-GPU (uses OneFormer3D's dist_train.sh automatically)
+GPUS=4 ./scripts/train_s3dis.sh influencerformer
+
+# Evaluate
+./scripts/eval_s3dis.sh influencerformer work_dirs/influencerformer/epoch_512.pth
+GPUS=4 ./scripts/eval_s3dis.sh influencerformer work_dirs/influencerformer/epoch_512.pth
+
+# Resume (auto-resumes from latest.pth in work_dir)
+./scripts/train_s3dis.sh influencerformer --resume
+```
+
+### Key hyperparameter
+
+`bg_weight` in `configs/s3dis/influencerformer_1xb4_s3dis-area-5.py` defaults to `0.1`, not `1.0`. S3DIS rooms are ~75% background superpoints — `bg_weight=1.0` destabilises early training by pushing all mask logits negative before the attractive term can compensate. Increase gradually after ~50–100 epochs if background superpoints are still being activated.
+
+Full details, hyperparameter guide, and troubleshooting: [docs/integration_guide.md](docs/integration_guide.md)

@@ -1,1 +1,1 @@
-from .influencer_loss import MaskInfluencerLoss
+from .influencer_loss import InfluencerLoss, MaskInfluencerLoss

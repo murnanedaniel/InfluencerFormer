@@ -33,7 +33,7 @@ Integration:
     # After (Influencer Loss):
     inst_criterion=dict(
         type='InfluencerCriterion',
-        loss_weight=[0.5, 1.0, 1.0],
+        loss_weight=[0.5, 1.0],   # [cls_weight, influencer_scale]; [2] ignored if present
         num_classes=num_instance_classes,
         non_object_weight=0.05,
         attr_weight=1.0,
@@ -102,8 +102,10 @@ class InfluencerCriterion:
             rep_margin=rep_margin,
             temperature=temperature,
         )
-        # loss_weight[0] = classification, [1] = influencer attractive,
-        # [2] = influencer repulsive. (BCE and Dice are replaced.)
+        # loss_weight[0] = classification weight
+        # loss_weight[1] = outer scale on the total influencer loss (attr+rep+bg
+        #                  weights are already applied inside MaskInfluencerLoss)
+        # loss_weight[2] = silently ignored if present (backward compat)
         self.loss_weight = loss_weight
         self.num_classes = num_classes
         class_weight = [1] * num_classes + [non_object_weight]
@@ -197,8 +199,7 @@ class InfluencerCriterion:
 
         loss = (
             self.loss_weight[0] * cls_loss
-            + self.loss_weight[1] * influencer_losses['attractive']
-            + self.loss_weight[2] * influencer_losses['repulsive']
+            + self.loss_weight[1] * influencer_losses['loss']
         )
         return loss
 
@@ -225,8 +226,7 @@ class InfluencerCriterion:
 
         loss = (
             self.loss_weight[0] * cls_loss
-            + self.loss_weight[1] * influencer_losses['attractive']
-            + self.loss_weight[2] * influencer_losses['repulsive']
+            + self.loss_weight[1] * influencer_losses['loss']
         )
 
         # Auxiliary losses (deep supervision)
