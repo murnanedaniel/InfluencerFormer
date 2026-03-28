@@ -85,33 +85,28 @@ class DCDLoss(nn.Module):
     def forward(self, D: torch.Tensor) -> torch.Tensor:
         B, M, N = D.shape
 
-        # --- Coverage direction: for each prediction x, find nearest target ŷ ---
-        nn_pred_to_tgt = D.argmin(dim=2)  # (B, M) — which target is nearest for each pred
-        nn_pred_dist = D.min(dim=2).values  # (B, M) — distance to nearest target
+        # --- Coverage: for each prediction, find nearest target ---
+        nn_pred_idx = D.argmin(dim=2)  # (B, M)
+        nn_pred_dist = D.min(dim=2).values  # (B, M)
         exp_pred = torch.exp(-self.alpha * nn_pred_dist)  # (B, M)
 
-        # Query frequency: how many predictions share each target as NN?
-        # n_ŷ[b, j] = count of predictions in batch b whose NN is target j
-        n_y = torch.zeros(B, N, device=D.device)
-        for b in range(B):
-            n_y[b].scatter_add_(0, nn_pred_to_tgt[b], torch.ones(M, device=D.device))
-        n_y = n_y.clamp(min=1)  # avoid div by zero
+        # Query frequency: vectorized scatter_add over batch
+        # One-hot encode the NN assignments, sum over predictions
+        nn_onehot = torch.zeros(B, M, N, device=D.device)
+        nn_onehot.scatter_(2, nn_pred_idx.unsqueeze(2), 1.0)  # (B, M, N)
+        n_y = nn_onehot.sum(dim=1).clamp(min=1)  # (B, N) — claims per target
+        n_y_per_pred = torch.gather(n_y, 1, nn_pred_idx)  # (B, M)
+        coverage = (1.0 - exp_pred / n_y_per_pred).mean(dim=-1)
 
-        # Weight each prediction's match by 1/n_ŷ
-        n_y_per_pred = torch.gather(n_y, 1, nn_pred_to_tgt)  # (B, M)
-        coverage = (1.0 - exp_pred / n_y_per_pred).mean(dim=-1)  # (B,)
-
-        # --- Precision direction: for each target y, find nearest prediction x̂ ---
-        nn_tgt_to_pred = D.argmin(dim=1)  # (B, N)
+        # --- Precision: for each target, find nearest prediction ---
+        nn_tgt_idx = D.argmin(dim=1)  # (B, N)
         nn_tgt_dist = D.min(dim=1).values  # (B, N)
         exp_tgt = torch.exp(-self.alpha * nn_tgt_dist)
 
-        n_x = torch.zeros(B, M, device=D.device)
-        for b in range(B):
-            n_x[b].scatter_add_(0, nn_tgt_to_pred[b], torch.ones(N, device=D.device))
-        n_x = n_x.clamp(min=1)
-
-        n_x_per_tgt = torch.gather(n_x, 1, nn_tgt_to_pred)
+        nn_onehot_t = torch.zeros(B, N, M, device=D.device)
+        nn_onehot_t.scatter_(2, nn_tgt_idx.unsqueeze(2), 1.0)
+        n_x = nn_onehot_t.sum(dim=1).clamp(min=1)  # (B, M)
+        n_x_per_tgt = torch.gather(n_x, 1, nn_tgt_idx)
         precision = (1.0 - exp_tgt / n_x_per_tgt).mean(dim=-1)
 
         return 0.5 * (coverage + precision).mean()

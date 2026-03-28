@@ -212,6 +212,119 @@ class WarmStartProductLoss(nn.Module):
         return loss.mean()
 
 
+class SoftDCDLoss(nn.Module):
+    """Soft DCD: SoftMin matching with soft query-frequency anti-duplication.
+
+    Borrows DCD's key insight (1/n_ŷ query-frequency weighting) but makes
+    it differentiable by using soft claim counts from the softmax instead
+    of hard argmin counts.
+
+    For each target j, the "soft claim count" is:
+        c_j = Σ_i softmax(-D/τ, dim=targets)_ij
+
+    This measures how many predictions are "pointed at" target j. Targets
+    with high claim count (duplicated) get downweighted; targets with low
+    claim count (uncovered) get upweighted.
+
+    This combines DCD's exact anti-duplication principle with SoftMin's
+    differentiability.
+    """
+
+    def __init__(self, temperature: float = 0.1, eps: float = 1e-8):
+        super().__init__()
+        self.temperature = temperature
+        self.eps = eps
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        # Soft assignments: how much does each prediction claim each target?
+        # pred_claims[i,j] = probability that prediction i is "assigned to" target j
+        pred_claims = torch.softmax(-D / self.temperature, dim=2)  # (B, M, N)
+
+        # Soft claim count per target: how many predictions claim target j?
+        claim_count = pred_claims.sum(dim=1)  # (B, N) — should be ~1 if unique, >1 if duplicated
+
+        # Inverse claim frequency weight (DCD's 1/n_ŷ, but soft)
+        inv_freq = 1.0 / (claim_count + self.eps)  # (B, N)
+        inv_freq_norm = inv_freq / (inv_freq.mean(dim=-1, keepdim=True) + self.eps)
+
+        # SoftMin coverage loss, weighted by inverse frequency
+        w_cov = torch.softmax(-D / self.temperature, dim=1)  # (B, M, N)
+        softmin_cov = (w_cov * D).sum(dim=1)  # (B, N)
+        coverage = (inv_freq_norm.detach() * softmin_cov).mean(dim=-1)
+
+        # Symmetric: soft claim count for precision direction
+        tgt_claims = torch.softmax(-D / self.temperature, dim=1)  # (B, M, N)
+        claim_count_prec = tgt_claims.sum(dim=2)  # (B, M)
+        inv_freq_prec = 1.0 / (claim_count_prec + self.eps)
+        inv_freq_prec_norm = inv_freq_prec / (inv_freq_prec.mean(dim=-1, keepdim=True) + self.eps)
+
+        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        softmin_prec = (w_prec * D).sum(dim=2)  # (B, M)
+        precision = (inv_freq_prec_norm.detach() * softmin_prec).mean(dim=-1)
+
+        return (coverage + precision).mean()
+
+
+class CombinedSoftMinLoss(nn.Module):
+    """SoftMin with both GM coverage weighting AND query-frequency weighting.
+
+    Combines the best of both PW-SoftMin and SoftDCD:
+    - GM reweighting: upweight uncovered targets (high GM = far from all preds)
+    - Query-frequency: downweight over-claimed targets (high count = duplicated)
+
+    The two signals are complementary:
+    - GM measures DISTANCE to nearest prediction (coverage quality)
+    - Claim count measures NUMBER of competing predictions (duplication)
+    """
+
+    def __init__(self, temperature: float = 0.1, gm_weight: float = 0.5,
+                 freq_weight: float = 0.5, eps: float = 1e-8):
+        super().__init__()
+        self.temperature = temperature
+        self.gm_weight = gm_weight
+        self.freq_weight = freq_weight
+        self.eps = eps
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        # SoftMin base loss
+        w_cov = torch.softmax(-D / self.temperature, dim=1)
+        softmin_cov = (w_cov * D).sum(dim=1)  # (B, N)
+
+        # GM coverage weight
+        log_D = torch.log(D + self.eps)
+        gm = torch.exp(log_D.mean(dim=1)).detach()  # (B, N)
+        gm_w = gm / (gm.mean(-1, keepdim=True) + self.eps)
+
+        # Query-frequency weight
+        claims = torch.softmax(-D / self.temperature, dim=2).sum(dim=1)  # (B, N)
+        inv_freq = (1.0 / (claims + self.eps)).detach()
+        freq_w = inv_freq / (inv_freq.mean(-1, keepdim=True) + self.eps)
+
+        # Combined weight
+        combined_w = self.gm_weight * gm_w + self.freq_weight * freq_w
+        combined_w = combined_w / (combined_w.mean(-1, keepdim=True) + self.eps)
+
+        coverage = (combined_w * softmin_cov).mean(dim=-1)
+
+        # Precision (symmetric)
+        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        softmin_prec = (w_prec * D).sum(dim=2)  # (B, M)
+
+        gm_prec = torch.exp(log_D.mean(dim=2)).detach()
+        gm_w_prec = gm_prec / (gm_prec.mean(-1, keepdim=True) + self.eps)
+
+        claims_prec = torch.softmax(-D / self.temperature, dim=1).sum(dim=2)
+        inv_freq_prec = (1.0 / (claims_prec + self.eps)).detach()
+        freq_w_prec = inv_freq_prec / (inv_freq_prec.mean(-1, keepdim=True) + self.eps)
+
+        combined_w_prec = self.gm_weight * gm_w_prec + self.freq_weight * freq_w_prec
+        combined_w_prec = combined_w_prec / (combined_w_prec.mean(-1, keepdim=True) + self.eps)
+
+        precision = (combined_w_prec * softmin_prec).mean(dim=-1)
+
+        return (coverage + precision).mean()
+
+
 class AnnealedExponentLoss(nn.Module):
     """Power-mean annealing: interpolate between min (p→∞) and GM (p→0).
 
