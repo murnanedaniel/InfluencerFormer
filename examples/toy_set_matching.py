@@ -1,13 +1,10 @@
 """Toy 2D point set matching: compare set prediction losses.
 
 Trains a small MLP to predict unordered 2D point sets using different
-loss functions (Product, Chamfer, Hungarian, Sinkhorn, Ordered), and
-compares convergence speed, matching quality, and mode collapse rate.
+loss functions, and compares convergence, matching quality, and mode collapse.
 
 Usage:
-    python examples/toy_set_matching.py [--n_points 10] [--n_epochs 300]
-
-No external datasets needed — generates random 2D point clouds.
+    python examples/toy_set_matching.py [--n_points 10] [--n_seeds 5]
 """
 
 import argparse
@@ -16,6 +13,9 @@ import time
 from collections import defaultdict
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -25,14 +25,20 @@ from torch.utils.data import DataLoader, TensorDataset
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from influencerformer.losses import (
-    ChamferLoss,
-    HungarianLoss,
-    OrderedLoss,
+from influencerformer.losses.product_loss import (
+    AnnealedExponentLoss,
+    HuberProductLoss,
+    LogDistanceProductLoss,
     ProductLoss,
     ProductWeightedSoftMinLoss,
-    SinkhornLoss,
+    SigmoidProductLoss,
     SoftMinChamferLoss,
+    WarmStartProductLoss,
+)
+from influencerformer.losses.set_losses import (
+    ChamferLoss,
+    HungarianLoss,
+    SinkhornLoss,
 )
 
 
@@ -40,26 +46,18 @@ from influencerformer.losses import (
 # Model
 # ---------------------------------------------------------------------------
 class SetPredictor(nn.Module):
-    """MLP that maps corrupted point set → clean point set.
-
-    Input: (B, N*dim) flattened corrupted points
-    Output: (B, N, dim) predicted points
-    """
-
     def __init__(self, n_points: int, dim: int = 2, hidden: int = 128):
         super().__init__()
         self.n_points = n_points
         self.dim = dim
-        in_dim = n_points * dim
-        out_dim = n_points * dim
         self.net = nn.Sequential(
-            nn.Linear(in_dim, hidden),
+            nn.Linear(n_points * dim, hidden),
             nn.ReLU(),
             nn.Linear(hidden, hidden),
             nn.ReLU(),
             nn.Linear(hidden, hidden),
             nn.ReLU(),
-            nn.Linear(hidden, out_dim),
+            nn.Linear(hidden, n_points * dim),
         )
 
     def forward(self, x):
@@ -67,28 +65,20 @@ class SetPredictor(nn.Module):
 
 
 # ---------------------------------------------------------------------------
-# Evaluation (same for all losses — uses Hungarian matching as ground truth)
+# Evaluation
 # ---------------------------------------------------------------------------
 def evaluate(model, test_inputs, test_targets, match_threshold=0.3):
-    """Evaluate set prediction quality using Hungarian matching.
-
-    Returns:
-        dict with matched_distance, match_accuracy, duplicate_rate.
-    """
     model.eval()
     with torch.no_grad():
         preds = model(test_inputs)
-        D = torch.cdist(preds, test_targets)  # (B, N, N)
+        D = torch.cdist(preds, test_targets)
 
     B, M, N = D.shape
     matched_dists = []
     n_correct = 0
     n_total = 0
     n_duplicates = 0
-
     D_np = D.cpu().numpy()
-    preds_np = preds.cpu().numpy()
-    targets_np = test_targets.cpu().numpy()
 
     for b in range(B):
         row_ind, col_ind = linear_sum_assignment(D_np[b])
@@ -96,11 +86,8 @@ def evaluate(model, test_inputs, test_targets, match_threshold=0.3):
         matched_dists.append(matched.mean())
         n_correct += (matched < match_threshold).sum()
         n_total += len(row_ind)
-
-        # Duplicate check: for each target, count predictions within threshold
         for j in range(N):
-            n_nearby = (D_np[b, :, j] < match_threshold).sum()
-            if n_nearby > 1:
+            if (D_np[b, :, j] < match_threshold).sum() > 1:
                 n_duplicates += 1
 
     return {
@@ -113,48 +100,34 @@ def evaluate(model, test_inputs, test_targets, match_threshold=0.3):
 # ---------------------------------------------------------------------------
 # Single training run
 # ---------------------------------------------------------------------------
-def train_one_loss(
-    loss_name,
-    loss_fn,
-    train_targets,
-    test_targets,
-    n_points,
-    n_epochs,
-    noise_scale,
-    lr,
-    batch_size,
-    device,
-    eval_every=5,
+def train_one(
+    loss_fn, train_targets, test_targets, n_points, n_epochs,
+    noise_scale, lr, batch_size, device, eval_every=5,
 ):
-    """Train a model with one loss function, return metrics history."""
-    model = SetPredictor(n_points=n_points, dim=2, hidden=128).to(device)
+    model = SetPredictor(n_points=n_points).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    loader = DataLoader(TensorDataset(train_targets), batch_size=batch_size, shuffle=True)
 
-    dataset = TensorDataset(train_targets)
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
-
-    # Precompute test inputs
-    test_inputs = (
-        test_targets + noise_scale * torch.randn_like(test_targets)
-    ).flatten(-2).to(device)
+    test_inputs = (test_targets + noise_scale * torch.randn_like(test_targets)).flatten(-2).to(device)
     test_tgt = test_targets.to(device)
 
     history = defaultdict(list)
     t0 = time.time()
+    has_set_epoch = hasattr(loss_fn, "set_epoch")
 
     for epoch in range(n_epochs):
+        if has_set_epoch:
+            loss_fn.set_epoch(epoch)
+
         model.train()
         epoch_loss = 0.0
         n_batches = 0
 
         for (targets_batch,) in loader:
             targets_batch = targets_batch.to(device)
-            noise = noise_scale * torch.randn_like(targets_batch)
-            inputs = (targets_batch + noise).flatten(-2)
-
+            inputs = (targets_batch + noise_scale * torch.randn_like(targets_batch)).flatten(-2)
             preds = model(inputs)
             D = torch.cdist(preds, targets_batch)
-
             loss = loss_fn(D)
 
             optimizer.zero_grad()
@@ -164,8 +137,7 @@ def train_one_loss(
             epoch_loss += loss.item()
             n_batches += 1
 
-        avg_loss = epoch_loss / max(n_batches, 1)
-        history["train_loss"].append(avg_loss)
+        history["train_loss"].append(epoch_loss / max(n_batches, 1))
 
         if (epoch + 1) % eval_every == 0 or epoch == 0:
             metrics = evaluate(model, test_inputs, test_tgt)
@@ -174,99 +146,84 @@ def train_one_loss(
             history["duplicate_rate"].append(metrics["duplicate_rate"])
             history["eval_epoch"].append(epoch)
 
-            if (epoch + 1) % 50 == 0:
-                elapsed = time.time() - t0
-                print(
-                    f"  [{loss_name}] epoch {epoch+1}/{n_epochs} "
-                    f"loss={avg_loss:.4f} "
-                    f"match_dist={metrics['matched_distance']:.4f} "
-                    f"match_acc={metrics['match_accuracy']:.3f} "
-                    f"dup_rate={metrics['duplicate_rate']:.3f} "
-                    f"({elapsed:.1f}s)"
-                )
-
-    total_time = time.time() - t0
-    history["total_time"] = total_time
+    history["total_time"] = time.time() - t0
     return history
+
+
+# ---------------------------------------------------------------------------
+# Multi-seed runner
+# ---------------------------------------------------------------------------
+def run_multi_seed(loss_name, make_loss_fn, train_targets, test_targets, args, device, n_seeds):
+    all_runs = []
+    for seed in range(n_seeds):
+        torch.manual_seed(args.seed + seed * 1000)
+        loss_fn = make_loss_fn()
+        hist = train_one(
+            loss_fn, train_targets, test_targets, args.n_points,
+            args.n_epochs, args.noise_scale, args.lr, args.batch_size, device,
+        )
+        final = {
+            "matched_distance": hist["matched_distance"][-1],
+            "match_accuracy": hist["match_accuracy"][-1],
+            "duplicate_rate": hist["duplicate_rate"][-1],
+            "total_time": hist["total_time"],
+        }
+        all_runs.append({"history": hist, "final": final})
+        print(f"  [{loss_name}] seed {seed}: dist={final['matched_distance']:.4f} "
+              f"acc={final['match_accuracy']:.3f} dup={final['duplicate_rate']:.3f} "
+              f"({final['total_time']:.1f}s)")
+
+    return all_runs
 
 
 # ---------------------------------------------------------------------------
 # Plotting
 # ---------------------------------------------------------------------------
 def plot_comparison(all_results, n_points, output_dir):
-    """Plot side-by-side comparison of all losses."""
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle(f"Set Prediction Loss Comparison (N={n_points} points)", fontsize=14)
+    fig, axes = plt.subplots(2, 2, figsize=(16, 11))
+    fig.suptitle(f"Set Prediction Loss Comparison (N={n_points}, 5 seeds)", fontsize=14)
 
-    colors = {
-        "product_gm": "#E69F00",
-        "pw_softmin": "#D55E00",
-        "softmin_0.1": "#F0E442",
-        "chamfer": "#56B4E9",
-        "hungarian": "#009E73",
-        "sinkhorn": "#CC79A7",
-        "ordered": "#999999",
-    }
+    # Color scheme
+    n = len(all_results)
+    cmap = plt.cm.tab20
+    colors = {name: cmap(i / max(n - 1, 1)) for i, name in enumerate(all_results)}
 
-    # 1. Training loss
-    ax = axes[0, 0]
-    for name, hist in all_results.items():
-        ax.plot(hist["train_loss"], color=colors[name], label=name, alpha=0.8)
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Training Loss")
-    ax.set_title("Training Loss")
-    ax.legend()
-    ax.set_yscale("log")
+    for ax_idx, (metric, title, yscale) in enumerate([
+        ("train_loss", "Training Loss", "log"),
+        ("matched_distance", "Hungarian-Matched Distance (lower=better)", "linear"),
+        ("match_accuracy", "Match Accuracy (higher=better)", "linear"),
+        ("duplicate_rate", "Duplicate Rate (lower=better)", "linear"),
+    ]):
+        ax = axes[ax_idx // 2, ax_idx % 2]
 
-    # 2. Mean matched distance
-    ax = axes[0, 1]
-    for name, hist in all_results.items():
-        ax.plot(
-            hist["eval_epoch"],
-            hist["matched_distance"],
-            color=colors[name],
-            label=name,
-            marker=".",
-            markersize=3,
-        )
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Mean Matched Distance")
-    ax.set_title("Hungarian-Matched Distance (lower = better)")
-    ax.legend()
+        for name, runs in all_results.items():
+            if metric == "train_loss":
+                x_key = None
+                all_curves = np.array([r["history"]["train_loss"] for r in runs])
+            else:
+                x_key = "eval_epoch"
+                all_curves = np.array([r["history"][metric] for r in runs])
 
-    # 3. Match accuracy
-    ax = axes[1, 0]
-    for name, hist in all_results.items():
-        ax.plot(
-            hist["eval_epoch"],
-            hist["match_accuracy"],
-            color=colors[name],
-            label=name,
-            marker=".",
-            markersize=3,
-        )
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Match Accuracy")
-    ax.set_title("Fraction of Points Matched < threshold")
-    ax.legend()
-    ax.set_ylim(-0.05, 1.05)
+            mean = all_curves.mean(axis=0)
+            std = all_curves.std(axis=0)
 
-    # 4. Duplicate rate
-    ax = axes[1, 1]
-    for name, hist in all_results.items():
-        ax.plot(
-            hist["eval_epoch"],
-            hist["duplicate_rate"],
-            color=colors[name],
-            label=name,
-            marker=".",
-            markersize=3,
-        )
-    ax.set_xlabel("Epoch")
-    ax.set_ylabel("Duplicate Rate")
-    ax.set_title("Fraction of Targets with 2+ Nearby Preds (lower = better)")
-    ax.legend()
-    ax.set_ylim(-0.05, 1.05)
+            if x_key:
+                x = runs[0]["history"][x_key]
+            else:
+                x = list(range(len(mean)))
+
+            ax.plot(x, mean, color=colors[name], label=name, linewidth=1.5)
+            ax.fill_between(x, mean - std, mean + std, color=colors[name], alpha=0.15)
+
+        ax.set_xlabel("Epoch")
+        ax.set_title(title)
+        if yscale == "log":
+            ax.set_yscale("log")
+        if "accuracy" in metric:
+            ax.set_ylim(-0.05, 1.05)
+        if "duplicate" in metric:
+            ax.set_ylim(-0.01, max(0.1, ax.get_ylim()[1]))
+        ax.legend(fontsize=7, ncol=2)
 
     plt.tight_layout()
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -276,78 +233,80 @@ def plot_comparison(all_results, n_points, output_dir):
     plt.close()
 
 
+def print_summary_table(all_results):
+    print(f"\n{'='*90}")
+    print(f"{'Loss':<22} {'Match Dist':>14} {'Match Acc':>14} {'Dup Rate':>14} {'Time (s)':>12}")
+    print(f"{'':<22} {'mean±std':>14} {'mean±std':>14} {'mean±std':>14} {'mean':>12}")
+    print("-" * 90)
+    for name, runs in all_results.items():
+        finals = [r["final"] for r in runs]
+        md = [f["matched_distance"] for f in finals]
+        ma = [f["match_accuracy"] for f in finals]
+        dr = [f["duplicate_rate"] for f in finals]
+        tt = [f["total_time"] for f in finals]
+        print(
+            f"{name:<22} "
+            f"{np.mean(md):>6.4f}±{np.std(md):.4f} "
+            f"{np.mean(ma):>6.3f}±{np.std(ma):.3f}  "
+            f"{np.mean(dr):>6.4f}±{np.std(dr):.4f} "
+            f"{np.mean(tt):>10.1f}"
+        )
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 def main():
-    parser = argparse.ArgumentParser(description="Toy 2D set matching experiment")
-    parser.add_argument("--n_points", type=int, default=10, help="Points per set")
-    parser.add_argument("--n_epochs", type=int, default=300, help="Training epochs")
-    parser.add_argument("--n_train", type=int, default=2000, help="Training samples")
-    parser.add_argument("--n_test", type=int, default=200, help="Test samples")
-    parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
-    parser.add_argument("--noise_scale", type=float, default=1.0, help="Input noise")
-    parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate")
-    parser.add_argument("--seed", type=int, default=42, help="Random seed")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--n_points", type=int, default=10)
+    parser.add_argument("--n_epochs", type=int, default=300)
+    parser.add_argument("--n_seeds", type=int, default=5)
+    parser.add_argument("--n_train", type=int, default=2000)
+    parser.add_argument("--n_test", type=int, default=200)
+    parser.add_argument("--batch_size", type=int, default=64)
+    parser.add_argument("--noise_scale", type=float, default=1.0)
+    parser.add_argument("--lr", type=float, default=1e-3)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
-    torch.manual_seed(args.seed)
-    np.random.seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"Device: {device}, N={args.n_points}, epochs={args.n_epochs}")
+    print(f"Device: {device}, N={args.n_points}, epochs={args.n_epochs}, seeds={args.n_seeds}")
 
-    # Generate data
+    # Fixed data across all methods (generated once)
+    torch.manual_seed(args.seed)
     train_targets = torch.randn(args.n_train, args.n_points, 2)
     test_targets = torch.randn(args.n_test, args.n_points, 2)
 
-    # Define losses
-    loss_fns = {
-        "product_gm": ProductLoss(eps=1e-8),
-        "pw_softmin": ProductWeightedSoftMinLoss(temperature=0.1),
-        "softmin_0.1": SoftMinChamferLoss(temperature=0.1),
-        "chamfer": ChamferLoss(),
-        "hungarian": HungarianLoss(),
-        "sinkhorn": SinkhornLoss(eps=0.1, n_iters=20),
+    # All loss constructors
+    loss_configs = {
+        # --- Baselines ---
+        "chamfer":        lambda: ChamferLoss(),
+        "hungarian":      lambda: HungarianLoss(),
+        "sinkhorn":       lambda: SinkhornLoss(eps=0.1, n_iters=20),
+        # --- Softmin family ---
+        "softmin_0.1":    lambda: SoftMinChamferLoss(temperature=0.1),
+        "pw_softmin":     lambda: ProductWeightedSoftMinLoss(temperature=0.1),
+        # --- Product family ---
+        "product_gm":     lambda: ProductLoss(),
+        "log_product":    lambda: LogDistanceProductLoss(),
+        "sigmoid_prod":   lambda: SigmoidProductLoss(margin=1.0, scale=5.0),
+        "huber_product":  lambda: HuberProductLoss(delta=1.0),
+        # --- Annealing ---
+        "warm_start":     lambda: WarmStartProductLoss(transition_epoch=80, blend_width=40),
+        "annealed_p":     lambda: AnnealedExponentLoss(p_start=10.0, p_end=0.5, anneal_epochs=200),
     }
 
-    # Train each
     all_results = {}
-    for name, loss_fn in loss_fns.items():
+    for name, make_fn in loss_configs.items():
         print(f"\n{'='*60}")
-        print(f"Training with {name.upper()} loss")
+        print(f"  {name.upper()}")
         print(f"{'='*60}")
-
-        history = train_one_loss(
-            loss_name=name,
-            loss_fn=loss_fn,
-            train_targets=train_targets,
-            test_targets=test_targets,
-            n_points=args.n_points,
-            n_epochs=args.n_epochs,
-            noise_scale=args.noise_scale,
-            lr=args.lr,
-            batch_size=args.batch_size,
-            device=device,
-        )
-        all_results[name] = history
-        print(f"  Completed in {history['total_time']:.1f}s")
-
-    # Summary table
-    print(f"\n{'='*60}")
-    print("FINAL RESULTS")
-    print(f"{'='*60}")
-    print(f"{'Loss':<12} {'Match Dist':>12} {'Match Acc':>12} {'Dup Rate':>12} {'Time (s)':>10}")
-    print("-" * 60)
-    for name, hist in all_results.items():
-        print(
-            f"{name:<12} "
-            f"{hist['matched_distance'][-1]:>12.4f} "
-            f"{hist['match_accuracy'][-1]:>12.3f} "
-            f"{hist['duplicate_rate'][-1]:>12.3f} "
-            f"{hist['total_time']:>10.1f}"
+        all_results[name] = run_multi_seed(
+            name, make_fn, train_targets, test_targets, args, device, args.n_seeds
         )
 
-    # Plot
+    print_summary_table(all_results)
+
     output_dir = Path(__file__).parent / "results"
     plot_comparison(all_results, args.n_points, output_dir)
 
