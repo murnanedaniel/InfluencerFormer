@@ -3,7 +3,10 @@ from .product_loss import (
     AnnealedExponentLoss,
     CombinedSoftMinLoss,
     HuberProductLoss,
+    LogChamferLoss,
     LogDistanceProductLoss,
+    LogProductSoftMinLoss,
+    PowerSoftMinLoss,
     ProductLoss,
     ProductWeightedSoftMinLoss,
     SigmoidProductLoss,
@@ -11,4 +14,11 @@ from .product_loss import (
     SoftMinChamferLoss,
     WarmStartProductLoss,
 )
-from .set_losses import ChamferLoss, DCDLoss, HungarianLoss, OrderedLoss, SinkhornLoss
+from .set_losses import (
+    ChamferLoss,
+    ClampedHungarianLoss,
+    DCDLoss,
+    HungarianLoss,
+    OrderedLoss,
+    SinkhornLoss,
+)

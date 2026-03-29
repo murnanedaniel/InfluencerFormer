@@ -368,3 +368,81 @@ class AnnealedExponentLoss(nn.Module):
         coverage = self._power_mean_neg(D, p, dim=1).mean(dim=-1)
         precision = self._power_mean_neg(D, p, dim=2).mean(dim=-1)
         return (coverage + precision).mean()
+
+
+# =============================================================================
+# Log-wrapped variants — the product structure enters through the gradient
+# =============================================================================
+
+
+class PowerSoftMinLoss(nn.Module):
+    """Power-SoftMin: Σ_j softmin(D_ij)^p.
+
+    Raises softmin to a power p > 1 to amplify uncovered targets.
+    The gradient ∂(sm^p)/∂D = p × sm^{p-1} × ∂sm/∂D is larger for
+    targets with higher softmin (uncovered), creating a natural
+    coverage enforcement that's stronger than PW-SoftMin's detached
+    GM reweighting.
+
+    At p=1: recovers standard SoftMin Chamfer.
+    At p=2: squared softmin — gradient ∝ softmin value.
+    At p=3: cubic — even stronger coverage pressure.
+
+    The power is applied AFTER softmin, so the matching signal (from
+    softmax) is preserved. Only the per-target aggregation changes.
+    """
+
+    def __init__(self, temperature: float = 0.1, power: float = 2.0):
+        super().__init__()
+        self.temperature = temperature
+        self.power = power
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        w_cov = torch.softmax(-D / self.temperature, dim=1)
+        sm_cov = (w_cov * D).sum(dim=1)  # (B, N)
+
+        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        sm_prec = (w_prec * D).sum(dim=2)  # (B, M)
+
+        coverage = sm_cov.pow(self.power).mean(dim=-1)
+        precision = sm_prec.pow(self.power).mean(dim=-1)
+
+        return (coverage + precision).mean()
+
+
+class LogProductSoftMinLoss(nn.Module):
+    """Log-Product-SoftMin: -Σ_j log(softmin_i(D_ij)).
+
+    NOTE: This amplifies COVERED targets (small softmin → large -log).
+    Included for completeness but Power-SoftMin is the correct
+    formulation for coverage enforcement.
+    """
+
+    def __init__(self, temperature: float = 0.1, eps: float = 1e-8):
+        super().__init__()
+        self.temperature = temperature
+        self.eps = eps
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        w_cov = torch.softmax(-D / self.temperature, dim=1)
+        sm_cov = (w_cov * D).sum(dim=1)  # (B, N)
+        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        sm_prec = (w_prec * D).sum(dim=2)  # (B, M)
+
+        log_coverage = -torch.log(sm_cov + self.eps).mean(dim=-1)
+        log_precision = -torch.log(sm_prec + self.eps).mean(dim=-1)
+
+        return (log_coverage + log_precision).mean()
+
+
+class LogChamferLoss(nn.Module):
+    """Log-Chamfer: -Σ_j log(min_i D_ij). Included for ablation."""
+
+    def __init__(self, eps: float = 1e-8):
+        super().__init__()
+        self.eps = eps
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        coverage = -torch.log(D.min(dim=1).values + self.eps).mean(dim=-1)
+        precision = -torch.log(D.min(dim=2).values + self.eps).mean(dim=-1)
+        return (coverage + precision).mean()

@@ -112,6 +112,36 @@ class DCDLoss(nn.Module):
         return 0.5 * (coverage + precision).mean()
 
 
+class ClampedHungarianLoss(nn.Module):
+    """Hungarian matching with clamped cost matrix.
+
+    Prevents the positive feedback loop that causes divergence with CE
+    distances: wrong-but-confident predictions create huge CE values that
+    dominate the cost matrix and lock in bad assignments.
+
+    Clamping bounds the cost matrix, so wrong assignments can't grow
+    unboundedly and the matching remains responsive to improvements.
+    """
+
+    def __init__(self, max_cost: float = 20.0):
+        super().__init__()
+        self.max_cost = max_cost
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        B = D.shape[0]
+        losses = []
+        # Clamp the detached cost matrix for matching
+        D_clamped = D.detach().clamp(max=self.max_cost).cpu().numpy()
+
+        for b in range(B):
+            row_ind, col_ind = linear_sum_assignment(D_clamped[b])
+            # But compute loss on the ORIGINAL (unclamped) D for gradient
+            matched = D[b, row_ind, col_ind]
+            losses.append(matched.mean())
+
+        return torch.stack(losses).mean()
+
+
 class OrderedLoss(nn.Module):
     """Baseline: assume prediction i matches target i (diagonal of D)."""
 
