@@ -236,28 +236,128 @@ Density-aware Chamfer Distance (Wu et al. 2021) underperforms standard Chamfer i
 ### Discrete Token Distances
 Preliminary experiments with CE-based distance matrices (N=10, K=4, V=32) show PW-SoftMin maintaining its relative advantage even with non-Euclidean distances, though absolute convergence is slow and requires more epochs and/or better architecture.
 
+## Power-SoftMin: The New Best
+
+After the PW-SoftMin discovery, we found an even simpler and better loss:
+
+```python
+class PowerSoftMinLoss(nn.Module):
+    def __init__(self, temperature=0.1, power=3.0):
+        ...
+    def forward(self, D):
+        w_cov = torch.softmax(-D / self.temperature, dim=1)
+        sm_cov = (w_cov * D).sum(dim=1)    # per-target softmin
+        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        sm_prec = (w_prec * D).sum(dim=2)  # per-prediction softmin
+        return (sm_cov.pow(self.power).mean(-1) + sm_prec.pow(self.power).mean(-1)).mean()
+```
+
+The power wrapping `sm^p` with p>1 creates coverage enforcement **through the gradient**: `∂(sm^p)/∂D = p × sm^{p-1} × ∂sm/∂D`. Targets with high softmin (uncovered) get gradient proportional to `sm^{p-1}`, which is much larger than for covered targets. No detached computation needed.
+
+### Results at N=20 (500 epochs, 3 seeds)
+
+```
+Loss                  Match Dist       Dup Rate       Time
+sinkhorn          0.553 ± 0.001    2.1% ± 0.3%    220s
+hungarian         0.554 ± 0.001    2.5% ± 0.3%    130s
+★ power_sm_3.0    0.558 ± 0.001    2.9% ± 0.4%     53s
+power_sm_2.0      0.563 ± 0.004    4.2% ± 0.6%     58s
+pw_softmin        0.565 ± 0.002    3.2% ± 0.4%     56s
+softmin           0.580 ± 0.003    5.7% ± 0.1%     58s
+chamfer           0.583 ± 0.003    7.0% ± 0.2%     49s
+```
+
+**Power-SoftMin p=3 is within 0.7% of Hungarian at 2.5× speed.** It beats PW-SoftMin because the power wrapping feeds the coverage signal directly through the gradient rather than through detached weights.
+
+## The Exact Permanent: Theoretically Optimal, Practically Worse
+
+We implemented the exact partition function over all matchings via Ryser's formula:
+```
+F = -T · log(perm(exp(-D/T)))
+```
+
+This is the **theoretically correct** soft matching loss — the negative log-likelihood marginalized over all N! permutations. At T→0 it recovers Hungarian, at T→∞ it's uniform.
+
+Results: **it fails at all temperatures.**
+- T=0.5: 0.737 (worse than Chamfer)
+- T=1.0: 1.231 (no learning)
+- T=2.0: 1.240 (no learning)
+
+The exact partition function suffers from the same gradient problems as the product loss. At high T, `exp(-D/T)` is too uniform → no matching signal. At low T, it's too sparse → numerical instability. The approximation (Sinkhorn ≈ Bethe permanent) works better because its iterative normalization acts as implicit regularization.
+
+**The approximation IS the innovation.** The theoretically exact loss is not the practically optimal one.
+
+## Why Hungarian Diverges on CE Distances
+
+Our initial token experiments showed Hungarian diverging (loss 14→29 over 1000 epochs). Investigation revealed:
+
+**DETR does NOT use raw CE in the cost matrix.** They use `-softmax_prob[target_class]`, which is bounded in [-1, 0]. Raw CE is unbounded and creates a positive feedback loop: confident-wrong predictions → huge CE → locks in bad assignment → more confident-wrong predictions.
+
+The fix: **NormalizedHungarian** (normalize D to [0,1] before matching) or **ClampedHungarian** (clamp D at max_cost before matching). Both prevent divergence while preserving matching quality.
+
+However, in our toy token experiments, ALL methods struggled — the task (flat MLP predicting 10×4 discrete tokens) is too hard for any loss to shine. A proper architecture (transformer + teacher forcing) is needed to test token-level losses meaningfully.
+
+## N=50 with Bigger Model
+
+Previous N=50 results showed ~35% dup rate for all methods — a model capacity bottleneck. With hidden=512 (4× bigger):
+
+```
+pw_softmin:  0.414 ± 0.001, dup 33.5%
+power_sm_3:  0.415 ± 0.001, dup 31.5%  ← lowest dup
+chamfer:     0.444 ± 0.003, dup 36.9%
+```
+
+The bigger model helps slightly but the relative ordering is preserved. Power-SoftMin p=3 maintains the lowest duplicate rate.
+
 ## Losses Tested (Complete List)
 
 | Loss | Working? | Best N=20 dist | Key insight |
 |---|---|---|---|
-| **PW-SoftMin** | ✓ | 0.565 | Soft matching + detached GM reweighting = Pareto optimal |
+| **★ Power-SoftMin p=3** | ✓ | **0.558** | **NEW BEST.** sm^3 amplifies uncovered targets through gradient |
+| Power-SoftMin p=2 | ✓ | 0.563 | Good, milder coverage pressure |
+| PW-SoftMin | ✓ | 0.565 | Soft matching + detached GM reweighting |
 | SoftMin (τ=0.1) | ✓ | 0.580 | Good but no anti-duplication pressure |
 | Chamfer | ✓ | 0.583 | Baseline, mode collapse at large N |
 | Hungarian | ✓ | 0.554 | Best quality, 2.5× slower, non-differentiable |
+| NormalizedHungarian | ✓ | 0.554 | Same as Hungarian (identical on L2 distances) |
 | Sinkhorn | ✓ | 0.554 | Tied with Hungarian, 3.5× slower |
-| Product (GM) | ✗ | 1.234 | Uniform gradients at init — fundamentally broken |
+| Permanent (exact) | ✗ | 0.737 | Theoretically optimal, practically broken |
+| Product (GM) | ✗ | 1.234 | Uniform gradients at init |
 | Log-Product | ✗ | 1.231 | Same problem |
 | Huber-Product | ✗ | 1.232 | Same problem |
 | Sigmoid-Product | Partial | 1.048 | Binary transition helps but product kills it |
+| LogProductSoftMin | ✗ | diverged | -log amplifies COVERED targets (wrong direction!) |
+| LogChamfer | ✗ | diverged | Same — -log(min) is backwards |
 | Warm-Start | ✗ | 1.223 | Product unlearns Chamfer's matches |
 | Annealed Exp | ✗ | 1.190 | Stalls when p→GM |
 | DCD (α=6) | ✗ | 0.646 | Worse than Chamfer — hard argmin + alpha sensitivity |
 | Soft DCD | ✗ | 0.684 | Over-corrects with claim-count weighting |
 | Combined (GM+freq) | ✗ | 0.606 | Dual weighting interferes with softmin |
 | Gentle DCD (10%) | ✓ | 0.576 | Works but still worse than PW-SoftMin |
-| Adaptive PW-SoftMin | ✓ | 0.566 | Ties with fixed τ=0.1 — no advantage |
+
+## The Design Principles
+
+After testing 20+ loss variants, the principles for a good set prediction loss are:
+
+1. **Exponential matching sensitivity** (softmax/softmin): breaks symmetry at initialization. Without this, the model gets no directional signal. Products, GMs, and permanents all fail this test.
+
+2. **Convex amplification of per-target losses** (power p>1): uncovered targets get gradient proportional to `sm^{p-1}`, creating natural coverage enforcement. Linear aggregation (p=1, standard SoftMin) gives equal weight to all targets regardless of coverage.
+
+3. **Bidirectionality** (coverage + precision): both directions needed. Coverage alone doesn't penalize unused predictions; precision alone doesn't catch unmatched targets.
+
+4. **Temperature calibration**: τ must be on the same scale as the distance metric. τ=0.1 for L2 (~1.6), τ~1 for CE (~14). Adaptive τ = scale × median(D) works but provides no advantage when τ is well-tuned.
+
+5. **Bounded cost for matching** (for Hungarian): if using discrete matching on unbounded distances (CE), normalize or clamp the cost matrix to prevent positive feedback loops. DETR uses softmax probabilities (bounded) for matching, not raw CE.
 
 ## References
+
+- **Influencer Loss:** Murnane, D. EPJ Web Conf. 295, 09016 (2024). [doi:10.1051/epjconf/202429509016](https://doi.org/10.1051/epjconf/202429509016)
+- **DETR:** Carion et al. ECCV 2020. [arXiv:2005.12872](https://arxiv.org/abs/2005.12872)
+- **Chamfer Distance:** Fan et al. CVPR 2017. [arXiv:1612.00603](https://arxiv.org/abs/1612.00603)
+- **DCD:** Wu et al. NeurIPS 2021. [arXiv:2111.12702](https://arxiv.org/abs/2111.12702)
+- **Set Cross Entropy:** Asai, M. 2018. [arXiv:1812.01217](https://arxiv.org/abs/1812.01217)
+- **Sinkhorn:** Cuturi, M. NeurIPS 2013. [arXiv:1306.0895](https://arxiv.org/abs/1306.0895)
+- **DN-DETR:** Li et al. CVPR 2022. [arXiv:2203.01305](https://arxiv.org/abs/2203.01305)
 
 - **Influencer Loss:** Murnane, D. EPJ Web Conf. 295, 09016 (2024). [doi:10.1051/epjconf/202429509016](https://doi.org/10.1051/epjconf/202429509016)
 - **DETR:** Carion et al. ECCV 2020. [arXiv:2005.12872](https://arxiv.org/abs/2005.12872)

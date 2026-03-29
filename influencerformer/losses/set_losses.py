@@ -18,6 +18,38 @@ class ChamferLoss(nn.Module):
         return (coverage + precision).mean()
 
 
+class NormalizedHungarianLoss(nn.Module):
+    """Hungarian matching with DETR-style cost normalization.
+
+    DETR uses -softmax_prob[target] (bounded in [-1, 0]) for matching,
+    NOT raw cross-entropy (unbounded). This prevents the positive
+    feedback loop where confident-but-wrong predictions create huge
+    CE values that lock in bad assignments.
+
+    For general distance matrices, we normalize D to [0, 1] per-sample
+    before matching, then compute the loss on the original (unnormalized) D.
+    """
+
+    def forward(self, D: torch.Tensor) -> torch.Tensor:
+        B = D.shape[0]
+        losses = []
+
+        for b in range(B):
+            # Normalize cost for matching: bounded [0, 1]
+            D_b = D[b]
+            D_norm = D_b.detach()
+            d_min = D_norm.min()
+            d_range = D_norm.max() - d_min + 1e-8
+            D_matching = ((D_norm - d_min) / d_range).cpu().numpy()
+
+            row_ind, col_ind = linear_sum_assignment(D_matching)
+            # Loss on ORIGINAL distances (for proper gradients)
+            matched = D[b, row_ind, col_ind]
+            losses.append(matched.mean())
+
+        return torch.stack(losses).mean()
+
+
 class HungarianLoss(nn.Module):
     """Hungarian matching loss (DETR-style).
 
