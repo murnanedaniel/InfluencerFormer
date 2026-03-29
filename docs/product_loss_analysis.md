@@ -216,6 +216,47 @@ class ProductWeightedSoftMinLoss(nn.Module):
         return (coverage + precision).mean()
 ```
 
+## Ablation Studies
+
+### Temperature Sensitivity (N=10)
+τ ∈ [0.1, 0.2] is optimal. τ < 0.05 is slightly worse (too hard, approaches Chamfer). τ > 0.5 degrades rapidly. The loss is robust within the optimal range.
+
+### N=50 Scaling
+PW-SoftMin advantage persists at N=50 (0.409 vs Chamfer 0.437, SoftMin 0.421). GM reweighting does not collapse. All methods have ~35% dup rate at this scale with 128-dim MLP — the model capacity is the bottleneck, not the loss.
+
+### Gentle Query-Frequency Weighting (DCD-inspired)
+Soft DCD (soft query-frequency reweighting) over-corrects even at 10% strength — worse than plain SoftMin. The GM reweighting in PW-SoftMin is gentler and more effective. The key difference: GM measures *coverage quality* (distance to nearest prediction), while query-frequency measures *claim count* (number of competing predictions). Coverage quality is a more useful signal.
+
+### DCD Comparison
+Density-aware Chamfer Distance (Wu et al. 2021) underperforms standard Chamfer in our setting at all alpha values tested. The hard argmin, non-differentiable matching, and alpha scale-dependence make it unsuitable. The query-frequency idea is sound but the implementation is too rigid.
+
+### Adaptive Temperature
+τ = scale × median(D) adapts to the distance scale automatically. At scale=0.05, it matches fixed τ=0.1. Useful for unknown distance scales but provides no advantage when τ is well-tuned.
+
+### Discrete Token Distances
+Preliminary experiments with CE-based distance matrices (N=10, K=4, V=32) show PW-SoftMin maintaining its relative advantage even with non-Euclidean distances, though absolute convergence is slow and requires more epochs and/or better architecture.
+
+## Losses Tested (Complete List)
+
+| Loss | Working? | Best N=20 dist | Key insight |
+|---|---|---|---|
+| **PW-SoftMin** | ✓ | 0.565 | Soft matching + detached GM reweighting = Pareto optimal |
+| SoftMin (τ=0.1) | ✓ | 0.580 | Good but no anti-duplication pressure |
+| Chamfer | ✓ | 0.583 | Baseline, mode collapse at large N |
+| Hungarian | ✓ | 0.554 | Best quality, 2.5× slower, non-differentiable |
+| Sinkhorn | ✓ | 0.554 | Tied with Hungarian, 3.5× slower |
+| Product (GM) | ✗ | 1.234 | Uniform gradients at init — fundamentally broken |
+| Log-Product | ✗ | 1.231 | Same problem |
+| Huber-Product | ✗ | 1.232 | Same problem |
+| Sigmoid-Product | Partial | 1.048 | Binary transition helps but product kills it |
+| Warm-Start | ✗ | 1.223 | Product unlearns Chamfer's matches |
+| Annealed Exp | ✗ | 1.190 | Stalls when p→GM |
+| DCD (α=6) | ✗ | 0.646 | Worse than Chamfer — hard argmin + alpha sensitivity |
+| Soft DCD | ✗ | 0.684 | Over-corrects with claim-count weighting |
+| Combined (GM+freq) | ✗ | 0.606 | Dual weighting interferes with softmin |
+| Gentle DCD (10%) | ✓ | 0.576 | Works but still worse than PW-SoftMin |
+| Adaptive PW-SoftMin | ✓ | 0.566 | Ties with fixed τ=0.1 — no advantage |
+
 ## References
 
 - **Influencer Loss:** Murnane, D. EPJ Web Conf. 295, 09016 (2024). [doi:10.1051/epjconf/202429509016](https://doi.org/10.1051/epjconf/202429509016)
