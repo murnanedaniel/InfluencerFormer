@@ -137,29 +137,55 @@ is strong enough to match Hungarian's bijectivity.
 
 ## Why No Transform of D Can Fix the Product
 
-**Theorem**: For any elementwise transform f: ℝ→ℝ, the gradient of Σ_j Π_i f(D_ij) with respect to D_kj, evaluated at D_ij = c for all i,j, is identical for all k.
+### The Precise Statement
 
-**Proof**:
-```
-∂/∂D_kj [Σ_j Π_i f(D_ij)] = f'(D_kj) × Π_{i≠k} f(D_ij)
-```
-
-At D_ij = c for all i,j:
-```
-= f'(c) × f(c)^{M-1}
-```
-
-This is independent of k. QED.
-
-**Corollary**: No choice of f(D) = D², log(D), exp(D), sigmoid(D), Huber(D), or any other elementwise function can make the product loss discriminate between predictions at initialization.
-
-**The escape**: The function must depend on MORE than just D_kj. It must depend on the RELATIVE values of D in the column — i.e., it must be a function of D_kj relative to D_*j. This is exactly what softmax does:
+For any elementwise transform f, the gradient ratio of `Σ_j Π_i f(D_ij)` between two predictions P1, P2 toward the same target j is:
 
 ```
-softmax(-D/τ)_kj = exp(-D_kj/τ) / Σ_l exp(-D_lj/τ)
+Grad_P1 / Grad_P2 = [f'(D_1j) / f'(D_2j)] × [f(D_2j) / f(D_1j)]
 ```
 
-The denominator creates COMPETITION between predictions. The product has no such competition mechanism.
+### For Power Transforms: The Exponent Cancels
+
+For `f(x) = x^a`:
+
+```
+f'(D_1)/f'(D_2) = (D_1/D_2)^{a-1}
+f(D_2)/f(D_1)   = (D_2/D_1)^a
+
+Ratio = (D_1/D_2)^{a-1} × (D_2/D_1)^a = D_2/D_1
+```
+
+**The exponent a vanishes from the ratio.** D, D², D¹⁰, D¹⁰⁰⁰ all give identical gradient ratios of D₂/D₁.
+
+Numerically (D₁=1.55, D₂=1.61): ratio = **1.039** regardless of a.
+
+### For Exponential Transforms: It Gets Worse
+
+For `f(x) = exp(-x/τ)`:
+
+```
+f'(x)/f(x) = -1/τ  (constant!)
+
+Ratio = (-1/τ)/(-1/τ) × exp(-D₂/τ)/exp(-D₁/τ) × exp(D₂/τ)/exp(D₁/τ)
+      ... actually:
+f'(D₁) × Π_{i≠1} f(D_i) = (-1/τ)exp(-D₁/τ) × exp(-D₂/τ) × exp(-D₃/τ)
+                           = (-1/τ) × exp(-(D₁+D₂+D₃)/τ)
+f'(D₂) × Π_{i≠2} f(D_i) = (-1/τ) × exp(-(D₁+D₂+D₃)/τ)
+
+Ratio = 1.000 exactly!
+```
+
+The exponential product gives **perfectly uniform** gradients. Worse than raw D.
+
+### For Softmax: Exponential Sensitivity
+
+Softmax(-D/τ) achieves ratio `exp((D₂-D₁)/τ)`.
+
+At τ=0.01 with D₁=1.55, D₂=1.61: ratio = exp(0.06/0.01) = **403×**.
+
+This is possible because softmax divides by Σ_l exp(-D_l/τ), creating **competition**
+between entries. The product has no such denominator.
 
 ## The Product-SoftMin Spectrum
 
