@@ -1,0 +1,1597 @@
+[gpu3] Starting: softdcd
+Study:      softdcd
+Device:     cuda
+Epochs:     200
+Batch size: 512
+LR:         8.49e-04  (auto-scaled from 0.0003 at batch=64)
+Output:     results/softdcd.pkl
+────────────────────────────────────────────────────────────
+
+=== Chamfer ===
+/pscratch/sd/d/danieltm/conda_envs/envs/influencerformer/lib/python3.10/site-packages/torch/nn/modules/transformer.py:380: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at ../aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(output, src_key_padding_mask.logical_not(), mask_check=False)
+  [Chamfer] epoch   0 | loss=2.8163 dist=1.3025 div=1.860 H=0.221 gd=0.759 lr=8.49e-04
+  [Chamfer] epoch   1 | loss=1.8789 dist=1.1514 div=1.980 H=0.219 gd=0.799 lr=8.49e-04
+  [Chamfer] epoch   2 | loss=1.6054 dist=1.1091 div=2.036 H=0.210 gd=0.704 lr=8.49e-04
+  [Chamfer] epoch   3 | loss=1.4836 dist=1.1017 div=2.024 H=0.221 gd=0.717 lr=8.49e-04
+  [Chamfer] epoch   4 | loss=1.4165 dist=1.0966 div=2.027 H=0.253 gd=0.704 lr=8.49e-04
+  [Chamfer] epoch   5 | loss=1.3714 dist=1.1449 div=2.075 H=0.306 gd=0.680 lr=8.49e-04
+  [Chamfer] epoch   6 | loss=1.3705 dist=1.1534 div=2.034 H=0.315 gd=0.695 lr=8.49e-04
+  [Chamfer] epoch   7 | loss=1.3376 dist=1.1484 div=2.048 H=0.306 gd=0.702 lr=8.49e-04
+  [Chamfer] epoch   8 | loss=1.3434 dist=1.1470 div=2.054 H=0.312 gd=0.706 lr=8.49e-04
+  [Chamfer] epoch   9 | loss=1.3276 dist=1.1356 div=2.053 H=0.310 gd=0.727 lr=8.49e-04
+  [Chamfer] epoch  10 | loss=1.3060 dist=1.1248 div=2.050 H=0.313 gd=0.676 lr=8.49e-04
+  [Chamfer] epoch  11 | loss=1.3048 dist=1.1284 div=2.042 H=0.311 gd=0.699 lr=8.49e-04
+  [Chamfer] epoch  12 | loss=1.2831 dist=1.1238 div=2.062 H=0.309 gd=0.734 lr=8.49e-04
+  [Chamfer] epoch  13 | loss=1.2867 dist=1.1316 div=2.068 H=0.311 gd=0.734 lr=8.49e-04
+  [Chamfer] epoch  14 | loss=1.2832 dist=1.1287 div=2.056 H=0.312 gd=0.725 lr=8.49e-04
+  [Chamfer] epoch  15 | loss=1.2664 dist=1.1410 div=2.034 H=0.323 gd=0.694 lr=8.49e-04
+  [Chamfer] epoch  16 | loss=1.2690 dist=1.1320 div=2.051 H=0.313 gd=0.646 lr=8.49e-04
+  [Chamfer] epoch  17 | loss=1.2713 dist=1.1249 div=2.080 H=0.306 gd=0.692 lr=8.49e-04
+  [Chamfer] epoch  18 | loss=1.3487 dist=1.1444 div=2.061 H=0.309 gd=0.634 lr=8.49e-04
+  [Chamfer] epoch  19 | loss=1.3274 dist=1.1439 div=2.058 H=0.309 gd=0.673 lr=8.49e-04
+  [Chamfer] epoch  20 | loss=1.3162 dist=1.1470 div=2.044 H=0.309 gd=0.656 lr=8.49e-04
+  [Chamfer] epoch  21 | loss=1.3101 dist=1.1422 div=2.035 H=0.311 gd=0.706 lr=8.49e-04
+  [Chamfer] epoch  22 | loss=1.2537 dist=1.1186 div=2.057 H=0.305 gd=0.695 lr=8.49e-04
+  [Chamfer] epoch  23 | loss=1.2459 dist=1.1268 div=2.057 H=0.309 gd=0.681 lr=8.49e-04
+  [Chamfer] epoch  24 | loss=1.2452 dist=1.1149 div=2.077 H=0.303 gd=0.642 lr=8.49e-04
+  [Chamfer] epoch  25 | loss=1.2327 dist=1.1348 div=2.058 H=0.310 gd=0.664 lr=8.49e-04
+  [Chamfer] epoch  26 | loss=1.2387 dist=1.1114 div=2.063 H=0.305 gd=0.635 lr=8.49e-04
+  [Chamfer] epoch  27 | loss=1.2273 dist=1.1088 div=2.105 H=0.299 gd=0.733 lr=8.49e-04
+  [Chamfer] epoch  28 | loss=1.2517 dist=1.1317 div=2.055 H=0.303 gd=0.642 lr=8.49e-04
+  [Chamfer] epoch  29 | loss=1.2817 dist=1.1226 div=2.083 H=0.300 gd=0.696 lr=8.49e-04
+  [Chamfer] epoch  30 | loss=1.3087 dist=1.1508 div=2.047 H=0.310 gd=0.699 lr=8.49e-04
+  [Chamfer] epoch  31 | loss=1.2788 dist=1.1209 div=2.067 H=0.305 gd=0.718 lr=8.49e-04
+  [Chamfer] epoch  32 | loss=1.2403 dist=1.1137 div=2.064 H=0.302 gd=0.736 lr=8.49e-04
+  [Chamfer] epoch  33 | loss=1.2185 dist=1.1116 div=2.063 H=0.303 gd=0.713 lr=8.49e-04
+  [Chamfer] epoch  34 | loss=1.2101 dist=1.0893 div=2.090 H=0.295 gd=0.691 lr=8.49e-04
+  [Chamfer] epoch  35 | loss=1.1975 dist=1.1176 div=2.080 H=0.305 gd=0.717 lr=8.49e-04
+  [Chamfer] epoch  36 | loss=1.2109 dist=1.1286 div=2.048 H=0.311 gd=0.655 lr=8.49e-04
+  [Chamfer] epoch  37 | loss=1.2486 dist=1.1179 div=2.085 H=0.304 gd=0.703 lr=8.49e-04
+  [Chamfer] epoch  38 | loss=1.2212 dist=1.0994 div=2.082 H=0.301 gd=0.740 lr=8.49e-04
+  [Chamfer] epoch  39 | loss=1.2146 dist=1.1037 div=2.087 H=0.300 gd=0.693 lr=8.49e-04
+  [Chamfer] epoch  40 | loss=1.2244 dist=1.0966 div=2.110 H=0.300 gd=0.672 lr=8.49e-04
+  [Chamfer] epoch  41 | loss=1.2423 dist=1.1164 div=2.079 H=0.303 gd=0.697 lr=8.49e-04
+  [Chamfer] epoch  42 | loss=1.2377 dist=1.1116 div=2.068 H=0.302 gd=0.658 lr=8.49e-04
+  [Chamfer] epoch  43 | loss=1.2196 dist=1.1232 div=2.058 H=0.308 gd=0.705 lr=8.49e-04
+  [Chamfer] epoch  44 | loss=1.2139 dist=1.1098 div=2.070 H=0.303 gd=0.641 lr=8.49e-04
+  [Chamfer] epoch  45 | loss=1.2249 dist=1.1003 div=2.098 H=0.296 gd=0.752 lr=8.49e-04
+  [Chamfer] epoch  46 | loss=1.2354 dist=1.1093 div=2.072 H=0.299 gd=0.697 lr=8.49e-04
+  [Chamfer] epoch  47 | loss=1.2277 dist=1.1155 div=2.088 H=0.300 gd=0.688 lr=8.49e-04
+  [Chamfer] epoch  48 | loss=1.2108 dist=1.0956 div=2.086 H=0.296 gd=0.674 lr=8.49e-04
+  [Chamfer] epoch  49 | loss=1.2086 dist=1.1146 div=2.091 H=0.292 gd=0.621 lr=8.49e-04
+  [Chamfer] epoch  50 | loss=1.2155 dist=1.1155 div=2.077 H=0.299 gd=0.698 lr=8.49e-04
+  [Chamfer] epoch  51 | loss=1.2072 dist=1.1164 div=2.085 H=0.299 gd=0.690 lr=8.49e-04
+  [Chamfer] epoch  52 | loss=1.2422 dist=1.1252 div=2.092 H=0.300 gd=0.644 lr=8.49e-04
+  [Chamfer] epoch  53 | loss=1.2190 dist=1.1269 div=2.050 H=0.308 gd=0.699 lr=8.49e-04
+  [Chamfer] epoch  54 | loss=1.2126 dist=1.1119 div=2.089 H=0.301 gd=0.723 lr=8.49e-04
+  [Chamfer] epoch  55 | loss=1.2055 dist=1.1132 div=2.067 H=0.303 gd=0.682 lr=8.49e-04
+  [Chamfer] epoch  56 | loss=1.1996 dist=1.1231 div=2.065 H=0.304 gd=0.675 lr=8.49e-04
+  [Chamfer] epoch  57 | loss=1.2185 dist=1.1336 div=2.052 H=0.308 gd=0.663 lr=8.49e-04
+  [Chamfer] epoch  58 | loss=1.2620 dist=1.1519 div=2.037 H=0.310 gd=0.686 lr=8.49e-04
+  [Chamfer] epoch  59 | loss=1.2433 dist=1.1643 div=2.020 H=0.317 gd=0.682 lr=8.49e-04
+  [Chamfer] epoch  60 | loss=1.2461 dist=1.1771 div=1.985 H=0.316 gd=0.648 lr=8.49e-04
+  [Chamfer] epoch  61 | loss=1.2631 dist=1.1245 div=2.062 H=0.300 gd=0.652 lr=8.49e-04
+  [Chamfer] epoch  62 | loss=1.2163 dist=1.1511 div=2.081 H=0.298 gd=0.747 lr=8.49e-04
+  [Chamfer] epoch  63 | loss=1.2026 dist=1.1243 div=2.088 H=0.298 gd=0.683 lr=8.49e-04
+  [Chamfer] epoch  64 | loss=1.2015 dist=1.0932 div=2.082 H=0.294 gd=0.680 lr=8.49e-04
+  [Chamfer] early stopping at epoch 64 (no improvement for 30 epochs, best dist=1.0893)
+
+=== PM3 τ=0.12 ===
+  [PM3 τ=0.12] epoch   0 | loss=6.8069 dist=1.3440 div=1.772 H=0.209 gd=0.616 lr=8.49e-04
+  [PM3 τ=0.12] epoch   1 | loss=3.0251 dist=1.1974 div=1.901 H=0.184 gd=0.582 lr=8.49e-04
+  [PM3 τ=0.12] epoch   2 | loss=2.3492 dist=1.1236 div=1.992 H=0.165 gd=0.475 lr=8.49e-04
+  [PM3 τ=0.12] epoch   3 | loss=2.0551 dist=1.0613 div=1.992 H=0.152 gd=0.503 lr=8.49e-04
+  [PM3 τ=0.12] epoch   4 | loss=1.8833 dist=1.0192 div=2.054 H=0.148 gd=0.475 lr=8.49e-04
+  [PM3 τ=0.12] epoch   5 | loss=1.7816 dist=1.0033 div=2.078 H=0.143 gd=0.491 lr=8.49e-04
+  [PM3 τ=0.12] epoch   6 | loss=1.7086 dist=0.9962 div=2.108 H=0.138 gd=0.525 lr=8.49e-04
+  [PM3 τ=0.12] epoch   7 | loss=1.6678 dist=0.9783 div=2.088 H=0.140 gd=0.516 lr=8.49e-04
+  [PM3 τ=0.12] epoch   8 | loss=1.6306 dist=0.9698 div=2.127 H=0.129 gd=0.552 lr=8.49e-04
+  [PM3 τ=0.12] epoch   9 | loss=1.5712 dist=0.9695 div=2.134 H=0.117 gd=0.574 lr=8.49e-04
+  [PM3 τ=0.12] epoch  10 | loss=1.4738 dist=0.9499 div=2.163 H=0.109 gd=0.572 lr=8.49e-04
+  [PM3 τ=0.12] epoch  11 | loss=1.4031 dist=0.9366 div=2.153 H=0.109 gd=0.591 lr=8.49e-04
+  [PM3 τ=0.12] epoch  12 | loss=1.3434 dist=0.9399 div=2.181 H=0.106 gd=0.570 lr=8.49e-04
+  [PM3 τ=0.12] epoch  13 | loss=1.3135 dist=0.9268 div=2.167 H=0.105 gd=0.577 lr=8.49e-04
+  [PM3 τ=0.12] epoch  14 | loss=1.3037 dist=0.9361 div=2.177 H=0.109 gd=0.583 lr=8.49e-04
+  [PM3 τ=0.12] epoch  15 | loss=1.2965 dist=0.9246 div=2.170 H=0.108 gd=0.562 lr=8.49e-04
+  [PM3 τ=0.12] epoch  16 | loss=1.2957 dist=0.9270 div=2.166 H=0.108 gd=0.581 lr=8.49e-04
+  [PM3 τ=0.12] epoch  17 | loss=1.2826 dist=0.9233 div=2.166 H=0.106 gd=0.584 lr=8.49e-04
+  [PM3 τ=0.12] epoch  18 | loss=1.2615 dist=0.9038 div=2.175 H=0.102 gd=0.584 lr=8.49e-04
+  [PM3 τ=0.12] epoch  19 | loss=1.2392 dist=0.8898 div=2.200 H=0.101 gd=0.574 lr=8.49e-04
+  [PM3 τ=0.12] epoch  20 | loss=1.2096 dist=0.8994 div=2.188 H=0.104 gd=0.579 lr=8.49e-04
+  [PM3 τ=0.12] epoch  21 | loss=1.1948 dist=0.8871 div=2.215 H=0.099 gd=0.599 lr=8.49e-04
+  [PM3 τ=0.12] epoch  22 | loss=1.1761 dist=0.8833 div=2.208 H=0.098 gd=0.603 lr=8.49e-04
+  [PM3 τ=0.12] epoch  23 | loss=1.1732 dist=0.8622 div=2.200 H=0.094 gd=0.608 lr=8.49e-04
+  [PM3 τ=0.12] epoch  24 | loss=1.1553 dist=0.8638 div=2.226 H=0.095 gd=0.596 lr=8.49e-04
+  [PM3 τ=0.12] epoch  25 | loss=1.1298 dist=0.8591 div=2.242 H=0.093 gd=0.599 lr=8.49e-04
+  [PM3 τ=0.12] epoch  26 | loss=1.1263 dist=0.8892 div=2.222 H=0.094 gd=0.608 lr=8.49e-04
+  [PM3 τ=0.12] epoch  27 | loss=1.1547 dist=0.8595 div=2.242 H=0.091 gd=0.624 lr=8.49e-04
+  [PM3 τ=0.12] epoch  28 | loss=1.1354 dist=0.8473 div=2.227 H=0.094 gd=0.622 lr=8.49e-04
+  [PM3 τ=0.12] epoch  29 | loss=1.1383 dist=0.8566 div=2.220 H=0.091 gd=0.626 lr=8.49e-04
+  [PM3 τ=0.12] epoch  30 | loss=1.1341 dist=0.8551 div=2.212 H=0.093 gd=0.618 lr=8.49e-04
+  [PM3 τ=0.12] epoch  31 | loss=1.1132 dist=0.8532 div=2.214 H=0.093 gd=0.614 lr=8.49e-04
+  [PM3 τ=0.12] epoch  32 | loss=1.1106 dist=0.8455 div=2.220 H=0.093 gd=0.619 lr=8.49e-04
+  [PM3 τ=0.12] epoch  33 | loss=1.1023 dist=0.8520 div=2.231 H=0.091 gd=0.638 lr=8.49e-04
+  [PM3 τ=0.12] epoch  34 | loss=1.1033 dist=0.8510 div=2.234 H=0.091 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch  35 | loss=1.0905 dist=0.8359 div=2.217 H=0.089 gd=0.620 lr=8.49e-04
+  [PM3 τ=0.12] epoch  36 | loss=1.0681 dist=0.8302 div=2.243 H=0.089 gd=0.625 lr=8.49e-04
+  [PM3 τ=0.12] epoch  37 | loss=1.1204 dist=0.8443 div=2.214 H=0.092 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch  38 | loss=1.2269 dist=0.8535 div=2.206 H=0.092 gd=0.646 lr=8.49e-04
+  [PM3 τ=0.12] epoch  39 | loss=1.1760 dist=0.8466 div=2.216 H=0.092 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch  40 | loss=1.1032 dist=0.8367 div=2.217 H=0.092 gd=0.627 lr=8.49e-04
+  [PM3 τ=0.12] epoch  41 | loss=1.0752 dist=0.8272 div=2.246 H=0.089 gd=0.667 lr=8.49e-04
+  [PM3 τ=0.12] epoch  42 | loss=1.0765 dist=0.8380 div=2.201 H=0.092 gd=0.617 lr=8.49e-04
+  [PM3 τ=0.12] epoch  43 | loss=1.0740 dist=0.8339 div=2.252 H=0.089 gd=0.650 lr=8.49e-04
+  [PM3 τ=0.12] epoch  44 | loss=1.0758 dist=0.8533 div=2.229 H=0.090 gd=0.643 lr=8.49e-04
+  [PM3 τ=0.12] epoch  45 | loss=1.0539 dist=0.8207 div=2.259 H=0.089 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  46 | loss=1.0432 dist=0.8192 div=2.239 H=0.087 gd=0.641 lr=8.49e-04
+  [PM3 τ=0.12] epoch  47 | loss=1.0512 dist=0.8285 div=2.206 H=0.091 gd=0.627 lr=8.49e-04
+  [PM3 τ=0.12] epoch  48 | loss=1.0417 dist=0.8187 div=2.246 H=0.087 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch  49 | loss=1.0446 dist=0.8088 div=2.234 H=0.088 gd=0.649 lr=8.49e-04
+  [PM3 τ=0.12] epoch  50 | loss=1.0336 dist=0.8062 div=2.238 H=0.086 gd=0.675 lr=8.49e-04
+  [PM3 τ=0.12] epoch  51 | loss=1.0134 dist=0.8131 div=2.246 H=0.088 gd=0.681 lr=8.49e-04
+  [PM3 τ=0.12] epoch  52 | loss=1.0086 dist=0.7934 div=2.256 H=0.085 gd=0.626 lr=8.49e-04
+  [PM3 τ=0.12] epoch  53 | loss=0.9971 dist=0.8054 div=2.250 H=0.083 gd=0.657 lr=8.49e-04
+  [PM3 τ=0.12] epoch  54 | loss=1.0062 dist=0.7998 div=2.249 H=0.086 gd=0.655 lr=8.49e-04
+  [PM3 τ=0.12] epoch  55 | loss=1.0068 dist=0.7896 div=2.248 H=0.084 gd=0.613 lr=8.49e-04
+  [PM3 τ=0.12] epoch  56 | loss=1.0041 dist=0.8030 div=2.268 H=0.084 gd=0.670 lr=8.49e-04
+  [PM3 τ=0.12] epoch  57 | loss=1.0033 dist=0.7780 div=2.263 H=0.083 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch  58 | loss=0.9914 dist=0.7843 div=2.264 H=0.081 gd=0.620 lr=8.49e-04
+  [PM3 τ=0.12] epoch  59 | loss=0.9825 dist=0.7776 div=2.259 H=0.083 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch  60 | loss=0.9853 dist=0.7930 div=2.263 H=0.082 gd=0.664 lr=8.49e-04
+  [PM3 τ=0.12] epoch  61 | loss=0.9633 dist=0.8026 div=2.267 H=0.083 gd=0.680 lr=8.49e-04
+  [PM3 τ=0.12] epoch  62 | loss=0.9664 dist=0.7773 div=2.270 H=0.083 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch  63 | loss=1.0093 dist=0.7890 div=2.242 H=0.085 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch  64 | loss=0.9821 dist=0.7793 div=2.275 H=0.084 gd=0.658 lr=8.49e-04
+  [PM3 τ=0.12] epoch  65 | loss=0.9754 dist=0.7906 div=2.248 H=0.085 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch  66 | loss=0.9641 dist=0.7961 div=2.243 H=0.083 gd=0.726 lr=8.49e-04
+  [PM3 τ=0.12] epoch  67 | loss=0.9676 dist=0.8022 div=2.251 H=0.082 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch  68 | loss=0.9623 dist=0.7864 div=2.245 H=0.085 gd=0.651 lr=8.49e-04
+  [PM3 τ=0.12] epoch  69 | loss=0.9932 dist=0.8013 div=2.262 H=0.086 gd=0.680 lr=8.49e-04
+  [PM3 τ=0.12] epoch  70 | loss=1.0108 dist=0.7789 div=2.238 H=0.082 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch  71 | loss=1.0372 dist=0.7904 div=2.245 H=0.085 gd=0.658 lr=8.49e-04
+  [PM3 τ=0.12] epoch  72 | loss=1.0221 dist=0.7762 div=2.254 H=0.085 gd=0.659 lr=8.49e-04
+  [PM3 τ=0.12] epoch  73 | loss=0.9742 dist=0.7686 div=2.241 H=0.084 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  74 | loss=0.9794 dist=0.8003 div=2.266 H=0.088 gd=0.648 lr=8.49e-04
+  [PM3 τ=0.12] epoch  75 | loss=1.0011 dist=0.8026 div=2.305 H=0.086 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch  76 | loss=0.9771 dist=0.7646 div=2.257 H=0.082 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch  77 | loss=0.9549 dist=0.7766 div=2.248 H=0.086 gd=0.660 lr=8.49e-04
+  [PM3 τ=0.12] epoch  78 | loss=0.9677 dist=0.7762 div=2.273 H=0.084 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch  79 | loss=0.9337 dist=0.7560 div=2.277 H=0.083 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  80 | loss=0.9727 dist=0.7829 div=2.258 H=0.084 gd=0.646 lr=8.49e-04
+  [PM3 τ=0.12] epoch  81 | loss=0.9706 dist=0.7562 div=2.258 H=0.085 gd=0.660 lr=8.49e-04
+  [PM3 τ=0.12] epoch  82 | loss=0.9427 dist=0.7635 div=2.280 H=0.084 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch  83 | loss=0.9492 dist=0.7621 div=2.258 H=0.084 gd=0.677 lr=8.49e-04
+  [PM3 τ=0.12] epoch  84 | loss=0.9463 dist=0.7497 div=2.249 H=0.083 gd=0.630 lr=8.49e-04
+  [PM3 τ=0.12] epoch  85 | loss=0.9271 dist=0.7617 div=2.268 H=0.083 gd=0.653 lr=8.49e-04
+  [PM3 τ=0.12] epoch  86 | loss=0.9184 dist=0.7478 div=2.285 H=0.081 gd=0.648 lr=8.49e-04
+  [PM3 τ=0.12] epoch  87 | loss=0.9158 dist=0.7626 div=2.271 H=0.083 gd=0.639 lr=8.49e-04
+  [PM3 τ=0.12] epoch  88 | loss=0.9080 dist=0.7711 div=2.251 H=0.088 gd=0.685 lr=8.49e-04
+  [PM3 τ=0.12] epoch  89 | loss=0.9591 dist=0.7578 div=2.246 H=0.085 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch  90 | loss=0.9365 dist=0.7574 div=2.259 H=0.084 gd=0.655 lr=8.49e-04
+  [PM3 τ=0.12] epoch  91 | loss=0.9285 dist=0.7854 div=2.257 H=0.083 gd=0.587 lr=8.49e-04
+  [PM3 τ=0.12] epoch  92 | loss=0.8993 dist=0.7430 div=2.272 H=0.080 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch  93 | loss=0.9014 dist=0.7526 div=2.254 H=0.083 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch  94 | loss=0.9219 dist=0.7530 div=2.285 H=0.083 gd=0.621 lr=8.49e-04
+  [PM3 τ=0.12] epoch  95 | loss=0.9148 dist=0.7481 div=2.286 H=0.081 gd=0.669 lr=8.49e-04
+  [PM3 τ=0.12] epoch  96 | loss=0.9205 dist=0.7624 div=2.273 H=0.084 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  97 | loss=0.9102 dist=0.7418 div=2.266 H=0.081 gd=0.661 lr=8.49e-04
+  [PM3 τ=0.12] epoch  98 | loss=0.8988 dist=0.7479 div=2.264 H=0.083 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch  99 | loss=0.9046 dist=0.7539 div=2.274 H=0.081 gd=0.652 lr=8.49e-04
+  [PM3 τ=0.12] epoch 100 | loss=0.8921 dist=0.7418 div=2.258 H=0.080 gd=0.682 lr=8.49e-04
+  [PM3 τ=0.12] epoch 101 | loss=0.8756 dist=0.7389 div=2.288 H=0.083 gd=0.664 lr=8.49e-04
+  [PM3 τ=0.12] epoch 102 | loss=0.8767 dist=0.7439 div=2.298 H=0.079 gd=0.689 lr=8.49e-04
+  [PM3 τ=0.12] epoch 103 | loss=0.8732 dist=0.7518 div=2.289 H=0.079 gd=0.716 lr=8.49e-04
+  [PM3 τ=0.12] epoch 104 | loss=0.9043 dist=0.7450 div=2.282 H=0.081 gd=0.666 lr=8.49e-04
+  [PM3 τ=0.12] epoch 105 | loss=0.9146 dist=0.7359 div=2.286 H=0.081 gd=0.667 lr=8.49e-04
+  [PM3 τ=0.12] epoch 106 | loss=0.8764 dist=0.7519 div=2.266 H=0.080 gd=0.694 lr=8.49e-04
+  [PM3 τ=0.12] epoch 107 | loss=0.8914 dist=0.7381 div=2.285 H=0.083 gd=0.689 lr=8.49e-04
+  [PM3 τ=0.12] epoch 108 | loss=0.8778 dist=0.7407 div=2.279 H=0.083 gd=0.684 lr=8.49e-04
+  [PM3 τ=0.12] epoch 109 | loss=0.8708 dist=0.7467 div=2.259 H=0.080 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch 110 | loss=0.8767 dist=0.7574 div=2.273 H=0.082 gd=0.656 lr=8.49e-04
+  [PM3 τ=0.12] epoch 111 | loss=0.8717 dist=0.7366 div=2.286 H=0.082 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch 112 | loss=0.8932 dist=0.7659 div=2.271 H=0.081 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch 113 | loss=0.9300 dist=0.7543 div=2.269 H=0.080 gd=0.659 lr=8.49e-04
+  [PM3 τ=0.12] epoch 114 | loss=0.9300 dist=0.7663 div=2.281 H=0.085 gd=0.673 lr=8.49e-04
+  [PM3 τ=0.12] epoch 115 | loss=0.9032 dist=0.7427 div=2.286 H=0.080 gd=0.674 lr=8.49e-04
+  [PM3 τ=0.12] epoch 116 | loss=0.8749 dist=0.7362 div=2.295 H=0.081 gd=0.649 lr=8.49e-04
+  [PM3 τ=0.12] epoch 117 | loss=0.8862 dist=0.7609 div=2.277 H=0.082 gd=0.665 lr=8.49e-04
+  [PM3 τ=0.12] epoch 118 | loss=0.8744 dist=0.7379 div=2.282 H=0.081 gd=0.700 lr=8.49e-04
+  [PM3 τ=0.12] epoch 119 | loss=0.8635 dist=0.7345 div=2.282 H=0.080 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch 120 | loss=0.8734 dist=0.7487 div=2.282 H=0.080 gd=0.663 lr=8.49e-04
+  [PM3 τ=0.12] epoch 121 | loss=0.8726 dist=0.7258 div=2.288 H=0.080 gd=0.654 lr=8.49e-04
+  [PM3 τ=0.12] epoch 122 | loss=0.8457 dist=0.7279 div=2.301 H=0.077 gd=0.651 lr=8.49e-04
+  [PM3 τ=0.12] epoch 123 | loss=0.8727 dist=0.7675 div=2.290 H=0.081 gd=0.616 lr=8.49e-04
+  [PM3 τ=0.12] epoch 124 | loss=0.8544 dist=0.7271 div=2.291 H=0.080 gd=0.650 lr=8.49e-04
+  [PM3 τ=0.12] epoch 125 | loss=0.8483 dist=0.7579 div=2.306 H=0.080 gd=0.661 lr=8.49e-04
+  [PM3 τ=0.12] epoch 126 | loss=0.8426 dist=0.7398 div=2.308 H=0.075 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch 127 | loss=0.8672 dist=0.7481 div=2.290 H=0.078 gd=0.630 lr=8.49e-04
+  [PM3 τ=0.12] epoch 128 | loss=0.8862 dist=0.7403 div=2.285 H=0.079 gd=0.608 lr=8.49e-04
+  [PM3 τ=0.12] epoch 129 | loss=0.8723 dist=0.7341 div=2.283 H=0.078 gd=0.618 lr=8.49e-04
+  [PM3 τ=0.12] epoch 130 | loss=0.8607 dist=0.7506 div=2.312 H=0.075 gd=0.676 lr=8.49e-04
+  [PM3 τ=0.12] epoch 131 | loss=0.8457 dist=0.7278 div=2.300 H=0.077 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch 132 | loss=0.8460 dist=0.7577 div=2.298 H=0.077 gd=0.622 lr=8.49e-04
+  [PM3 τ=0.12] epoch 133 | loss=0.8480 dist=0.7345 div=2.293 H=0.076 gd=0.639 lr=8.49e-04
+  [PM3 τ=0.12] epoch 134 | loss=0.8558 dist=0.7268 div=2.303 H=0.075 gd=0.673 lr=8.49e-04
+  [PM3 τ=0.12] epoch 135 | loss=0.8393 dist=0.7465 div=2.272 H=0.080 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch 136 | loss=0.8337 dist=0.7235 div=2.308 H=0.075 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch 137 | loss=0.8257 dist=0.7337 div=2.289 H=0.077 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch 138 | loss=0.8246 dist=0.7330 div=2.289 H=0.077 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch 139 | loss=0.8242 dist=0.7318 div=2.303 H=0.078 gd=0.643 lr=8.49e-04
+  [PM3 τ=0.12] epoch 140 | loss=0.8227 dist=0.7276 div=2.289 H=0.076 gd=0.690 lr=8.49e-04
+  [PM3 τ=0.12] epoch 141 | loss=0.8188 dist=0.7240 div=2.298 H=0.075 gd=0.706 lr=8.49e-04
+  [PM3 τ=0.12] epoch 142 | loss=0.8214 dist=0.7355 div=2.305 H=0.076 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch 143 | loss=0.8343 dist=0.7376 div=2.305 H=0.076 gd=0.683 lr=8.49e-04
+  [PM3 τ=0.12] epoch 144 | loss=0.8374 dist=0.7316 div=2.286 H=0.077 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch 145 | loss=0.8396 dist=0.7370 div=2.293 H=0.076 gd=0.647 lr=8.49e-04
+  [PM3 τ=0.12] epoch 146 | loss=0.8227 dist=0.7341 div=2.302 H=0.076 gd=0.592 lr=8.49e-04
+  [PM3 τ=0.12] epoch 147 | loss=0.8307 dist=0.7263 div=2.291 H=0.077 gd=0.677 lr=8.49e-04
+  [PM3 τ=0.12] epoch 148 | loss=0.8378 dist=0.7292 div=2.296 H=0.077 gd=0.654 lr=8.49e-04
+  [PM3 τ=0.12] epoch 149 | loss=0.8238 dist=0.7159 div=2.303 H=0.075 gd=0.655 lr=8.49e-04
+  [PM3 τ=0.12] epoch 150 | loss=0.8207 dist=0.7257 div=2.311 H=0.075 gd=0.665 lr=8.49e-04
+  [PM3 τ=0.12] epoch 151 | loss=0.8304 dist=0.7319 div=2.303 H=0.075 gd=0.625 lr=8.49e-04
+  [PM3 τ=0.12] epoch 152 | loss=0.8211 dist=0.7274 div=2.313 H=0.075 gd=0.683 lr=8.49e-04
+  [PM3 τ=0.12] epoch 153 | loss=0.8090 dist=0.7273 div=2.308 H=0.074 gd=0.674 lr=8.49e-04
+  [PM3 τ=0.12] epoch 154 | loss=0.8059 dist=0.7257 div=2.304 H=0.072 gd=0.631 lr=8.49e-04
+  [PM3 τ=0.12] epoch 155 | loss=0.8148 dist=0.7416 div=2.313 H=0.074 gd=0.664 lr=8.49e-04
+  [PM3 τ=0.12] epoch 156 | loss=0.8088 dist=0.7226 div=2.283 H=0.075 gd=0.651 lr=8.49e-04
+  [PM3 τ=0.12] epoch 157 | loss=0.8040 dist=0.7442 div=2.315 H=0.071 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch 158 | loss=0.7952 dist=0.7143 div=2.311 H=0.075 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch 159 | loss=0.7951 dist=0.7081 div=2.310 H=0.075 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch 160 | loss=0.8170 dist=0.7123 div=2.290 H=0.076 gd=0.673 lr=8.49e-04
+  [PM3 τ=0.12] epoch 161 | loss=0.8097 dist=0.7300 div=2.285 H=0.075 gd=0.621 lr=8.49e-04
+  [PM3 τ=0.12] epoch 162 | loss=0.8040 dist=0.7297 div=2.287 H=0.073 gd=0.624 lr=8.49e-04
+  [PM3 τ=0.12] epoch 163 | loss=0.8037 dist=0.7249 div=2.301 H=0.075 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch 164 | loss=0.8075 dist=0.7086 div=2.284 H=0.073 gd=0.610 lr=8.49e-04
+  [PM3 τ=0.12] epoch 165 | loss=0.7999 dist=0.7208 div=2.308 H=0.077 gd=0.611 lr=8.49e-04
+  [PM3 τ=0.12] epoch 166 | loss=0.7979 dist=0.7304 div=2.312 H=0.073 gd=0.593 lr=8.49e-04
+  [PM3 τ=0.12] epoch 167 | loss=0.7895 dist=0.7124 div=2.298 H=0.075 gd=0.683 lr=8.49e-04
+  [PM3 τ=0.12] epoch 168 | loss=0.7933 dist=0.7213 div=2.292 H=0.072 gd=0.654 lr=8.49e-04
+  [PM3 τ=0.12] epoch 169 | loss=0.7884 dist=0.7096 div=2.302 H=0.074 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch 170 | loss=0.8230 dist=0.7205 div=2.316 H=0.076 gd=0.586 lr=8.49e-04
+  [PM3 τ=0.12] epoch 171 | loss=0.8046 dist=0.7110 div=2.283 H=0.075 gd=0.648 lr=8.49e-04
+  [PM3 τ=0.12] epoch 172 | loss=0.8110 dist=0.7382 div=2.313 H=0.075 gd=0.643 lr=8.49e-04
+  [PM3 τ=0.12] epoch 173 | loss=0.8070 dist=0.7098 div=2.278 H=0.075 gd=0.599 lr=8.49e-04
+  [PM3 τ=0.12] epoch 174 | loss=0.7957 dist=0.7064 div=2.312 H=0.072 gd=0.632 lr=8.49e-04
+  [PM3 τ=0.12] epoch 175 | loss=0.8059 dist=0.7260 div=2.318 H=0.073 gd=0.634 lr=8.49e-04
+  [PM3 τ=0.12] epoch 176 | loss=0.7820 dist=0.7010 div=2.295 H=0.073 gd=0.634 lr=8.49e-04
+  [PM3 τ=0.12] epoch 177 | loss=0.8027 dist=0.7301 div=2.290 H=0.074 gd=0.652 lr=8.49e-04
+  [PM3 τ=0.12] epoch 178 | loss=0.7887 dist=0.7089 div=2.313 H=0.073 gd=0.607 lr=8.49e-04
+  [PM3 τ=0.12] epoch 179 | loss=0.7846 dist=0.7261 div=2.292 H=0.075 gd=0.667 lr=8.49e-04
+  [PM3 τ=0.12] epoch 180 | loss=0.7850 dist=0.7090 div=2.294 H=0.075 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch 181 | loss=0.8088 dist=0.7202 div=2.302 H=0.074 gd=0.668 lr=8.49e-04
+  [PM3 τ=0.12] epoch 182 | loss=0.7948 dist=0.7182 div=2.300 H=0.075 gd=0.645 lr=8.49e-04
+  [PM3 τ=0.12] epoch 183 | loss=0.8042 dist=0.7240 div=2.295 H=0.075 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch 184 | loss=0.7969 dist=0.7183 div=2.311 H=0.075 gd=0.646 lr=8.49e-04
+  [PM3 τ=0.12] epoch 185 | loss=0.7981 dist=0.7091 div=2.295 H=0.073 gd=0.613 lr=8.49e-04
+  [PM3 τ=0.12] epoch 186 | loss=0.7939 dist=0.7311 div=2.299 H=0.076 gd=0.641 lr=8.49e-04
+  [PM3 τ=0.12] epoch 187 | loss=0.7964 dist=0.7332 div=2.307 H=0.072 gd=0.577 lr=8.49e-04
+  [PM3 τ=0.12] epoch 188 | loss=0.7983 dist=0.7102 div=2.289 H=0.072 gd=0.689 lr=8.49e-04
+  [PM3 τ=0.12] epoch 189 | loss=0.7877 dist=0.7125 div=2.308 H=0.073 gd=0.639 lr=8.49e-04
+  [PM3 τ=0.12] epoch 190 | loss=0.8004 dist=0.7289 div=2.306 H=0.076 gd=0.659 lr=8.49e-04
+  [PM3 τ=0.12] epoch 191 | loss=0.7967 dist=0.7169 div=2.302 H=0.073 gd=0.695 lr=8.49e-04
+  [PM3 τ=0.12] epoch 192 | loss=0.7891 dist=0.7216 div=2.308 H=0.074 gd=0.658 lr=8.49e-04
+  [PM3 τ=0.12] epoch 193 | loss=0.7986 dist=0.7147 div=2.289 H=0.076 gd=0.653 lr=8.49e-04
+  [PM3 τ=0.12] epoch 194 | loss=0.7991 dist=0.7165 div=2.294 H=0.075 gd=0.701 lr=8.49e-04
+  [PM3 τ=0.12] epoch 195 | loss=0.7943 dist=0.7235 div=2.313 H=0.071 gd=0.620 lr=8.49e-04
+  [PM3 τ=0.12] epoch 196 | loss=0.7914 dist=0.7159 div=2.307 H=0.076 gd=0.690 lr=8.49e-04
+  [PM3 τ=0.12] epoch 197 | loss=0.8023 dist=0.7209 div=2.314 H=0.074 gd=0.672 lr=8.49e-04
+  [PM3 τ=0.12] epoch 198 | loss=0.8083 dist=0.7157 div=2.277 H=0.073 gd=0.593 lr=8.49e-04
+  [PM3 τ=0.12] epoch 199 | loss=0.8423 dist=0.7124 div=2.336 H=0.073 gd=0.619 lr=8.49e-04
+
+=== SoftDCD ===
+  [SoftDCD] epoch   0 | loss=3.1667 dist=1.4003 div=1.678 H=0.233 gd=0.653 lr=8.49e-04
+  [SoftDCD] epoch   1 | loss=2.3731 dist=1.4243 div=1.678 H=0.187 gd=0.667 lr=8.49e-04
+  [SoftDCD] epoch   2 | loss=2.0434 dist=1.3975 div=1.708 H=0.186 gd=0.626 lr=8.49e-04
+  [SoftDCD] epoch   3 | loss=1.8979 dist=1.3672 div=1.757 H=0.186 gd=0.676 lr=8.49e-04
+  [SoftDCD] epoch   4 | loss=1.8388 dist=1.3962 div=1.718 H=0.178 gd=0.661 lr=8.49e-04
+  [SoftDCD] epoch   5 | loss=1.7873 dist=1.3886 div=1.755 H=0.180 gd=0.659 lr=8.49e-04
+  [SoftDCD] epoch   6 | loss=1.7480 dist=1.3701 div=1.744 H=0.179 gd=0.658 lr=8.49e-04
+  [SoftDCD] epoch   7 | loss=1.7173 dist=1.3591 div=1.747 H=0.178 gd=0.685 lr=8.49e-04
+  [SoftDCD] epoch   8 | loss=1.6882 dist=1.3495 div=1.775 H=0.176 gd=0.692 lr=8.49e-04
+  [SoftDCD] epoch   9 | loss=1.6574 dist=1.3320 div=1.763 H=0.174 gd=0.665 lr=8.49e-04
+  [SoftDCD] epoch  10 | loss=1.6353 dist=1.3253 div=1.774 H=0.175 gd=0.636 lr=8.49e-04
+  [SoftDCD] epoch  11 | loss=1.6445 dist=1.3252 div=1.780 H=0.179 gd=0.679 lr=8.49e-04
+  [SoftDCD] epoch  12 | loss=1.6436 dist=1.3363 div=1.768 H=0.173 gd=0.704 lr=8.49e-04
+  [SoftDCD] epoch  13 | loss=1.6190 dist=1.3178 div=1.768 H=0.174 gd=0.674 lr=8.49e-04
+  [SoftDCD] epoch  14 | loss=1.5947 dist=1.3080 div=1.818 H=0.173 gd=0.665 lr=8.49e-04
+  [SoftDCD] epoch  15 | loss=1.5824 dist=1.3080 div=1.781 H=0.169 gd=0.654 lr=8.49e-04
+  [SoftDCD] epoch  16 | loss=1.5790 dist=1.3113 div=1.790 H=0.176 gd=0.684 lr=8.49e-04
+  [SoftDCD] epoch  17 | loss=1.6419 dist=1.3180 div=1.802 H=0.171 gd=0.679 lr=8.49e-04
+  [SoftDCD] epoch  18 | loss=1.6238 dist=1.3009 div=1.807 H=0.171 gd=0.633 lr=8.49e-04
+  [SoftDCD] epoch  19 | loss=1.6117 dist=1.3139 div=1.791 H=0.170 gd=0.662 lr=8.49e-04
+  [SoftDCD] epoch  20 | loss=1.6010 dist=1.2875 div=1.823 H=0.164 gd=0.647 lr=8.49e-04
+  [SoftDCD] epoch  21 | loss=1.5941 dist=1.2813 div=1.812 H=0.169 gd=0.672 lr=8.49e-04
+  [SoftDCD] epoch  22 | loss=1.5689 dist=1.3121 div=1.811 H=0.166 gd=0.664 lr=8.49e-04
+  [SoftDCD] epoch  23 | loss=1.5684 dist=1.2880 div=1.808 H=0.165 gd=0.668 lr=8.49e-04
+  [SoftDCD] epoch  24 | loss=1.6181 dist=1.2853 div=1.822 H=0.171 gd=0.704 lr=8.49e-04
+  [SoftDCD] epoch  25 | loss=1.5907 dist=1.2791 div=1.834 H=0.169 gd=0.687 lr=8.49e-04
+  [SoftDCD] epoch  26 | loss=1.5535 dist=1.2674 div=1.869 H=0.163 gd=0.664 lr=8.49e-04
+  [SoftDCD] epoch  27 | loss=1.5464 dist=1.2633 div=1.857 H=0.164 gd=0.717 lr=8.49e-04
+  [SoftDCD] epoch  28 | loss=1.5628 dist=1.2585 div=1.846 H=0.170 gd=0.719 lr=8.49e-04
+  [SoftDCD] epoch  29 | loss=1.5620 dist=1.2826 div=1.849 H=0.170 gd=0.676 lr=8.49e-04
+  [SoftDCD] epoch  30 | loss=1.5759 dist=1.2870 div=1.801 H=0.168 gd=0.688 lr=8.49e-04
+  [SoftDCD] epoch  31 | loss=1.5990 dist=1.2936 div=1.798 H=0.168 gd=0.696 lr=8.49e-04
+  [SoftDCD] epoch  32 | loss=1.6032 dist=1.2780 div=1.827 H=0.161 gd=0.679 lr=8.49e-04
+  [SoftDCD] epoch  33 | loss=1.5465 dist=1.2647 div=1.841 H=0.165 gd=0.713 lr=8.49e-04
+  [SoftDCD] epoch  34 | loss=1.5634 dist=1.2662 div=1.841 H=0.164 gd=0.695 lr=8.49e-04
+  [SoftDCD] epoch  35 | loss=1.5679 dist=1.2677 div=1.856 H=0.170 gd=0.686 lr=8.49e-04
+  [SoftDCD] epoch  36 | loss=1.6029 dist=1.2667 div=1.831 H=0.169 gd=0.667 lr=8.49e-04
+  [SoftDCD] epoch  37 | loss=1.5524 dist=1.2700 div=1.839 H=0.172 gd=0.707 lr=8.49e-04
+  [SoftDCD] epoch  38 | loss=1.5493 dist=1.2591 div=1.834 H=0.171 gd=0.695 lr=8.49e-04
+  [SoftDCD] epoch  39 | loss=1.5506 dist=1.2670 div=1.838 H=0.170 gd=0.693 lr=8.49e-04
+  [SoftDCD] epoch  40 | loss=1.6744 dist=1.2946 div=1.782 H=0.170 gd=0.683 lr=8.49e-04
+  [SoftDCD] epoch  41 | loss=1.6125 dist=1.3046 div=1.832 H=0.172 gd=0.750 lr=8.49e-04
+  [SoftDCD] epoch  42 | loss=1.6002 dist=1.3047 div=1.796 H=0.163 gd=0.666 lr=8.49e-04
+  [SoftDCD] epoch  43 | loss=1.6096 dist=1.2877 div=1.815 H=0.177 gd=0.687 lr=8.49e-04
+  [SoftDCD] epoch  44 | loss=1.6150 dist=1.2788 div=1.824 H=0.165 gd=0.674 lr=8.49e-04
+  [SoftDCD] epoch  45 | loss=1.6240 dist=1.3205 div=1.768 H=0.168 gd=0.724 lr=8.49e-04
+  [SoftDCD] epoch  46 | loss=1.6119 dist=1.3032 div=1.804 H=0.170 gd=0.679 lr=8.49e-04
+  [SoftDCD] epoch  47 | loss=1.5665 dist=1.2912 div=1.809 H=0.168 gd=0.702 lr=8.49e-04
+  [SoftDCD] epoch  48 | loss=1.6087 dist=1.2733 div=1.830 H=0.163 gd=0.694 lr=8.49e-04
+  [SoftDCD] epoch  49 | loss=1.6015 dist=1.2899 div=1.805 H=0.171 gd=0.670 lr=8.49e-04
+  [SoftDCD] epoch  50 | loss=1.5900 dist=1.2900 div=1.814 H=0.166 gd=0.686 lr=8.49e-04
+  [SoftDCD] epoch  51 | loss=1.5819 dist=1.2816 div=1.800 H=0.167 gd=0.700 lr=8.49e-04
+  [SoftDCD] epoch  52 | loss=1.5786 dist=1.2649 div=1.822 H=0.162 gd=0.680 lr=8.49e-04
+  [SoftDCD] epoch  53 | loss=1.5481 dist=1.2627 div=1.837 H=0.164 gd=0.683 lr=8.49e-04
+  [SoftDCD] epoch  54 | loss=1.5569 dist=1.2683 div=1.828 H=0.161 gd=0.667 lr=8.49e-04
+  [SoftDCD] epoch  55 | loss=1.5734 dist=1.2763 div=1.831 H=0.163 gd=0.608 lr=8.49e-04
+  [SoftDCD] epoch  56 | loss=1.5386 dist=1.2711 div=1.829 H=0.166 gd=0.686 lr=8.49e-04
+  [SoftDCD] epoch  57 | loss=1.5386 dist=1.2680 div=1.840 H=0.162 gd=0.653 lr=8.49e-04
+  [SoftDCD] epoch  58 | loss=1.5360 dist=1.2759 div=1.812 H=0.165 gd=0.675 lr=8.49e-04
+  [SoftDCD] early stopping at epoch 58 (no improvement for 30 epochs, best dist=1.2585)
+
+=== CombinedSM ===
+  [CombinedSM] epoch   0 | loss=3.0827 dist=1.3781 div=1.731 H=0.232 gd=0.628 lr=8.49e-04
+  [CombinedSM] epoch   1 | loss=2.2705 dist=1.2215 div=1.928 H=0.209 gd=0.638 lr=8.49e-04
+  [CombinedSM] epoch   2 | loss=1.9610 dist=1.1384 div=1.993 H=0.208 gd=0.565 lr=8.49e-04
+  [CombinedSM] epoch   3 | loss=1.8234 dist=1.1021 div=2.046 H=0.213 gd=0.591 lr=8.49e-04
+  [CombinedSM] epoch   4 | loss=1.7478 dist=1.0737 div=2.052 H=0.219 gd=0.576 lr=8.49e-04
+  [CombinedSM] epoch   5 | loss=1.6812 dist=1.0557 div=2.083 H=0.221 gd=0.595 lr=8.49e-04
+  [CombinedSM] epoch   6 | loss=1.6341 dist=1.0486 div=2.079 H=0.226 gd=0.604 lr=8.49e-04
+  [CombinedSM] epoch   7 | loss=1.6209 dist=1.0476 div=2.076 H=0.228 gd=0.642 lr=8.49e-04
+  [CombinedSM] epoch   8 | loss=1.6100 dist=1.0468 div=2.090 H=0.232 gd=0.661 lr=8.49e-04
+  [CombinedSM] epoch   9 | loss=1.6092 dist=1.0450 div=2.076 H=0.231 gd=0.671 lr=8.49e-04
+  [CombinedSM] epoch  10 | loss=1.6020 dist=1.0496 div=2.102 H=0.231 gd=0.604 lr=8.49e-04
+  [CombinedSM] epoch  11 | loss=1.5991 dist=1.0455 div=2.085 H=0.234 gd=0.629 lr=8.49e-04
+  [CombinedSM] epoch  12 | loss=1.5896 dist=1.0413 div=2.081 H=0.235 gd=0.683 lr=8.49e-04
+  [CombinedSM] epoch  13 | loss=1.5754 dist=1.0329 div=2.073 H=0.237 gd=0.671 lr=8.49e-04
+  [CombinedSM] epoch  14 | loss=1.5726 dist=1.0419 div=2.076 H=0.237 gd=0.644 lr=8.49e-04
+  [CombinedSM] epoch  15 | loss=1.5708 dist=1.0490 div=2.076 H=0.240 gd=0.643 lr=8.49e-04
+  [CombinedSM] epoch  16 | loss=1.5596 dist=1.0576 div=2.081 H=0.242 gd=0.677 lr=8.49e-04
+  [CombinedSM] epoch  17 | loss=1.5571 dist=1.0576 div=2.078 H=0.241 gd=0.691 lr=8.49e-04
+  [CombinedSM] epoch  18 | loss=1.5873 dist=1.0621 div=2.059 H=0.239 gd=0.654 lr=8.49e-04
+  [CombinedSM] epoch  19 | loss=1.5677 dist=1.0310 div=2.076 H=0.235 gd=0.714 lr=8.49e-04
+  [CombinedSM] epoch  20 | loss=1.5412 dist=1.0197 div=2.091 H=0.231 gd=0.656 lr=8.49e-04
+  [CombinedSM] epoch  21 | loss=1.5334 dist=1.0302 div=2.084 H=0.229 gd=0.693 lr=8.49e-04
+  [CombinedSM] epoch  22 | loss=1.5157 dist=1.0205 div=2.084 H=0.226 gd=0.685 lr=8.49e-04
+  [CombinedSM] epoch  23 | loss=1.5280 dist=1.0171 div=2.082 H=0.227 gd=0.689 lr=8.49e-04
+  [CombinedSM] epoch  24 | loss=1.5239 dist=1.0369 div=2.057 H=0.235 gd=0.679 lr=8.49e-04
+  [CombinedSM] epoch  25 | loss=1.5524 dist=1.0418 div=2.070 H=0.228 gd=0.706 lr=8.49e-04
+  [CombinedSM] epoch  26 | loss=1.5325 dist=1.0246 div=2.077 H=0.226 gd=0.664 lr=8.49e-04
+  [CombinedSM] epoch  27 | loss=1.5143 dist=1.0249 div=2.097 H=0.226 gd=0.726 lr=8.49e-04
+  [CombinedSM] epoch  28 | loss=1.4982 dist=1.0171 div=2.078 H=0.223 gd=0.685 lr=8.49e-04
+  [CombinedSM] epoch  29 | loss=1.4939 dist=1.0202 div=2.099 H=0.221 gd=0.674 lr=8.49e-04
+  [CombinedSM] epoch  30 | loss=1.4855 dist=1.0277 div=2.087 H=0.218 gd=0.694 lr=8.49e-04
+  [CombinedSM] epoch  31 | loss=1.4904 dist=1.0355 div=2.080 H=0.214 gd=0.674 lr=8.49e-04
+  [CombinedSM] epoch  32 | loss=1.4808 dist=1.0287 div=2.060 H=0.216 gd=0.682 lr=8.49e-04
+  [CombinedSM] epoch  33 | loss=1.5255 dist=1.0952 div=2.012 H=0.204 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch  34 | loss=1.5685 dist=1.0937 div=2.031 H=0.196 gd=0.709 lr=8.49e-04
+  [CombinedSM] epoch  35 | loss=1.5508 dist=1.0818 div=2.028 H=0.197 gd=0.673 lr=8.49e-04
+  [CombinedSM] epoch  36 | loss=1.5245 dist=1.0972 div=2.022 H=0.195 gd=0.681 lr=8.49e-04
+  [CombinedSM] epoch  37 | loss=1.5171 dist=1.0784 div=2.026 H=0.190 gd=0.685 lr=8.49e-04
+  [CombinedSM] epoch  38 | loss=1.5052 dist=1.0698 div=2.016 H=0.197 gd=0.732 lr=8.49e-04
+  [CombinedSM] epoch  39 | loss=1.5289 dist=1.0780 div=2.019 H=0.188 gd=0.697 lr=8.49e-04
+  [CombinedSM] epoch  40 | loss=1.5554 dist=1.2374 div=1.905 H=0.190 gd=0.663 lr=8.49e-04
+  [CombinedSM] epoch  41 | loss=1.6156 dist=1.2043 div=1.898 H=0.169 gd=0.688 lr=8.49e-04
+  [CombinedSM] epoch  42 | loss=1.5296 dist=1.1706 div=1.937 H=0.172 gd=0.669 lr=8.49e-04
+  [CombinedSM] epoch  43 | loss=1.5364 dist=1.0924 div=2.039 H=0.184 gd=0.688 lr=8.49e-04
+  [CombinedSM] epoch  44 | loss=1.5023 dist=1.0812 div=2.033 H=0.189 gd=0.683 lr=8.49e-04
+  [CombinedSM] epoch  45 | loss=1.5030 dist=1.0902 div=2.075 H=0.194 gd=0.746 lr=8.49e-04
+  [CombinedSM] epoch  46 | loss=1.5102 dist=1.0688 div=2.045 H=0.196 gd=0.685 lr=8.49e-04
+  [CombinedSM] epoch  47 | loss=1.5131 dist=1.0903 div=2.036 H=0.194 gd=0.699 lr=8.49e-04
+  [CombinedSM] epoch  48 | loss=1.4995 dist=1.0650 div=2.040 H=0.194 gd=0.688 lr=8.49e-04
+  [CombinedSM] epoch  49 | loss=1.5035 dist=1.0652 div=2.035 H=0.196 gd=0.695 lr=8.49e-04
+  [CombinedSM] epoch  50 | loss=1.4868 dist=1.0636 div=2.026 H=0.191 gd=0.695 lr=8.49e-04
+  [CombinedSM] epoch  51 | loss=1.4964 dist=1.0785 div=2.022 H=0.197 gd=0.700 lr=8.49e-04
+  [CombinedSM] epoch  52 | loss=1.4960 dist=1.0705 div=2.039 H=0.193 gd=0.693 lr=8.49e-04
+  [CombinedSM] epoch  53 | loss=1.4852 dist=1.0569 div=2.062 H=0.192 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch  54 | loss=1.4967 dist=1.0390 div=2.041 H=0.190 gd=0.715 lr=8.49e-04
+  [CombinedSM] epoch  55 | loss=1.4706 dist=1.0027 div=2.087 H=0.179 gd=0.633 lr=8.49e-04
+  [CombinedSM] epoch  56 | loss=1.4322 dist=1.0303 div=2.065 H=0.186 gd=0.695 lr=8.49e-04
+  [CombinedSM] epoch  57 | loss=1.4717 dist=1.0111 div=2.073 H=0.188 gd=0.678 lr=8.49e-04
+  [CombinedSM] epoch  58 | loss=1.4384 dist=0.9973 div=2.085 H=0.173 gd=0.701 lr=8.49e-04
+  [CombinedSM] epoch  59 | loss=1.4133 dist=0.9941 div=2.089 H=0.177 gd=0.690 lr=8.49e-04
+  [CombinedSM] epoch  60 | loss=1.4759 dist=1.0360 div=2.056 H=0.191 gd=0.688 lr=8.49e-04
+  [CombinedSM] epoch  61 | loss=1.5056 dist=1.0225 div=2.071 H=0.175 gd=0.686 lr=8.49e-04
+  [CombinedSM] epoch  62 | loss=1.4461 dist=1.0037 div=2.087 H=0.169 gd=0.712 lr=8.49e-04
+  [CombinedSM] epoch  63 | loss=1.4187 dist=1.0042 div=2.073 H=0.173 gd=0.691 lr=8.49e-04
+  [CombinedSM] epoch  64 | loss=1.4017 dist=1.0035 div=2.083 H=0.169 gd=0.681 lr=8.49e-04
+  [CombinedSM] epoch  65 | loss=1.4149 dist=1.0037 div=2.102 H=0.173 gd=0.701 lr=8.49e-04
+  [CombinedSM] epoch  66 | loss=1.3968 dist=0.9941 div=2.100 H=0.175 gd=0.727 lr=8.49e-04
+  [CombinedSM] epoch  67 | loss=1.3942 dist=0.9955 div=2.100 H=0.171 gd=0.712 lr=8.49e-04
+  [CombinedSM] epoch  68 | loss=1.3878 dist=0.9943 div=2.089 H=0.171 gd=0.714 lr=8.49e-04
+  [CombinedSM] epoch  69 | loss=1.3820 dist=0.9931 div=2.095 H=0.162 gd=0.702 lr=8.49e-04
+  [CombinedSM] epoch  70 | loss=1.3882 dist=0.9934 div=2.096 H=0.167 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch  71 | loss=1.3820 dist=0.9941 div=2.099 H=0.163 gd=0.686 lr=8.49e-04
+  [CombinedSM] epoch  72 | loss=1.3974 dist=0.9914 div=2.073 H=0.165 gd=0.718 lr=8.49e-04
+  [CombinedSM] epoch  73 | loss=1.3708 dist=0.9952 div=2.095 H=0.159 gd=0.696 lr=8.49e-04
+  [CombinedSM] epoch  74 | loss=1.3734 dist=1.0095 div=2.109 H=0.169 gd=0.690 lr=8.49e-04
+  [CombinedSM] epoch  75 | loss=1.3845 dist=0.9997 div=2.094 H=0.163 gd=0.720 lr=8.49e-04
+  [CombinedSM] epoch  76 | loss=1.3615 dist=0.9895 div=2.108 H=0.164 gd=0.727 lr=8.49e-04
+  [CombinedSM] epoch  77 | loss=1.3598 dist=0.9873 div=2.110 H=0.162 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch  78 | loss=1.3708 dist=0.9837 div=2.107 H=0.165 gd=0.732 lr=8.49e-04
+  [CombinedSM] epoch  79 | loss=1.3650 dist=0.9807 div=2.100 H=0.164 gd=0.730 lr=8.49e-04
+  [CombinedSM] epoch  80 | loss=1.3842 dist=0.9900 div=2.094 H=0.161 gd=0.708 lr=8.49e-04
+  [CombinedSM] epoch  81 | loss=1.3517 dist=0.9924 div=2.097 H=0.163 gd=0.730 lr=8.49e-04
+  [CombinedSM] epoch  82 | loss=1.3838 dist=0.9920 div=2.087 H=0.162 gd=0.757 lr=8.49e-04
+  [CombinedSM] epoch  83 | loss=1.3632 dist=0.9980 div=2.102 H=0.163 gd=0.706 lr=8.49e-04
+  [CombinedSM] epoch  84 | loss=1.3657 dist=0.9934 div=2.099 H=0.160 gd=0.682 lr=8.49e-04
+  [CombinedSM] epoch  85 | loss=1.3677 dist=0.9951 div=2.076 H=0.156 gd=0.722 lr=8.49e-04
+  [CombinedSM] epoch  86 | loss=1.3639 dist=0.9807 div=2.091 H=0.162 gd=0.728 lr=8.49e-04
+  [CombinedSM] epoch  87 | loss=1.3750 dist=0.9827 div=2.099 H=0.159 gd=0.745 lr=8.49e-04
+  [CombinedSM] epoch  88 | loss=1.3676 dist=0.9846 div=2.084 H=0.166 gd=0.709 lr=8.49e-04
+  [CombinedSM] epoch  89 | loss=1.3888 dist=0.9816 div=2.114 H=0.158 gd=0.709 lr=8.49e-04
+  [CombinedSM] epoch  90 | loss=1.3617 dist=0.9881 div=2.114 H=0.157 gd=0.676 lr=8.49e-04
+  [CombinedSM] epoch  91 | loss=1.3490 dist=0.9847 div=2.086 H=0.163 gd=0.696 lr=8.49e-04
+  [CombinedSM] epoch  92 | loss=1.3626 dist=0.9811 div=2.092 H=0.157 gd=0.678 lr=8.49e-04
+  [CombinedSM] epoch  93 | loss=1.3605 dist=0.9853 div=2.101 H=0.155 gd=0.708 lr=8.49e-04
+  [CombinedSM] epoch  94 | loss=1.3529 dist=0.9818 div=2.095 H=0.159 gd=0.694 lr=8.49e-04
+  [CombinedSM] epoch  95 | loss=1.3686 dist=0.9851 div=2.111 H=0.155 gd=0.698 lr=8.49e-04
+  [CombinedSM] epoch  96 | loss=1.3643 dist=0.9788 div=2.120 H=0.162 gd=0.692 lr=8.49e-04
+  [CombinedSM] epoch  97 | loss=1.3551 dist=0.9818 div=2.104 H=0.160 gd=0.676 lr=8.49e-04
+  [CombinedSM] epoch  98 | loss=1.3780 dist=0.9811 div=2.105 H=0.157 gd=0.692 lr=8.49e-04
+  [CombinedSM] epoch  99 | loss=1.3585 dist=0.9773 div=2.109 H=0.157 gd=0.718 lr=8.49e-04
+  [CombinedSM] epoch 100 | loss=1.3652 dist=0.9904 div=2.095 H=0.159 gd=0.721 lr=8.49e-04
+  [CombinedSM] epoch 101 | loss=1.3655 dist=0.9931 div=2.098 H=0.158 gd=0.697 lr=8.49e-04
+  [CombinedSM] epoch 102 | loss=1.3738 dist=0.9989 div=2.078 H=0.158 gd=0.741 lr=8.49e-04
+  [CombinedSM] epoch 103 | loss=1.3614 dist=0.9900 div=2.117 H=0.154 gd=0.697 lr=8.49e-04
+  [CombinedSM] epoch 104 | loss=1.3486 dist=0.9875 div=2.108 H=0.157 gd=0.722 lr=8.49e-04
+  [CombinedSM] epoch 105 | loss=1.3563 dist=0.9924 div=2.110 H=0.156 gd=0.719 lr=8.49e-04
+  [CombinedSM] epoch 106 | loss=1.3665 dist=0.9854 div=2.104 H=0.156 gd=0.721 lr=8.49e-04
+  [CombinedSM] epoch 107 | loss=1.3658 dist=0.9904 div=2.098 H=0.158 gd=0.704 lr=8.49e-04
+  [CombinedSM] epoch 108 | loss=1.3455 dist=0.9861 div=2.106 H=0.157 gd=0.756 lr=8.49e-04
+  [CombinedSM] epoch 109 | loss=1.3445 dist=0.9875 div=2.099 H=0.154 gd=0.728 lr=8.49e-04
+  [CombinedSM] epoch 110 | loss=1.3455 dist=0.9814 div=2.108 H=0.160 gd=0.713 lr=8.49e-04
+  [CombinedSM] epoch 111 | loss=1.3461 dist=0.9848 div=2.089 H=0.154 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch 112 | loss=1.3564 dist=0.9971 div=2.100 H=0.154 gd=0.696 lr=8.49e-04
+  [CombinedSM] epoch 113 | loss=1.3578 dist=0.9866 div=2.109 H=0.154 gd=0.698 lr=8.49e-04
+  [CombinedSM] epoch 114 | loss=1.3421 dist=0.9862 div=2.086 H=0.157 gd=0.731 lr=8.49e-04
+  [CombinedSM] epoch 115 | loss=1.3506 dist=0.9874 div=2.103 H=0.153 gd=0.696 lr=8.49e-04
+  [CombinedSM] epoch 116 | loss=1.3442 dist=0.9749 div=2.109 H=0.153 gd=0.693 lr=8.49e-04
+  [CombinedSM] epoch 117 | loss=1.3369 dist=0.9730 div=2.098 H=0.152 gd=0.721 lr=8.49e-04
+  [CombinedSM] epoch 118 | loss=1.3821 dist=1.0145 div=2.086 H=0.163 gd=0.717 lr=8.49e-04
+  [CombinedSM] epoch 119 | loss=1.5368 dist=0.9995 div=2.051 H=0.166 gd=0.718 lr=8.49e-04
+  [CombinedSM] epoch 120 | loss=1.3762 dist=0.9843 div=2.106 H=0.152 gd=0.701 lr=8.49e-04
+  [CombinedSM] epoch 121 | loss=1.3562 dist=0.9843 div=2.090 H=0.152 gd=0.684 lr=8.49e-04
+  [CombinedSM] epoch 122 | loss=1.3586 dist=0.9785 div=2.100 H=0.154 gd=0.720 lr=8.49e-04
+  [CombinedSM] epoch 123 | loss=1.3603 dist=0.9854 div=2.094 H=0.152 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch 124 | loss=1.3712 dist=1.0176 div=2.074 H=0.154 gd=0.709 lr=8.49e-04
+  [CombinedSM] epoch 125 | loss=1.3726 dist=0.9871 div=2.115 H=0.151 gd=0.713 lr=8.49e-04
+  [CombinedSM] epoch 126 | loss=1.3404 dist=0.9776 div=2.104 H=0.151 gd=0.706 lr=8.49e-04
+  [CombinedSM] epoch 127 | loss=1.3319 dist=0.9779 div=2.108 H=0.152 gd=0.728 lr=8.49e-04
+  [CombinedSM] epoch 128 | loss=1.3514 dist=0.9930 div=2.108 H=0.155 gd=0.696 lr=8.49e-04
+  [CombinedSM] epoch 129 | loss=1.3567 dist=0.9823 div=2.094 H=0.154 gd=0.713 lr=8.49e-04
+  [CombinedSM] epoch 130 | loss=1.3306 dist=0.9967 div=2.095 H=0.155 gd=0.747 lr=8.49e-04
+  [CombinedSM] epoch 131 | loss=1.3329 dist=0.9857 div=2.117 H=0.152 gd=0.722 lr=8.49e-04
+  [CombinedSM] epoch 132 | loss=1.3250 dist=0.9779 div=2.118 H=0.149 gd=0.682 lr=8.49e-04
+  [CombinedSM] epoch 133 | loss=1.3172 dist=0.9721 div=2.112 H=0.148 gd=0.720 lr=8.49e-04
+  [CombinedSM] epoch 134 | loss=1.3597 dist=0.9688 div=2.113 H=0.151 gd=0.727 lr=8.49e-04
+  [CombinedSM] epoch 135 | loss=1.3488 dist=0.9703 div=2.108 H=0.151 gd=0.711 lr=8.49e-04
+  [CombinedSM] epoch 136 | loss=1.3512 dist=0.9952 div=2.127 H=0.147 gd=0.748 lr=8.49e-04
+  [CombinedSM] epoch 137 | loss=1.3623 dist=0.9867 div=2.149 H=0.153 gd=0.712 lr=8.49e-04
+  [CombinedSM] epoch 138 | loss=1.3450 dist=0.9766 div=2.110 H=0.152 gd=0.687 lr=8.49e-04
+  [CombinedSM] epoch 139 | loss=1.4475 dist=1.1914 div=1.860 H=0.184 gd=0.728 lr=8.49e-04
+  [CombinedSM] epoch 140 | loss=1.6977 dist=1.0695 div=2.031 H=0.176 gd=0.704 lr=8.49e-04
+  [CombinedSM] epoch 141 | loss=1.6565 dist=1.2835 div=1.823 H=0.187 gd=0.696 lr=8.49e-04
+  [CombinedSM] epoch 142 | loss=1.6612 dist=1.2603 div=1.824 H=0.185 gd=0.692 lr=8.49e-04
+  [CombinedSM] epoch 143 | loss=1.6498 dist=1.2260 div=1.847 H=0.184 gd=0.674 lr=8.49e-04
+  [CombinedSM] epoch 144 | loss=1.6277 dist=1.1194 div=1.979 H=0.172 gd=0.725 lr=8.49e-04
+  [CombinedSM] epoch 145 | loss=1.6272 dist=1.0844 div=1.995 H=0.179 gd=0.725 lr=8.49e-04
+  [CombinedSM] epoch 146 | loss=1.5563 dist=1.0879 div=2.028 H=0.173 gd=0.710 lr=8.49e-04
+  [CombinedSM] epoch 147 | loss=1.5125 dist=1.0544 div=2.046 H=0.174 gd=0.700 lr=8.49e-04
+  [CombinedSM] epoch 148 | loss=1.4843 dist=1.0624 div=2.061 H=0.175 gd=0.694 lr=8.49e-04
+  [CombinedSM] epoch 149 | loss=1.4831 dist=1.0527 div=2.046 H=0.172 gd=0.702 lr=8.49e-04
+  [CombinedSM] epoch 150 | loss=1.4644 dist=1.0480 div=2.048 H=0.173 gd=0.703 lr=8.49e-04
+  [CombinedSM] epoch 151 | loss=1.4686 dist=1.0309 div=2.052 H=0.168 gd=0.698 lr=8.49e-04
+  [CombinedSM] epoch 152 | loss=1.4724 dist=1.0571 div=2.059 H=0.175 gd=0.713 lr=8.49e-04
+  [CombinedSM] epoch 153 | loss=1.4585 dist=1.0546 div=2.047 H=0.171 gd=0.689 lr=8.49e-04
+  [CombinedSM] epoch 154 | loss=1.4569 dist=1.0496 div=2.051 H=0.173 gd=0.700 lr=8.49e-04
+  [CombinedSM] epoch 155 | loss=1.4500 dist=1.0530 div=2.040 H=0.173 gd=0.709 lr=8.49e-04
+  [CombinedSM] epoch 156 | loss=1.4389 dist=1.0357 div=2.068 H=0.170 gd=0.722 lr=8.49e-04
+  [CombinedSM] epoch 157 | loss=1.4194 dist=1.0177 div=2.070 H=0.165 gd=0.722 lr=8.49e-04
+  [CombinedSM] epoch 158 | loss=1.3904 dist=1.0015 div=2.078 H=0.167 gd=0.707 lr=8.49e-04
+  [CombinedSM] epoch 159 | loss=1.4244 dist=1.0194 div=2.081 H=0.170 gd=0.705 lr=8.49e-04
+  [CombinedSM] epoch 160 | loss=1.4506 dist=1.0098 div=2.083 H=0.165 gd=0.713 lr=8.49e-04
+  [CombinedSM] epoch 161 | loss=1.3975 dist=1.0026 div=2.082 H=0.161 gd=0.671 lr=8.49e-04
+  [CombinedSM] epoch 162 | loss=1.3936 dist=1.0135 div=2.072 H=0.162 gd=0.682 lr=8.49e-04
+  [CombinedSM] epoch 163 | loss=1.4015 dist=1.0108 div=2.075 H=0.168 gd=0.674 lr=8.49e-04
+  [CombinedSM] epoch 164 | loss=1.4325 dist=1.0227 div=2.078 H=0.165 gd=0.680 lr=8.49e-04
+  [CombinedSM] early stopping at epoch 164 (no improvement for 30 epochs, best dist=0.9688)
+
+────────────────────────────────────────────────────────────
+Study complete in 25.0 min
+
+Name                           Final dist   Pred div   SM entropy   Grad div
+----------------------------------------------------------------------------
+PM3 τ=0.12                         0.7124     2.3360       0.0726     0.6186
+CombinedSM                         1.0227     2.0776       0.1652     0.6804
+Chamfer                            1.0932     2.0817       0.2945     0.6797
+SoftDCD                            1.2759     1.8124       0.1654     0.6745
+
+Saved → results/softdcd.pkl
+[gpu3] Finished: softdcd
+[gpu3] Starting: model_scale
+Study:      model_scale
+Device:     cuda
+Epochs:     200
+Batch size: 512
+LR:         8.49e-04  (auto-scaled from 0.0003 at batch=64)
+Output:     results/model_scale.pkl
+────────────────────────────────────────────────────────────
+
+=== d_model=64 ===
+/pscratch/sd/d/danieltm/conda_envs/envs/influencerformer/lib/python3.10/site-packages/torch/nn/modules/transformer.py:380: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at ../aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(output, src_key_padding_mask.logical_not(), mask_check=False)
+  [d_model=64] epoch   0 | loss=8.3549 dist=1.4609 div=1.599 H=0.214 gd=0.642 lr=8.49e-04
+  [d_model=64] epoch   1 | loss=4.5813 dist=1.3624 div=1.728 H=0.182 gd=0.644 lr=8.49e-04
+  [d_model=64] epoch   2 | loss=3.5555 dist=1.3140 div=1.824 H=0.172 gd=0.660 lr=8.49e-04
+  [d_model=64] epoch   3 | loss=3.1019 dist=1.2789 div=1.853 H=0.165 gd=0.670 lr=8.49e-04
+  [d_model=64] epoch   4 | loss=2.8531 dist=1.2618 div=1.868 H=0.165 gd=0.715 lr=8.49e-04
+  [d_model=64] epoch   5 | loss=2.7046 dist=1.2481 div=1.893 H=0.157 gd=0.678 lr=8.49e-04
+  [d_model=64] epoch   6 | loss=2.5845 dist=1.2291 div=1.906 H=0.155 gd=0.712 lr=8.49e-04
+  [d_model=64] epoch   7 | loss=2.4803 dist=1.2171 div=1.916 H=0.148 gd=0.683 lr=8.49e-04
+  [d_model=64] epoch   8 | loss=2.3848 dist=1.2048 div=1.934 H=0.146 gd=0.728 lr=8.49e-04
+  [d_model=64] epoch   9 | loss=2.3170 dist=1.1881 div=1.946 H=0.142 gd=0.684 lr=8.49e-04
+  [d_model=64] epoch  10 | loss=2.2642 dist=1.1774 div=1.948 H=0.139 gd=0.721 lr=8.49e-04
+  [d_model=64] epoch  11 | loss=2.2123 dist=1.1694 div=1.962 H=0.136 gd=0.708 lr=8.49e-04
+  [d_model=64] epoch  12 | loss=2.1626 dist=1.1583 div=1.952 H=0.134 gd=0.723 lr=8.49e-04
+  [d_model=64] epoch  13 | loss=2.1210 dist=1.1540 div=1.986 H=0.130 gd=0.699 lr=8.49e-04
+  [d_model=64] epoch  14 | loss=2.0896 dist=1.1557 div=1.978 H=0.129 gd=0.718 lr=8.49e-04
+  [d_model=64] epoch  15 | loss=2.0724 dist=1.1464 div=1.995 H=0.128 gd=0.744 lr=8.49e-04
+  [d_model=64] epoch  16 | loss=2.0355 dist=1.1329 div=2.001 H=0.127 gd=0.733 lr=8.49e-04
+  [d_model=64] epoch  17 | loss=2.0070 dist=1.1306 div=2.009 H=0.126 gd=0.747 lr=8.49e-04
+  [d_model=64] epoch  18 | loss=1.9793 dist=1.1350 div=1.989 H=0.128 gd=0.806 lr=8.49e-04
+  [d_model=64] epoch  19 | loss=1.9563 dist=1.1249 div=2.006 H=0.124 gd=0.710 lr=8.49e-04
+  [d_model=64] epoch  20 | loss=1.9246 dist=1.1159 div=2.019 H=0.122 gd=0.750 lr=8.49e-04
+  [d_model=64] epoch  21 | loss=1.8944 dist=1.1068 div=2.033 H=0.123 gd=0.751 lr=8.49e-04
+  [d_model=64] epoch  22 | loss=1.8757 dist=1.1023 div=2.024 H=0.121 gd=0.709 lr=8.49e-04
+  [d_model=64] epoch  23 | loss=1.8494 dist=1.0949 div=2.038 H=0.119 gd=0.750 lr=8.49e-04
+  [d_model=64] epoch  24 | loss=1.8278 dist=1.0938 div=2.045 H=0.118 gd=0.715 lr=8.49e-04
+  [d_model=64] epoch  25 | loss=1.8062 dist=1.0933 div=2.052 H=0.117 gd=0.692 lr=8.49e-04
+  [d_model=64] epoch  26 | loss=1.7856 dist=1.0870 div=2.058 H=0.118 gd=0.700 lr=8.49e-04
+  [d_model=64] epoch  27 | loss=1.7738 dist=1.0824 div=2.045 H=0.118 gd=0.750 lr=8.49e-04
+  [d_model=64] epoch  28 | loss=1.7669 dist=1.0820 div=2.059 H=0.116 gd=0.738 lr=8.49e-04
+  [d_model=64] epoch  29 | loss=1.7604 dist=1.0792 div=2.048 H=0.118 gd=0.693 lr=8.49e-04
+  [d_model=64] epoch  30 | loss=1.7441 dist=1.0802 div=2.060 H=0.116 gd=0.723 lr=8.49e-04
+  [d_model=64] epoch  31 | loss=1.7477 dist=1.0787 div=2.059 H=0.117 gd=0.747 lr=8.49e-04
+  [d_model=64] epoch  32 | loss=1.7270 dist=1.0737 div=2.066 H=0.117 gd=0.724 lr=8.49e-04
+  [d_model=64] epoch  33 | loss=1.7166 dist=1.0684 div=2.066 H=0.114 gd=0.736 lr=8.49e-04
+  [d_model=64] epoch  34 | loss=1.6980 dist=1.0630 div=2.053 H=0.117 gd=0.762 lr=8.49e-04
+  [d_model=64] epoch  35 | loss=1.6867 dist=1.0600 div=2.074 H=0.117 gd=0.719 lr=8.49e-04
+  [d_model=64] epoch  36 | loss=1.6711 dist=1.0667 div=2.069 H=0.117 gd=0.742 lr=8.49e-04
+  [d_model=64] epoch  37 | loss=1.6694 dist=1.0637 div=2.072 H=0.118 gd=0.771 lr=8.49e-04
+  [d_model=64] epoch  38 | loss=1.6664 dist=1.0629 div=2.048 H=0.120 gd=0.762 lr=8.49e-04
+  [d_model=64] epoch  39 | loss=1.6654 dist=1.0645 div=2.074 H=0.115 gd=0.718 lr=8.49e-04
+  [d_model=64] epoch  40 | loss=1.6561 dist=1.0553 div=2.075 H=0.117 gd=0.743 lr=8.49e-04
+  [d_model=64] epoch  41 | loss=1.6580 dist=1.0540 div=2.067 H=0.115 gd=0.734 lr=8.49e-04
+  [d_model=64] epoch  42 | loss=1.6534 dist=1.0584 div=2.080 H=0.114 gd=0.722 lr=8.49e-04
+  [d_model=64] epoch  43 | loss=1.6489 dist=1.0608 div=2.071 H=0.115 gd=0.697 lr=8.49e-04
+  [d_model=64] epoch  44 | loss=1.6422 dist=1.0561 div=2.082 H=0.115 gd=0.761 lr=8.49e-04
+  [d_model=64] epoch  45 | loss=1.6388 dist=1.0554 div=2.080 H=0.114 gd=0.738 lr=8.49e-04
+  [d_model=64] epoch  46 | loss=1.6336 dist=1.0541 div=2.082 H=0.112 gd=0.763 lr=8.49e-04
+  [d_model=64] epoch  47 | loss=1.6239 dist=1.0501 div=2.095 H=0.114 gd=0.775 lr=8.49e-04
+  [d_model=64] epoch  48 | loss=1.6168 dist=1.0473 div=2.081 H=0.114 gd=0.748 lr=8.49e-04
+  [d_model=64] epoch  49 | loss=1.6187 dist=1.0514 div=2.089 H=0.113 gd=0.710 lr=8.49e-04
+  [d_model=64] epoch  50 | loss=1.6038 dist=1.0509 div=2.093 H=0.114 gd=0.696 lr=8.49e-04
+  [d_model=64] epoch  51 | loss=1.6063 dist=1.0489 div=2.088 H=0.113 gd=0.747 lr=8.49e-04
+  [d_model=64] epoch  52 | loss=1.6011 dist=1.0426 div=2.072 H=0.117 gd=0.722 lr=8.49e-04
+  [d_model=64] epoch  53 | loss=1.6030 dist=1.0414 div=2.099 H=0.113 gd=0.731 lr=8.49e-04
+  [d_model=64] epoch  54 | loss=1.5896 dist=1.0440 div=2.093 H=0.114 gd=0.767 lr=8.49e-04
+  [d_model=64] epoch  55 | loss=1.5986 dist=1.0429 div=2.094 H=0.114 gd=0.710 lr=8.49e-04
+  [d_model=64] epoch  56 | loss=1.5966 dist=1.0409 div=2.114 H=0.111 gd=0.750 lr=8.49e-04
+  [d_model=64] epoch  57 | loss=1.5864 dist=1.0414 div=2.093 H=0.113 gd=0.737 lr=8.49e-04
+  [d_model=64] epoch  58 | loss=1.5812 dist=1.0344 div=2.092 H=0.112 gd=0.741 lr=8.49e-04
+  [d_model=64] epoch  59 | loss=1.5707 dist=1.0360 div=2.093 H=0.113 gd=0.713 lr=8.49e-04
+  [d_model=64] epoch  60 | loss=1.5606 dist=1.0330 div=2.110 H=0.111 gd=0.709 lr=8.49e-04
+  [d_model=64] epoch  61 | loss=1.5606 dist=1.0349 div=2.090 H=0.113 gd=0.719 lr=8.49e-04
+  [d_model=64] epoch  62 | loss=1.5508 dist=1.0282 div=2.096 H=0.112 gd=0.734 lr=8.49e-04
+  [d_model=64] epoch  63 | loss=1.5482 dist=1.0283 div=2.102 H=0.109 gd=0.698 lr=8.49e-04
+  [d_model=64] epoch  64 | loss=1.5427 dist=1.0294 div=2.106 H=0.109 gd=0.718 lr=8.49e-04
+  [d_model=64] epoch  65 | loss=1.5376 dist=1.0221 div=2.112 H=0.111 gd=0.695 lr=8.49e-04
+  [d_model=64] epoch  66 | loss=1.5491 dist=1.0285 div=2.094 H=0.110 gd=0.658 lr=8.49e-04
+  [d_model=64] epoch  67 | loss=1.5361 dist=1.0283 div=2.113 H=0.110 gd=0.700 lr=8.49e-04
+  [d_model=64] epoch  68 | loss=1.5289 dist=1.0212 div=2.119 H=0.109 gd=0.709 lr=8.49e-04
+  [d_model=64] epoch  69 | loss=1.5333 dist=1.0237 div=2.115 H=0.111 gd=0.719 lr=8.49e-04
+  [d_model=64] epoch  70 | loss=1.5233 dist=1.0193 div=2.109 H=0.109 gd=0.748 lr=8.49e-04
+  [d_model=64] epoch  71 | loss=1.5110 dist=1.0182 div=2.111 H=0.109 gd=0.732 lr=8.49e-04
+  [d_model=64] epoch  72 | loss=1.5007 dist=1.0128 div=2.111 H=0.107 gd=0.674 lr=8.49e-04
+  [d_model=64] epoch  73 | loss=1.4986 dist=1.0099 div=2.123 H=0.108 gd=0.664 lr=8.49e-04
+  [d_model=64] epoch  74 | loss=1.4929 dist=1.0136 div=2.120 H=0.106 gd=0.694 lr=8.49e-04
+  [d_model=64] epoch  75 | loss=1.4868 dist=1.0122 div=2.112 H=0.106 gd=0.693 lr=8.49e-04
+  [d_model=64] epoch  76 | loss=1.4872 dist=1.0150 div=2.130 H=0.106 gd=0.708 lr=8.49e-04
+  [d_model=64] epoch  77 | loss=1.4744 dist=1.0090 div=2.119 H=0.106 gd=0.741 lr=8.49e-04
+  [d_model=64] epoch  78 | loss=1.4727 dist=1.0103 div=2.116 H=0.104 gd=0.643 lr=8.49e-04
+  [d_model=64] epoch  79 | loss=1.4631 dist=1.0104 div=2.123 H=0.104 gd=0.691 lr=8.49e-04
+  [d_model=64] epoch  80 | loss=1.4629 dist=1.0148 div=2.134 H=0.105 gd=0.662 lr=8.49e-04
+  [d_model=64] epoch  81 | loss=1.4512 dist=1.0108 div=2.123 H=0.106 gd=0.735 lr=8.49e-04
+  [d_model=64] epoch  82 | loss=1.4425 dist=1.0024 div=2.139 H=0.104 gd=0.700 lr=8.49e-04
+  [d_model=64] epoch  83 | loss=1.4423 dist=1.0063 div=2.124 H=0.104 gd=0.652 lr=8.49e-04
+  [d_model=64] epoch  84 | loss=1.4304 dist=1.0014 div=2.138 H=0.103 gd=0.716 lr=8.49e-04
+  [d_model=64] epoch  85 | loss=1.4220 dist=1.0027 div=2.128 H=0.103 gd=0.692 lr=8.49e-04
+  [d_model=64] epoch  86 | loss=1.4147 dist=0.9962 div=2.128 H=0.101 gd=0.690 lr=8.49e-04
+  [d_model=64] epoch  87 | loss=1.4123 dist=1.0003 div=2.131 H=0.103 gd=0.703 lr=8.49e-04
+  [d_model=64] epoch  88 | loss=1.4058 dist=0.9936 div=2.147 H=0.102 gd=0.736 lr=8.49e-04
+  [d_model=64] epoch  89 | loss=1.3992 dist=0.9932 div=2.149 H=0.102 gd=0.699 lr=8.49e-04
+  [d_model=64] epoch  90 | loss=1.3954 dist=0.9909 div=2.140 H=0.102 gd=0.717 lr=8.49e-04
+  [d_model=64] epoch  91 | loss=1.3959 dist=0.9975 div=2.133 H=0.102 gd=0.738 lr=8.49e-04
+  [d_model=64] epoch  92 | loss=1.3900 dist=0.9974 div=2.137 H=0.101 gd=0.713 lr=8.49e-04
+  [d_model=64] epoch  93 | loss=1.3869 dist=1.0083 div=2.115 H=0.104 gd=0.710 lr=8.49e-04
+  [d_model=64] epoch  94 | loss=1.4023 dist=0.9916 div=2.145 H=0.102 gd=0.712 lr=8.49e-04
+  [d_model=64] epoch  95 | loss=1.3859 dist=0.9933 div=2.135 H=0.101 gd=0.679 lr=8.49e-04
+  [d_model=64] epoch  96 | loss=1.3732 dist=0.9985 div=2.135 H=0.101 gd=0.690 lr=8.49e-04
+  [d_model=64] epoch  97 | loss=1.3795 dist=0.9914 div=2.134 H=0.101 gd=0.671 lr=8.49e-04
+  [d_model=64] epoch  98 | loss=1.3604 dist=0.9890 div=2.144 H=0.101 gd=0.653 lr=8.49e-04
+  [d_model=64] epoch  99 | loss=1.3571 dist=0.9793 div=2.139 H=0.102 gd=0.695 lr=8.49e-04
+  [d_model=64] epoch 100 | loss=1.3572 dist=0.9870 div=2.145 H=0.102 gd=0.687 lr=8.49e-04
+  [d_model=64] epoch 101 | loss=1.3566 dist=0.9863 div=2.139 H=0.102 gd=0.715 lr=8.49e-04
+  [d_model=64] epoch 102 | loss=1.3540 dist=0.9879 div=2.151 H=0.102 gd=0.691 lr=8.49e-04
+  [d_model=64] epoch 103 | loss=1.3543 dist=0.9842 div=2.145 H=0.101 gd=0.676 lr=8.49e-04
+  [d_model=64] epoch 104 | loss=1.3589 dist=0.9874 div=2.151 H=0.100 gd=0.689 lr=8.49e-04
+  [d_model=64] epoch 105 | loss=1.3494 dist=0.9814 div=2.146 H=0.101 gd=0.726 lr=8.49e-04
+  [d_model=64] epoch 106 | loss=1.3424 dist=0.9817 div=2.146 H=0.100 gd=0.678 lr=8.49e-04
+  [d_model=64] epoch 107 | loss=1.3394 dist=0.9868 div=2.164 H=0.100 gd=0.671 lr=8.49e-04
+  [d_model=64] epoch 108 | loss=1.3401 dist=0.9836 div=2.139 H=0.102 gd=0.658 lr=8.49e-04
+  [d_model=64] epoch 109 | loss=1.3590 dist=0.9812 div=2.156 H=0.101 gd=0.718 lr=8.49e-04
+  [d_model=64] epoch 110 | loss=1.3365 dist=0.9770 div=2.142 H=0.102 gd=0.659 lr=8.49e-04
+  [d_model=64] epoch 111 | loss=1.3356 dist=0.9861 div=2.154 H=0.101 gd=0.684 lr=8.49e-04
+  [d_model=64] epoch 112 | loss=1.3331 dist=0.9858 div=2.155 H=0.100 gd=0.678 lr=8.49e-04
+  [d_model=64] epoch 113 | loss=1.3389 dist=0.9841 div=2.149 H=0.102 gd=0.651 lr=8.49e-04
+  [d_model=64] epoch 114 | loss=1.3314 dist=0.9778 div=2.157 H=0.099 gd=0.705 lr=8.49e-04
+  [d_model=64] epoch 115 | loss=1.3252 dist=0.9857 div=2.143 H=0.102 gd=0.681 lr=8.49e-04
+  [d_model=64] epoch 116 | loss=1.3286 dist=0.9819 div=2.152 H=0.100 gd=0.698 lr=8.49e-04
+  [d_model=64] epoch 117 | loss=1.3366 dist=0.9804 div=2.152 H=0.100 gd=0.678 lr=8.49e-04
+  [d_model=64] epoch 118 | loss=1.3353 dist=0.9871 div=2.143 H=0.102 gd=0.692 lr=8.49e-04
+  [d_model=64] epoch 119 | loss=1.3261 dist=0.9789 div=2.178 H=0.099 gd=0.669 lr=8.49e-04
+  [d_model=64] epoch 120 | loss=1.3252 dist=0.9763 div=2.152 H=0.101 gd=0.664 lr=8.49e-04
+  [d_model=64] epoch 121 | loss=1.3204 dist=0.9787 div=2.153 H=0.101 gd=0.703 lr=8.49e-04
+  [d_model=64] epoch 122 | loss=1.3214 dist=0.9717 div=2.152 H=0.100 gd=0.698 lr=8.49e-04
+  [d_model=64] epoch 123 | loss=1.3321 dist=0.9744 div=2.151 H=0.101 gd=0.669 lr=8.49e-04
+  [d_model=64] epoch 124 | loss=1.3315 dist=0.9898 div=2.138 H=0.103 gd=0.697 lr=8.49e-04
+  [d_model=64] epoch 125 | loss=1.3329 dist=0.9791 div=2.151 H=0.100 gd=0.701 lr=8.49e-04
+  [d_model=64] epoch 126 | loss=1.3247 dist=0.9790 div=2.152 H=0.100 gd=0.711 lr=8.49e-04
+  [d_model=64] epoch 127 | loss=1.3157 dist=0.9785 div=2.162 H=0.100 gd=0.618 lr=8.49e-04
+  [d_model=64] epoch 128 | loss=1.3148 dist=0.9722 div=2.155 H=0.101 gd=0.640 lr=8.49e-04
+  [d_model=64] epoch 129 | loss=1.3163 dist=0.9722 div=2.155 H=0.101 gd=0.657 lr=8.49e-04
+  [d_model=64] epoch 130 | loss=1.3101 dist=0.9731 div=2.166 H=0.099 gd=0.667 lr=8.49e-04
+  [d_model=64] epoch 131 | loss=1.3034 dist=0.9743 div=2.157 H=0.099 gd=0.671 lr=8.49e-04
+  [d_model=64] epoch 132 | loss=1.3031 dist=0.9724 div=2.168 H=0.098 gd=0.648 lr=8.49e-04
+  [d_model=64] epoch 133 | loss=1.3003 dist=0.9728 div=2.156 H=0.100 gd=0.663 lr=8.49e-04
+  [d_model=64] epoch 134 | loss=1.2994 dist=0.9759 div=2.153 H=0.101 gd=0.621 lr=8.49e-04
+  [d_model=64] epoch 135 | loss=1.3045 dist=0.9822 div=2.182 H=0.099 gd=0.707 lr=8.49e-04
+  [d_model=64] epoch 136 | loss=1.3048 dist=0.9813 div=2.158 H=0.101 gd=0.673 lr=8.49e-04
+  [d_model=64] epoch 137 | loss=1.3049 dist=0.9792 div=2.168 H=0.098 gd=0.653 lr=8.49e-04
+  [d_model=64] epoch 138 | loss=1.3000 dist=0.9693 div=2.174 H=0.099 gd=0.668 lr=8.49e-04
+  [d_model=64] epoch 139 | loss=1.3075 dist=0.9823 div=2.163 H=0.100 gd=0.653 lr=8.49e-04
+  [d_model=64] epoch 140 | loss=1.3069 dist=0.9738 div=2.150 H=0.101 gd=0.662 lr=8.49e-04
+  [d_model=64] epoch 141 | loss=1.2983 dist=0.9674 div=2.176 H=0.098 gd=0.676 lr=8.49e-04
+  [d_model=64] epoch 142 | loss=1.2938 dist=0.9766 div=2.165 H=0.099 gd=0.683 lr=8.49e-04
+  [d_model=64] epoch 143 | loss=1.2955 dist=0.9659 div=2.156 H=0.100 gd=0.667 lr=8.49e-04
+  [d_model=64] epoch 144 | loss=1.2995 dist=0.9728 div=2.157 H=0.100 gd=0.688 lr=8.49e-04
+  [d_model=64] epoch 145 | loss=1.2989 dist=0.9763 div=2.160 H=0.098 gd=0.682 lr=8.49e-04
+  [d_model=64] epoch 146 | loss=1.3018 dist=0.9772 div=2.140 H=0.101 gd=0.687 lr=8.49e-04
+  [d_model=64] epoch 147 | loss=1.2959 dist=0.9712 div=2.155 H=0.100 gd=0.679 lr=8.49e-04
+  [d_model=64] epoch 148 | loss=1.2828 dist=0.9666 div=2.155 H=0.099 gd=0.679 lr=8.49e-04
+  [d_model=64] epoch 149 | loss=1.2892 dist=0.9699 div=2.165 H=0.099 gd=0.676 lr=8.49e-04
+  [d_model=64] epoch 150 | loss=1.2816 dist=0.9679 div=2.161 H=0.098 gd=0.690 lr=8.49e-04
+  [d_model=64] epoch 151 | loss=1.2840 dist=0.9707 div=2.166 H=0.099 gd=0.668 lr=8.49e-04
+  [d_model=64] epoch 152 | loss=1.2785 dist=0.9655 div=2.154 H=0.104 gd=0.643 lr=8.49e-04
+  [d_model=64] epoch 153 | loss=1.2835 dist=0.9659 div=2.163 H=0.098 gd=0.669 lr=8.49e-04
+  [d_model=64] epoch 154 | loss=1.2813 dist=0.9655 div=2.163 H=0.098 gd=0.669 lr=8.49e-04
+  [d_model=64] epoch 155 | loss=1.2810 dist=0.9732 div=2.164 H=0.101 gd=0.680 lr=8.49e-04
+  [d_model=64] epoch 156 | loss=1.2817 dist=0.9581 div=2.155 H=0.099 gd=0.704 lr=8.49e-04
+  [d_model=64] epoch 157 | loss=1.2777 dist=0.9603 div=2.178 H=0.098 gd=0.661 lr=8.49e-04
+  [d_model=64] epoch 158 | loss=1.2740 dist=0.9607 div=2.175 H=0.099 gd=0.714 lr=8.49e-04
+  [d_model=64] epoch 159 | loss=1.2671 dist=0.9588 div=2.163 H=0.098 gd=0.651 lr=8.49e-04
+  [d_model=64] epoch 160 | loss=1.2708 dist=0.9576 div=2.183 H=0.098 gd=0.694 lr=8.49e-04
+  [d_model=64] epoch 161 | loss=1.2841 dist=0.9668 div=2.168 H=0.100 gd=0.613 lr=8.49e-04
+  [d_model=64] epoch 162 | loss=1.2760 dist=0.9597 div=2.161 H=0.098 gd=0.674 lr=8.49e-04
+  [d_model=64] epoch 163 | loss=1.2683 dist=0.9616 div=2.169 H=0.098 gd=0.650 lr=8.49e-04
+  [d_model=64] epoch 164 | loss=1.2619 dist=0.9553 div=2.179 H=0.095 gd=0.714 lr=8.49e-04
+  [d_model=64] epoch 165 | loss=1.2685 dist=0.9594 div=2.151 H=0.100 gd=0.675 lr=8.49e-04
+  [d_model=64] epoch 166 | loss=1.2713 dist=0.9513 div=2.175 H=0.097 gd=0.688 lr=8.49e-04
+  [d_model=64] epoch 167 | loss=1.2736 dist=0.9502 div=2.162 H=0.097 gd=0.656 lr=8.49e-04
+  [d_model=64] epoch 168 | loss=1.2704 dist=0.9565 div=2.164 H=0.097 gd=0.696 lr=8.49e-04
+  [d_model=64] epoch 169 | loss=1.2634 dist=0.9613 div=2.166 H=0.099 gd=0.637 lr=8.49e-04
+  [d_model=64] epoch 170 | loss=1.2642 dist=0.9550 div=2.175 H=0.096 gd=0.693 lr=8.49e-04
+  [d_model=64] epoch 171 | loss=1.2625 dist=0.9476 div=2.174 H=0.097 gd=0.665 lr=8.49e-04
+  [d_model=64] epoch 172 | loss=1.2553 dist=0.9545 div=2.162 H=0.099 gd=0.647 lr=8.49e-04
+  [d_model=64] epoch 173 | loss=1.2534 dist=0.9581 div=2.158 H=0.100 gd=0.698 lr=8.49e-04
+  [d_model=64] epoch 174 | loss=1.2544 dist=0.9563 div=2.179 H=0.097 gd=0.688 lr=8.49e-04
+  [d_model=64] epoch 175 | loss=1.2529 dist=0.9518 div=2.161 H=0.099 gd=0.575 lr=8.49e-04
+  [d_model=64] epoch 176 | loss=1.2583 dist=0.9537 div=2.174 H=0.099 gd=0.671 lr=8.49e-04
+  [d_model=64] epoch 177 | loss=1.2580 dist=0.9499 div=2.176 H=0.095 gd=0.701 lr=8.49e-04
+  [d_model=64] epoch 178 | loss=1.2527 dist=0.9455 div=2.189 H=0.097 gd=0.724 lr=8.49e-04
+  [d_model=64] epoch 179 | loss=1.2504 dist=0.9501 div=2.174 H=0.096 gd=0.715 lr=8.49e-04
+  [d_model=64] epoch 180 | loss=1.2469 dist=0.9505 div=2.179 H=0.097 gd=0.656 lr=8.49e-04
+  [d_model=64] epoch 181 | loss=1.2545 dist=0.9542 div=2.172 H=0.097 gd=0.704 lr=8.49e-04
+  [d_model=64] epoch 182 | loss=1.2499 dist=0.9568 div=2.167 H=0.096 gd=0.668 lr=8.49e-04
+  [d_model=64] epoch 183 | loss=1.2458 dist=0.9496 div=2.174 H=0.097 gd=0.651 lr=8.49e-04
+  [d_model=64] epoch 184 | loss=1.2424 dist=0.9435 div=2.170 H=0.095 gd=0.663 lr=8.49e-04
+  [d_model=64] epoch 185 | loss=1.2417 dist=0.9519 div=2.184 H=0.097 gd=0.660 lr=8.49e-04
+  [d_model=64] epoch 186 | loss=1.2401 dist=0.9509 div=2.172 H=0.096 gd=0.641 lr=8.49e-04
+  [d_model=64] epoch 187 | loss=1.2429 dist=0.9582 div=2.166 H=0.097 gd=0.675 lr=8.49e-04
+  [d_model=64] epoch 188 | loss=1.2432 dist=0.9467 div=2.173 H=0.097 gd=0.672 lr=8.49e-04
+  [d_model=64] epoch 189 | loss=1.2430 dist=0.9511 div=2.181 H=0.097 gd=0.650 lr=8.49e-04
+  [d_model=64] epoch 190 | loss=1.2409 dist=0.9513 div=2.165 H=0.096 gd=0.664 lr=8.49e-04
+  [d_model=64] epoch 191 | loss=1.2358 dist=0.9597 div=2.178 H=0.099 gd=0.686 lr=8.49e-04
+  [d_model=64] epoch 192 | loss=1.2568 dist=0.9495 div=2.171 H=0.097 gd=0.684 lr=8.49e-04
+  [d_model=64] epoch 193 | loss=1.2490 dist=0.9487 div=2.169 H=0.096 gd=0.673 lr=8.49e-04
+  [d_model=64] epoch 194 | loss=1.2489 dist=0.9470 div=2.174 H=0.097 gd=0.642 lr=8.49e-04
+  [d_model=64] epoch 195 | loss=1.2450 dist=0.9473 div=2.169 H=0.098 gd=0.587 lr=8.49e-04
+  [d_model=64] epoch 196 | loss=1.2474 dist=0.9581 div=2.178 H=0.097 gd=0.666 lr=8.49e-04
+  [d_model=64] epoch 197 | loss=1.2389 dist=0.9481 div=2.176 H=0.097 gd=0.675 lr=8.49e-04
+  [d_model=64] epoch 198 | loss=1.2363 dist=0.9508 div=2.182 H=0.096 gd=0.711 lr=8.49e-04
+  [d_model=64] epoch 199 | loss=1.2316 dist=0.9540 div=2.178 H=0.096 gd=0.691 lr=8.49e-04
+
+=== d_model=128 ===
+  [d_model=128] epoch   0 | loss=6.8069 dist=1.3440 div=1.772 H=0.209 gd=0.616 lr=8.49e-04
+  [d_model=128] epoch   1 | loss=3.0251 dist=1.1974 div=1.901 H=0.184 gd=0.582 lr=8.49e-04
+  [d_model=128] epoch   2 | loss=2.3492 dist=1.1236 div=1.992 H=0.165 gd=0.475 lr=8.49e-04
+  [d_model=128] epoch   3 | loss=2.0551 dist=1.0613 div=1.992 H=0.152 gd=0.503 lr=8.49e-04
+  [d_model=128] epoch   4 | loss=1.8833 dist=1.0192 div=2.054 H=0.148 gd=0.475 lr=8.49e-04
+  [d_model=128] epoch   5 | loss=1.7816 dist=1.0033 div=2.078 H=0.143 gd=0.491 lr=8.49e-04
+  [d_model=128] epoch   6 | loss=1.7086 dist=0.9962 div=2.108 H=0.138 gd=0.525 lr=8.49e-04
+  [d_model=128] epoch   7 | loss=1.6678 dist=0.9783 div=2.088 H=0.140 gd=0.516 lr=8.49e-04
+  [d_model=128] epoch   8 | loss=1.6306 dist=0.9698 div=2.127 H=0.129 gd=0.552 lr=8.49e-04
+  [d_model=128] epoch   9 | loss=1.5712 dist=0.9695 div=2.134 H=0.117 gd=0.574 lr=8.49e-04
+  [d_model=128] epoch  10 | loss=1.4738 dist=0.9499 div=2.163 H=0.109 gd=0.572 lr=8.49e-04
+  [d_model=128] epoch  11 | loss=1.4031 dist=0.9366 div=2.153 H=0.109 gd=0.591 lr=8.49e-04
+  [d_model=128] epoch  12 | loss=1.3434 dist=0.9399 div=2.181 H=0.106 gd=0.570 lr=8.49e-04
+  [d_model=128] epoch  13 | loss=1.3135 dist=0.9268 div=2.167 H=0.105 gd=0.577 lr=8.49e-04
+  [d_model=128] epoch  14 | loss=1.3037 dist=0.9361 div=2.177 H=0.109 gd=0.583 lr=8.49e-04
+  [d_model=128] epoch  15 | loss=1.2965 dist=0.9246 div=2.170 H=0.108 gd=0.562 lr=8.49e-04
+  [d_model=128] epoch  16 | loss=1.2957 dist=0.9270 div=2.166 H=0.108 gd=0.581 lr=8.49e-04
+  [d_model=128] epoch  17 | loss=1.2826 dist=0.9233 div=2.166 H=0.106 gd=0.584 lr=8.49e-04
+  [d_model=128] epoch  18 | loss=1.2615 dist=0.9038 div=2.175 H=0.102 gd=0.584 lr=8.49e-04
+  [d_model=128] epoch  19 | loss=1.2392 dist=0.8898 div=2.200 H=0.101 gd=0.574 lr=8.49e-04
+  [d_model=128] epoch  20 | loss=1.2096 dist=0.8994 div=2.188 H=0.104 gd=0.579 lr=8.49e-04
+  [d_model=128] epoch  21 | loss=1.1948 dist=0.8871 div=2.215 H=0.099 gd=0.599 lr=8.49e-04
+  [d_model=128] epoch  22 | loss=1.1761 dist=0.8833 div=2.208 H=0.098 gd=0.603 lr=8.49e-04
+  [d_model=128] epoch  23 | loss=1.1732 dist=0.8622 div=2.200 H=0.094 gd=0.608 lr=8.49e-04
+  [d_model=128] epoch  24 | loss=1.1553 dist=0.8638 div=2.226 H=0.095 gd=0.596 lr=8.49e-04
+  [d_model=128] epoch  25 | loss=1.1298 dist=0.8591 div=2.242 H=0.093 gd=0.599 lr=8.49e-04
+  [d_model=128] epoch  26 | loss=1.1263 dist=0.8892 div=2.222 H=0.094 gd=0.608 lr=8.49e-04
+  [d_model=128] epoch  27 | loss=1.1547 dist=0.8595 div=2.242 H=0.091 gd=0.624 lr=8.49e-04
+  [d_model=128] epoch  28 | loss=1.1354 dist=0.8473 div=2.227 H=0.094 gd=0.622 lr=8.49e-04
+  [d_model=128] epoch  29 | loss=1.1383 dist=0.8566 div=2.220 H=0.091 gd=0.626 lr=8.49e-04
+  [d_model=128] epoch  30 | loss=1.1341 dist=0.8551 div=2.212 H=0.093 gd=0.618 lr=8.49e-04
+  [d_model=128] epoch  31 | loss=1.1132 dist=0.8532 div=2.214 H=0.093 gd=0.614 lr=8.49e-04
+  [d_model=128] epoch  32 | loss=1.1106 dist=0.8455 div=2.220 H=0.093 gd=0.619 lr=8.49e-04
+  [d_model=128] epoch  33 | loss=1.1023 dist=0.8520 div=2.231 H=0.091 gd=0.638 lr=8.49e-04
+  [d_model=128] epoch  34 | loss=1.1033 dist=0.8510 div=2.234 H=0.091 gd=0.640 lr=8.49e-04
+  [d_model=128] epoch  35 | loss=1.0905 dist=0.8359 div=2.217 H=0.089 gd=0.620 lr=8.49e-04
+  [d_model=128] epoch  36 | loss=1.0681 dist=0.8302 div=2.243 H=0.089 gd=0.625 lr=8.49e-04
+  [d_model=128] epoch  37 | loss=1.1204 dist=0.8443 div=2.214 H=0.092 gd=0.633 lr=8.49e-04
+  [d_model=128] epoch  38 | loss=1.2269 dist=0.8535 div=2.206 H=0.092 gd=0.646 lr=8.49e-04
+  [d_model=128] epoch  39 | loss=1.1760 dist=0.8466 div=2.216 H=0.092 gd=0.636 lr=8.49e-04
+  [d_model=128] epoch  40 | loss=1.1032 dist=0.8367 div=2.217 H=0.092 gd=0.627 lr=8.49e-04
+  [d_model=128] epoch  41 | loss=1.0752 dist=0.8272 div=2.246 H=0.089 gd=0.667 lr=8.49e-04
+  [d_model=128] epoch  42 | loss=1.0765 dist=0.8380 div=2.201 H=0.092 gd=0.617 lr=8.49e-04
+  [d_model=128] epoch  43 | loss=1.0740 dist=0.8339 div=2.252 H=0.089 gd=0.650 lr=8.49e-04
+  [d_model=128] epoch  44 | loss=1.0758 dist=0.8533 div=2.229 H=0.090 gd=0.643 lr=8.49e-04
+  [d_model=128] epoch  45 | loss=1.0539 dist=0.8207 div=2.259 H=0.089 gd=0.662 lr=8.49e-04
+  [d_model=128] epoch  46 | loss=1.0432 dist=0.8192 div=2.239 H=0.087 gd=0.641 lr=8.49e-04
+  [d_model=128] epoch  47 | loss=1.0512 dist=0.8285 div=2.206 H=0.091 gd=0.627 lr=8.49e-04
+  [d_model=128] epoch  48 | loss=1.0417 dist=0.8187 div=2.246 H=0.087 gd=0.636 lr=8.49e-04
+  [d_model=128] epoch  49 | loss=1.0446 dist=0.8088 div=2.234 H=0.088 gd=0.649 lr=8.49e-04
+  [d_model=128] epoch  50 | loss=1.0336 dist=0.8062 div=2.238 H=0.086 gd=0.675 lr=8.49e-04
+  [d_model=128] epoch  51 | loss=1.0134 dist=0.8131 div=2.246 H=0.088 gd=0.681 lr=8.49e-04
+  [d_model=128] epoch  52 | loss=1.0086 dist=0.7934 div=2.256 H=0.085 gd=0.626 lr=8.49e-04
+  [d_model=128] epoch  53 | loss=0.9971 dist=0.8054 div=2.250 H=0.083 gd=0.657 lr=8.49e-04
+  [d_model=128] epoch  54 | loss=1.0062 dist=0.7998 div=2.249 H=0.086 gd=0.655 lr=8.49e-04
+  [d_model=128] epoch  55 | loss=1.0068 dist=0.7896 div=2.248 H=0.084 gd=0.613 lr=8.49e-04
+  [d_model=128] epoch  56 | loss=1.0041 dist=0.8030 div=2.268 H=0.084 gd=0.670 lr=8.49e-04
+  [d_model=128] epoch  57 | loss=1.0033 dist=0.7780 div=2.263 H=0.083 gd=0.633 lr=8.49e-04
+  [d_model=128] epoch  58 | loss=0.9914 dist=0.7843 div=2.264 H=0.081 gd=0.620 lr=8.49e-04
+  [d_model=128] epoch  59 | loss=0.9825 dist=0.7776 div=2.259 H=0.083 gd=0.637 lr=8.49e-04
+  [d_model=128] epoch  60 | loss=0.9853 dist=0.7930 div=2.263 H=0.082 gd=0.664 lr=8.49e-04
+  [d_model=128] epoch  61 | loss=0.9633 dist=0.8026 div=2.267 H=0.083 gd=0.680 lr=8.49e-04
+  [d_model=128] epoch  62 | loss=0.9664 dist=0.7773 div=2.270 H=0.083 gd=0.688 lr=8.49e-04
+  [d_model=128] epoch  63 | loss=1.0093 dist=0.7890 div=2.242 H=0.085 gd=0.698 lr=8.49e-04
+  [d_model=128] epoch  64 | loss=0.9821 dist=0.7793 div=2.275 H=0.084 gd=0.658 lr=8.49e-04
+  [d_model=128] epoch  65 | loss=0.9754 dist=0.7906 div=2.248 H=0.085 gd=0.633 lr=8.49e-04
+  [d_model=128] epoch  66 | loss=0.9641 dist=0.7961 div=2.243 H=0.083 gd=0.726 lr=8.49e-04
+  [d_model=128] epoch  67 | loss=0.9676 dist=0.8022 div=2.251 H=0.082 gd=0.640 lr=8.49e-04
+  [d_model=128] epoch  68 | loss=0.9623 dist=0.7864 div=2.245 H=0.085 gd=0.651 lr=8.49e-04
+  [d_model=128] epoch  69 | loss=0.9932 dist=0.8013 div=2.262 H=0.086 gd=0.680 lr=8.49e-04
+  [d_model=128] epoch  70 | loss=1.0108 dist=0.7789 div=2.238 H=0.082 gd=0.636 lr=8.49e-04
+  [d_model=128] epoch  71 | loss=1.0372 dist=0.7904 div=2.245 H=0.085 gd=0.658 lr=8.49e-04
+  [d_model=128] epoch  72 | loss=1.0221 dist=0.7762 div=2.254 H=0.085 gd=0.659 lr=8.49e-04
+  [d_model=128] epoch  73 | loss=0.9742 dist=0.7686 div=2.241 H=0.084 gd=0.662 lr=8.49e-04
+  [d_model=128] epoch  74 | loss=0.9794 dist=0.8003 div=2.266 H=0.088 gd=0.648 lr=8.49e-04
+  [d_model=128] epoch  75 | loss=1.0011 dist=0.8026 div=2.305 H=0.086 gd=0.671 lr=8.49e-04
+  [d_model=128] epoch  76 | loss=0.9771 dist=0.7646 div=2.257 H=0.082 gd=0.698 lr=8.49e-04
+  [d_model=128] epoch  77 | loss=0.9549 dist=0.7766 div=2.248 H=0.086 gd=0.660 lr=8.49e-04
+  [d_model=128] epoch  78 | loss=0.9677 dist=0.7762 div=2.273 H=0.084 gd=0.688 lr=8.49e-04
+  [d_model=128] epoch  79 | loss=0.9337 dist=0.7560 div=2.277 H=0.083 gd=0.662 lr=8.49e-04
+  [d_model=128] epoch  80 | loss=0.9727 dist=0.7829 div=2.258 H=0.084 gd=0.646 lr=8.49e-04
+  [d_model=128] epoch  81 | loss=0.9706 dist=0.7562 div=2.258 H=0.085 gd=0.660 lr=8.49e-04
+  [d_model=128] epoch  82 | loss=0.9427 dist=0.7635 div=2.280 H=0.084 gd=0.698 lr=8.49e-04
+  [d_model=128] epoch  83 | loss=0.9492 dist=0.7621 div=2.258 H=0.084 gd=0.677 lr=8.49e-04
+  [d_model=128] epoch  84 | loss=0.9463 dist=0.7497 div=2.249 H=0.083 gd=0.630 lr=8.49e-04
+  [d_model=128] epoch  85 | loss=0.9271 dist=0.7617 div=2.268 H=0.083 gd=0.653 lr=8.49e-04
+  [d_model=128] epoch  86 | loss=0.9184 dist=0.7478 div=2.285 H=0.081 gd=0.648 lr=8.49e-04
+  [d_model=128] epoch  87 | loss=0.9158 dist=0.7626 div=2.271 H=0.083 gd=0.639 lr=8.49e-04
+  [d_model=128] epoch  88 | loss=0.9080 dist=0.7711 div=2.251 H=0.088 gd=0.685 lr=8.49e-04
+  [d_model=128] epoch  89 | loss=0.9591 dist=0.7578 div=2.246 H=0.085 gd=0.671 lr=8.49e-04
+  [d_model=128] epoch  90 | loss=0.9365 dist=0.7574 div=2.259 H=0.084 gd=0.655 lr=8.49e-04
+  [d_model=128] epoch  91 | loss=0.9285 dist=0.7854 div=2.257 H=0.083 gd=0.587 lr=8.49e-04
+  [d_model=128] epoch  92 | loss=0.8993 dist=0.7430 div=2.272 H=0.080 gd=0.640 lr=8.49e-04
+  [d_model=128] epoch  93 | loss=0.9014 dist=0.7526 div=2.254 H=0.083 gd=0.637 lr=8.49e-04
+  [d_model=128] epoch  94 | loss=0.9219 dist=0.7530 div=2.285 H=0.083 gd=0.621 lr=8.49e-04
+  [d_model=128] epoch  95 | loss=0.9148 dist=0.7481 div=2.286 H=0.081 gd=0.669 lr=8.49e-04
+  [d_model=128] epoch  96 | loss=0.9205 dist=0.7624 div=2.273 H=0.084 gd=0.662 lr=8.49e-04
+  [d_model=128] epoch  97 | loss=0.9102 dist=0.7418 div=2.266 H=0.081 gd=0.661 lr=8.49e-04
+  [d_model=128] epoch  98 | loss=0.8988 dist=0.7479 div=2.264 H=0.083 gd=0.644 lr=8.49e-04
+  [d_model=128] epoch  99 | loss=0.9046 dist=0.7539 div=2.274 H=0.081 gd=0.652 lr=8.49e-04
+  [d_model=128] epoch 100 | loss=0.8921 dist=0.7418 div=2.258 H=0.080 gd=0.682 lr=8.49e-04
+  [d_model=128] epoch 101 | loss=0.8756 dist=0.7389 div=2.288 H=0.083 gd=0.664 lr=8.49e-04
+  [d_model=128] epoch 102 | loss=0.8767 dist=0.7439 div=2.298 H=0.079 gd=0.689 lr=8.49e-04
+  [d_model=128] epoch 103 | loss=0.8732 dist=0.7518 div=2.289 H=0.079 gd=0.716 lr=8.49e-04
+  [d_model=128] epoch 104 | loss=0.9043 dist=0.7450 div=2.282 H=0.081 gd=0.666 lr=8.49e-04
+  [d_model=128] epoch 105 | loss=0.9146 dist=0.7359 div=2.286 H=0.081 gd=0.667 lr=8.49e-04
+  [d_model=128] epoch 106 | loss=0.8764 dist=0.7519 div=2.266 H=0.080 gd=0.694 lr=8.49e-04
+  [d_model=128] epoch 107 | loss=0.8914 dist=0.7381 div=2.285 H=0.083 gd=0.689 lr=8.49e-04
+  [d_model=128] epoch 108 | loss=0.8778 dist=0.7407 div=2.279 H=0.083 gd=0.684 lr=8.49e-04
+  [d_model=128] epoch 109 | loss=0.8708 dist=0.7467 div=2.259 H=0.080 gd=0.671 lr=8.49e-04
+  [d_model=128] epoch 110 | loss=0.8767 dist=0.7574 div=2.273 H=0.082 gd=0.656 lr=8.49e-04
+  [d_model=128] epoch 111 | loss=0.8717 dist=0.7366 div=2.286 H=0.082 gd=0.688 lr=8.49e-04
+  [d_model=128] epoch 112 | loss=0.8932 dist=0.7659 div=2.271 H=0.081 gd=0.637 lr=8.49e-04
+  [d_model=128] epoch 113 | loss=0.9300 dist=0.7543 div=2.269 H=0.080 gd=0.659 lr=8.49e-04
+  [d_model=128] epoch 114 | loss=0.9300 dist=0.7663 div=2.281 H=0.085 gd=0.673 lr=8.49e-04
+  [d_model=128] epoch 115 | loss=0.9032 dist=0.7427 div=2.286 H=0.080 gd=0.674 lr=8.49e-04
+  [d_model=128] epoch 116 | loss=0.8749 dist=0.7362 div=2.295 H=0.081 gd=0.649 lr=8.49e-04
+  [d_model=128] epoch 117 | loss=0.8862 dist=0.7609 div=2.277 H=0.082 gd=0.665 lr=8.49e-04
+  [d_model=128] epoch 118 | loss=0.8744 dist=0.7379 div=2.282 H=0.081 gd=0.700 lr=8.49e-04
+  [d_model=128] epoch 119 | loss=0.8635 dist=0.7345 div=2.282 H=0.080 gd=0.633 lr=8.49e-04
+  [d_model=128] epoch 120 | loss=0.8734 dist=0.7487 div=2.282 H=0.080 gd=0.663 lr=8.49e-04
+  [d_model=128] epoch 121 | loss=0.8726 dist=0.7258 div=2.288 H=0.080 gd=0.654 lr=8.49e-04
+  [d_model=128] epoch 122 | loss=0.8457 dist=0.7279 div=2.301 H=0.077 gd=0.651 lr=8.49e-04
+  [d_model=128] epoch 123 | loss=0.8727 dist=0.7675 div=2.290 H=0.081 gd=0.616 lr=8.49e-04
+  [d_model=128] epoch 124 | loss=0.8544 dist=0.7271 div=2.291 H=0.080 gd=0.650 lr=8.49e-04
+  [d_model=128] epoch 125 | loss=0.8483 dist=0.7579 div=2.306 H=0.080 gd=0.661 lr=8.49e-04
+  [d_model=128] epoch 126 | loss=0.8426 dist=0.7398 div=2.308 H=0.075 gd=0.662 lr=8.49e-04
+  [d_model=128] epoch 127 | loss=0.8672 dist=0.7481 div=2.290 H=0.078 gd=0.630 lr=8.49e-04
+  [d_model=128] epoch 128 | loss=0.8862 dist=0.7403 div=2.285 H=0.079 gd=0.608 lr=8.49e-04
+  [d_model=128] epoch 129 | loss=0.8723 dist=0.7341 div=2.283 H=0.078 gd=0.618 lr=8.49e-04
+  [d_model=128] epoch 130 | loss=0.8607 dist=0.7506 div=2.312 H=0.075 gd=0.676 lr=8.49e-04
+  [d_model=128] epoch 131 | loss=0.8457 dist=0.7278 div=2.300 H=0.077 gd=0.644 lr=8.49e-04
+  [d_model=128] epoch 132 | loss=0.8460 dist=0.7577 div=2.298 H=0.077 gd=0.622 lr=8.49e-04
+  [d_model=128] epoch 133 | loss=0.8480 dist=0.7345 div=2.293 H=0.076 gd=0.639 lr=8.49e-04
+  [d_model=128] epoch 134 | loss=0.8558 dist=0.7268 div=2.303 H=0.075 gd=0.673 lr=8.49e-04
+  [d_model=128] epoch 135 | loss=0.8393 dist=0.7465 div=2.272 H=0.080 gd=0.698 lr=8.49e-04
+  [d_model=128] epoch 136 | loss=0.8337 dist=0.7235 div=2.308 H=0.075 gd=0.671 lr=8.49e-04
+  [d_model=128] epoch 137 | loss=0.8257 dist=0.7337 div=2.289 H=0.077 gd=0.644 lr=8.49e-04
+  [d_model=128] epoch 138 | loss=0.8246 dist=0.7330 div=2.289 H=0.077 gd=0.637 lr=8.49e-04
+  [d_model=128] epoch 139 | loss=0.8242 dist=0.7318 div=2.303 H=0.078 gd=0.643 lr=8.49e-04
+  [d_model=128] epoch 140 | loss=0.8227 dist=0.7276 div=2.289 H=0.076 gd=0.690 lr=8.49e-04
+  [d_model=128] epoch 141 | loss=0.8188 dist=0.7240 div=2.298 H=0.075 gd=0.706 lr=8.49e-04
+  [d_model=128] epoch 142 | loss=0.8214 dist=0.7355 div=2.305 H=0.076 gd=0.662 lr=8.49e-04
+  [d_model=128] epoch 143 | loss=0.8343 dist=0.7376 div=2.305 H=0.076 gd=0.683 lr=8.49e-04
+  [d_model=128] epoch 144 | loss=0.8374 dist=0.7316 div=2.286 H=0.077 gd=0.640 lr=8.49e-04
+  [d_model=128] epoch 145 | loss=0.8396 dist=0.7370 div=2.293 H=0.076 gd=0.647 lr=8.49e-04
+  [d_model=128] epoch 146 | loss=0.8227 dist=0.7341 div=2.302 H=0.076 gd=0.592 lr=8.49e-04
+  [d_model=128] epoch 147 | loss=0.8307 dist=0.7263 div=2.291 H=0.077 gd=0.677 lr=8.49e-04
+  [d_model=128] epoch 148 | loss=0.8378 dist=0.7292 div=2.296 H=0.077 gd=0.654 lr=8.49e-04
+  [d_model=128] epoch 149 | loss=0.8238 dist=0.7159 div=2.303 H=0.075 gd=0.655 lr=8.49e-04
+  [d_model=128] epoch 150 | loss=0.8207 dist=0.7257 div=2.311 H=0.075 gd=0.665 lr=8.49e-04
+  [d_model=128] epoch 151 | loss=0.8304 dist=0.7319 div=2.303 H=0.075 gd=0.625 lr=8.49e-04
+  [d_model=128] epoch 152 | loss=0.8211 dist=0.7274 div=2.313 H=0.075 gd=0.683 lr=8.49e-04
+  [d_model=128] epoch 153 | loss=0.8090 dist=0.7273 div=2.308 H=0.074 gd=0.674 lr=8.49e-04
+  [d_model=128] epoch 154 | loss=0.8059 dist=0.7257 div=2.304 H=0.072 gd=0.631 lr=8.49e-04
+  [d_model=128] epoch 155 | loss=0.8148 dist=0.7416 div=2.313 H=0.074 gd=0.664 lr=8.49e-04
+  [d_model=128] epoch 156 | loss=0.8088 dist=0.7226 div=2.283 H=0.075 gd=0.651 lr=8.49e-04
+  [d_model=128] epoch 157 | loss=0.8040 dist=0.7442 div=2.315 H=0.071 gd=0.637 lr=8.49e-04
+  [d_model=128] epoch 158 | loss=0.7952 dist=0.7143 div=2.311 H=0.075 gd=0.640 lr=8.49e-04
+  [d_model=128] epoch 159 | loss=0.7951 dist=0.7081 div=2.310 H=0.075 gd=0.671 lr=8.49e-04
+  [d_model=128] epoch 160 | loss=0.8170 dist=0.7123 div=2.290 H=0.076 gd=0.673 lr=8.49e-04
+  [d_model=128] epoch 161 | loss=0.8097 dist=0.7300 div=2.285 H=0.075 gd=0.621 lr=8.49e-04
+  [d_model=128] epoch 162 | loss=0.8040 dist=0.7297 div=2.287 H=0.073 gd=0.624 lr=8.49e-04
+  [d_model=128] epoch 163 | loss=0.8037 dist=0.7249 div=2.301 H=0.075 gd=0.636 lr=8.49e-04
+  [d_model=128] epoch 164 | loss=0.8075 dist=0.7086 div=2.284 H=0.073 gd=0.610 lr=8.49e-04
+  [d_model=128] epoch 165 | loss=0.7999 dist=0.7208 div=2.308 H=0.077 gd=0.611 lr=8.49e-04
+  [d_model=128] epoch 166 | loss=0.7979 dist=0.7304 div=2.312 H=0.073 gd=0.593 lr=8.49e-04
+  [d_model=128] epoch 167 | loss=0.7895 dist=0.7124 div=2.298 H=0.075 gd=0.683 lr=8.49e-04
+  [d_model=128] epoch 168 | loss=0.7933 dist=0.7213 div=2.292 H=0.072 gd=0.654 lr=8.49e-04
+  [d_model=128] epoch 169 | loss=0.7884 dist=0.7096 div=2.302 H=0.074 gd=0.633 lr=8.49e-04
+  [d_model=128] epoch 170 | loss=0.8230 dist=0.7205 div=2.316 H=0.076 gd=0.586 lr=8.49e-04
+  [d_model=128] epoch 171 | loss=0.8046 dist=0.7110 div=2.283 H=0.075 gd=0.648 lr=8.49e-04
+  [d_model=128] epoch 172 | loss=0.8110 dist=0.7382 div=2.313 H=0.075 gd=0.643 lr=8.49e-04
+  [d_model=128] epoch 173 | loss=0.8070 dist=0.7098 div=2.278 H=0.075 gd=0.599 lr=8.49e-04
+  [d_model=128] epoch 174 | loss=0.7957 dist=0.7064 div=2.312 H=0.072 gd=0.632 lr=8.49e-04
+  [d_model=128] epoch 175 | loss=0.8059 dist=0.7260 div=2.318 H=0.073 gd=0.634 lr=8.49e-04
+  [d_model=128] epoch 176 | loss=0.7820 dist=0.7010 div=2.295 H=0.073 gd=0.634 lr=8.49e-04
+  [d_model=128] epoch 177 | loss=0.8027 dist=0.7301 div=2.290 H=0.074 gd=0.652 lr=8.49e-04
+  [d_model=128] epoch 178 | loss=0.7887 dist=0.7089 div=2.313 H=0.073 gd=0.607 lr=8.49e-04
+  [d_model=128] epoch 179 | loss=0.7846 dist=0.7261 div=2.292 H=0.075 gd=0.667 lr=8.49e-04
+  [d_model=128] epoch 180 | loss=0.7850 dist=0.7090 div=2.294 H=0.075 gd=0.688 lr=8.49e-04
+  [d_model=128] epoch 181 | loss=0.8088 dist=0.7202 div=2.302 H=0.074 gd=0.668 lr=8.49e-04
+  [d_model=128] epoch 182 | loss=0.7948 dist=0.7182 div=2.300 H=0.075 gd=0.645 lr=8.49e-04
+  [d_model=128] epoch 183 | loss=0.8042 dist=0.7240 div=2.295 H=0.075 gd=0.644 lr=8.49e-04
+  [d_model=128] epoch 184 | loss=0.7969 dist=0.7183 div=2.311 H=0.075 gd=0.646 lr=8.49e-04
+  [d_model=128] epoch 185 | loss=0.7981 dist=0.7091 div=2.295 H=0.073 gd=0.613 lr=8.49e-04
+  [d_model=128] epoch 186 | loss=0.7939 dist=0.7311 div=2.299 H=0.076 gd=0.641 lr=8.49e-04
+  [d_model=128] epoch 187 | loss=0.7964 dist=0.7332 div=2.307 H=0.072 gd=0.577 lr=8.49e-04
+  [d_model=128] epoch 188 | loss=0.7983 dist=0.7102 div=2.289 H=0.072 gd=0.689 lr=8.49e-04
+  [d_model=128] epoch 189 | loss=0.7877 dist=0.7125 div=2.308 H=0.073 gd=0.639 lr=8.49e-04
+  [d_model=128] epoch 190 | loss=0.8004 dist=0.7289 div=2.306 H=0.076 gd=0.659 lr=8.49e-04
+  [d_model=128] epoch 191 | loss=0.7967 dist=0.7169 div=2.302 H=0.073 gd=0.695 lr=8.49e-04
+  [d_model=128] epoch 192 | loss=0.7891 dist=0.7216 div=2.308 H=0.074 gd=0.658 lr=8.49e-04
+  [d_model=128] epoch 193 | loss=0.7986 dist=0.7147 div=2.289 H=0.076 gd=0.653 lr=8.49e-04
+  [d_model=128] epoch 194 | loss=0.7991 dist=0.7165 div=2.294 H=0.075 gd=0.701 lr=8.49e-04
+  [d_model=128] epoch 195 | loss=0.7943 dist=0.7235 div=2.313 H=0.071 gd=0.620 lr=8.49e-04
+  [d_model=128] epoch 196 | loss=0.7914 dist=0.7159 div=2.307 H=0.076 gd=0.690 lr=8.49e-04
+  [d_model=128] epoch 197 | loss=0.8023 dist=0.7209 div=2.314 H=0.074 gd=0.672 lr=8.49e-04
+  [d_model=128] epoch 198 | loss=0.8083 dist=0.7157 div=2.277 H=0.073 gd=0.593 lr=8.49e-04
+  [d_model=128] epoch 199 | loss=0.8423 dist=0.7124 div=2.336 H=0.073 gd=0.619 lr=8.49e-04
+
+=== d_model=256 ===
+  [d_model=256] epoch   0 | loss=5.5383 dist=1.1965 div=1.873 H=0.176 gd=0.557 lr=8.49e-04
+  [d_model=256] epoch   1 | loss=2.1317 dist=1.0715 div=2.003 H=0.149 gd=0.500 lr=8.49e-04
+  [d_model=256] epoch   2 | loss=1.7855 dist=1.0524 div=2.023 H=0.145 gd=0.576 lr=8.49e-04
+  [d_model=256] epoch   3 | loss=1.6450 dist=1.0316 div=2.071 H=0.129 gd=0.562 lr=8.49e-04
+  [d_model=256] epoch   4 | loss=1.5637 dist=0.9803 div=2.141 H=0.118 gd=0.615 lr=8.49e-04
+  [d_model=256] epoch   5 | loss=1.4099 dist=0.9683 div=2.157 H=0.115 gd=0.636 lr=8.49e-04
+  [d_model=256] epoch   6 | loss=1.3807 dist=0.9423 div=2.172 H=0.101 gd=0.634 lr=8.49e-04
+  [d_model=256] epoch   7 | loss=1.2667 dist=0.9234 div=2.182 H=0.095 gd=0.625 lr=8.49e-04
+  [d_model=256] epoch   8 | loss=1.2267 dist=0.9035 div=2.199 H=0.092 gd=0.651 lr=8.49e-04
+  [d_model=256] epoch   9 | loss=1.2270 dist=0.9445 div=2.185 H=0.098 gd=0.685 lr=8.49e-04
+  [d_model=256] epoch  10 | loss=1.2252 dist=0.8960 div=2.175 H=0.091 gd=0.648 lr=8.49e-04
+  [d_model=256] epoch  11 | loss=1.1625 dist=0.8873 div=2.212 H=0.088 gd=0.674 lr=8.49e-04
+  [d_model=256] epoch  12 | loss=1.1206 dist=0.9027 div=2.196 H=0.089 gd=0.664 lr=8.49e-04
+  [d_model=256] epoch  13 | loss=1.1414 dist=0.8651 div=2.234 H=0.085 gd=0.685 lr=8.49e-04
+  [d_model=256] epoch  14 | loss=1.0959 dist=0.8892 div=2.167 H=0.088 gd=0.720 lr=8.49e-04
+  [d_model=256] epoch  15 | loss=1.0634 dist=0.8654 div=2.267 H=0.080 gd=0.747 lr=8.49e-04
+  [d_model=256] epoch  16 | loss=1.0635 dist=0.8488 div=2.225 H=0.084 gd=0.731 lr=8.49e-04
+  [d_model=256] epoch  17 | loss=1.0331 dist=0.8501 div=2.254 H=0.081 gd=0.690 lr=8.49e-04
+  [d_model=256] epoch  18 | loss=1.0181 dist=0.8368 div=2.233 H=0.081 gd=0.695 lr=8.49e-04
+  [d_model=256] epoch  19 | loss=0.9955 dist=0.8435 div=2.236 H=0.082 gd=0.729 lr=8.49e-04
+  [d_model=256] epoch  20 | loss=1.0055 dist=0.8154 div=2.242 H=0.081 gd=0.706 lr=8.49e-04
+  [d_model=256] epoch  21 | loss=0.9837 dist=0.8183 div=2.237 H=0.081 gd=0.726 lr=8.49e-04
+  [d_model=256] epoch  22 | loss=0.9707 dist=0.8355 div=2.252 H=0.080 gd=0.728 lr=8.49e-04
+  [d_model=256] epoch  23 | loss=0.9724 dist=0.8372 div=2.259 H=0.083 gd=0.770 lr=8.49e-04
+  [d_model=256] epoch  24 | loss=1.0013 dist=0.8551 div=2.260 H=0.081 gd=0.744 lr=8.49e-04
+  [d_model=256] epoch  25 | loss=1.0401 dist=0.8468 div=2.242 H=0.083 gd=0.718 lr=8.49e-04
+  [d_model=256] epoch  26 | loss=1.0228 dist=0.8403 div=2.261 H=0.082 gd=0.776 lr=8.49e-04
+  [d_model=256] epoch  27 | loss=1.0040 dist=0.8277 div=2.241 H=0.081 gd=0.767 lr=8.49e-04
+  [d_model=256] epoch  28 | loss=0.9959 dist=0.8486 div=2.237 H=0.084 gd=0.772 lr=8.49e-04
+  [d_model=256] epoch  29 | loss=0.9786 dist=0.8309 div=2.231 H=0.083 gd=0.743 lr=8.49e-04
+  [d_model=256] epoch  30 | loss=0.9981 dist=0.8230 div=2.230 H=0.080 gd=0.779 lr=8.49e-04
+  [d_model=256] epoch  31 | loss=0.9794 dist=0.8448 div=2.268 H=0.080 gd=0.792 lr=8.49e-04
+  [d_model=256] epoch  32 | loss=0.9731 dist=0.8128 div=2.258 H=0.079 gd=0.791 lr=8.49e-04
+  [d_model=256] epoch  33 | loss=0.9497 dist=0.8135 div=2.288 H=0.080 gd=0.746 lr=8.49e-04
+  [d_model=256] epoch  34 | loss=0.9478 dist=0.8283 div=2.253 H=0.080 gd=0.754 lr=8.49e-04
+  [d_model=256] epoch  35 | loss=0.9471 dist=0.8172 div=2.267 H=0.082 gd=0.729 lr=8.49e-04
+  [d_model=256] epoch  36 | loss=0.9458 dist=0.8167 div=2.259 H=0.081 gd=0.750 lr=8.49e-04
+  [d_model=256] epoch  37 | loss=0.9503 dist=0.8153 div=2.254 H=0.079 gd=0.741 lr=8.49e-04
+  [d_model=256] epoch  38 | loss=0.9367 dist=0.8071 div=2.247 H=0.080 gd=0.751 lr=8.49e-04
+  [d_model=256] epoch  39 | loss=0.9439 dist=0.8383 div=2.233 H=0.082 gd=0.740 lr=8.49e-04
+  [d_model=256] epoch  40 | loss=0.9500 dist=0.8361 div=2.239 H=0.082 gd=0.751 lr=8.49e-04
+  [d_model=256] epoch  41 | loss=0.9549 dist=0.8233 div=2.259 H=0.080 gd=0.757 lr=8.49e-04
+  [d_model=256] epoch  42 | loss=0.9764 dist=0.8235 div=2.271 H=0.080 gd=0.712 lr=8.49e-04
+  [d_model=256] epoch  43 | loss=0.9679 dist=0.8071 div=2.269 H=0.079 gd=0.768 lr=8.49e-04
+  [d_model=256] epoch  44 | loss=0.9515 dist=0.8125 div=2.256 H=0.080 gd=0.836 lr=8.49e-04
+  [d_model=256] epoch  45 | loss=0.9229 dist=0.8027 div=2.267 H=0.081 gd=0.753 lr=8.49e-04
+  [d_model=256] epoch  46 | loss=0.9112 dist=0.8060 div=2.290 H=0.078 gd=0.742 lr=8.49e-04
+  [d_model=256] epoch  47 | loss=0.9126 dist=0.8181 div=2.248 H=0.079 gd=0.721 lr=8.49e-04
+  [d_model=256] epoch  48 | loss=0.9259 dist=0.8379 div=2.271 H=0.080 gd=0.733 lr=8.49e-04
+  [d_model=256] epoch  49 | loss=0.9576 dist=0.8275 div=2.259 H=0.080 gd=0.722 lr=8.49e-04
+  [d_model=256] epoch  50 | loss=0.9288 dist=0.8038 div=2.281 H=0.078 gd=0.727 lr=8.49e-04
+  [d_model=256] epoch  51 | loss=0.9083 dist=0.8073 div=2.280 H=0.079 gd=0.704 lr=8.49e-04
+  [d_model=256] epoch  52 | loss=0.9192 dist=0.8055 div=2.260 H=0.080 gd=0.748 lr=8.49e-04
+  [d_model=256] epoch  53 | loss=0.9132 dist=0.7967 div=2.283 H=0.079 gd=0.722 lr=8.49e-04
+  [d_model=256] epoch  54 | loss=0.9049 dist=0.8005 div=2.268 H=0.079 gd=0.742 lr=8.49e-04
+  [d_model=256] epoch  55 | loss=0.9113 dist=0.8160 div=2.256 H=0.079 gd=0.686 lr=8.49e-04
+  [d_model=256] epoch  56 | loss=0.9279 dist=0.8116 div=2.259 H=0.082 gd=0.770 lr=8.49e-04
+  [d_model=256] epoch  57 | loss=0.9272 dist=0.8074 div=2.264 H=0.080 gd=0.715 lr=8.49e-04
+  [d_model=256] epoch  58 | loss=0.9114 dist=0.7907 div=2.273 H=0.078 gd=0.706 lr=8.49e-04
+  [d_model=256] epoch  59 | loss=0.8802 dist=0.7947 div=2.304 H=0.078 gd=0.799 lr=8.49e-04
+  [d_model=256] epoch  60 | loss=0.8971 dist=0.7949 div=2.256 H=0.078 gd=0.712 lr=8.49e-04
+  [d_model=256] epoch  61 | loss=0.9429 dist=0.8060 div=2.268 H=0.078 gd=0.753 lr=8.49e-04
+  [d_model=256] epoch  62 | loss=0.9354 dist=0.7934 div=2.260 H=0.078 gd=0.730 lr=8.49e-04
+  [d_model=256] epoch  63 | loss=0.9185 dist=0.8082 div=2.269 H=0.079 gd=0.744 lr=8.49e-04
+  [d_model=256] epoch  64 | loss=0.8965 dist=0.7879 div=2.306 H=0.078 gd=0.797 lr=8.49e-04
+  [d_model=256] epoch  65 | loss=0.8914 dist=0.7971 div=2.289 H=0.079 gd=0.745 lr=8.49e-04
+  [d_model=256] epoch  66 | loss=0.9307 dist=0.7984 div=2.277 H=0.079 gd=0.710 lr=8.49e-04
+  [d_model=256] epoch  67 | loss=0.9019 dist=0.8150 div=2.277 H=0.081 gd=0.699 lr=8.49e-04
+  [d_model=256] epoch  68 | loss=0.8936 dist=0.7875 div=2.270 H=0.080 gd=0.699 lr=8.49e-04
+  [d_model=256] epoch  69 | loss=0.8998 dist=0.8043 div=2.261 H=0.079 gd=0.743 lr=8.49e-04
+  [d_model=256] epoch  70 | loss=0.8853 dist=0.7966 div=2.293 H=0.081 gd=0.736 lr=8.49e-04
+  [d_model=256] epoch  71 | loss=0.8997 dist=0.8248 div=2.286 H=0.079 gd=0.702 lr=8.49e-04
+  [d_model=256] epoch  72 | loss=0.8862 dist=0.7799 div=2.283 H=0.077 gd=0.742 lr=8.49e-04
+  [d_model=256] epoch  73 | loss=0.8830 dist=0.7904 div=2.276 H=0.078 gd=0.738 lr=8.49e-04
+  [d_model=256] epoch  74 | loss=0.8820 dist=0.8015 div=2.261 H=0.079 gd=0.773 lr=8.49e-04
+  [d_model=256] epoch  75 | loss=0.8831 dist=0.7859 div=2.293 H=0.075 gd=0.757 lr=8.49e-04
+  [d_model=256] epoch  76 | loss=0.8689 dist=0.7974 div=2.279 H=0.078 gd=0.767 lr=8.49e-04
+  [d_model=256] epoch  77 | loss=0.8605 dist=0.7980 div=2.292 H=0.078 gd=0.733 lr=8.49e-04
+  [d_model=256] epoch  78 | loss=0.8677 dist=0.7947 div=2.289 H=0.078 gd=0.674 lr=8.49e-04
+  [d_model=256] epoch  79 | loss=0.8698 dist=0.7805 div=2.292 H=0.077 gd=0.758 lr=8.49e-04
+  [d_model=256] epoch  80 | loss=0.9204 dist=0.8052 div=2.269 H=0.079 gd=0.740 lr=8.49e-04
+  [d_model=256] epoch  81 | loss=0.9219 dist=0.8359 div=2.298 H=0.081 gd=0.721 lr=8.49e-04
+  [d_model=256] epoch  82 | loss=0.9294 dist=0.7811 div=2.271 H=0.079 gd=0.724 lr=8.49e-04
+  [d_model=256] epoch  83 | loss=0.8813 dist=0.7870 div=2.295 H=0.077 gd=0.782 lr=8.49e-04
+  [d_model=256] epoch  84 | loss=0.8974 dist=0.7857 div=2.295 H=0.077 gd=0.739 lr=8.49e-04
+  [d_model=256] epoch  85 | loss=0.8875 dist=0.7747 div=2.290 H=0.076 gd=0.784 lr=8.49e-04
+  [d_model=256] epoch  86 | loss=0.8737 dist=0.7743 div=2.282 H=0.078 gd=0.767 lr=8.49e-04
+  [d_model=256] epoch  87 | loss=0.9410 dist=0.8055 div=2.246 H=0.080 gd=0.753 lr=8.49e-04
+  [d_model=256] epoch  88 | loss=0.8986 dist=0.7866 div=2.272 H=0.080 gd=0.723 lr=8.49e-04
+  [d_model=256] epoch  89 | loss=0.9357 dist=0.8021 div=2.252 H=0.081 gd=0.752 lr=8.49e-04
+  [d_model=256] epoch  90 | loss=0.9759 dist=0.8275 div=2.290 H=0.079 gd=0.762 lr=8.49e-04
+  [d_model=256] epoch  91 | loss=0.9513 dist=0.7887 div=2.247 H=0.077 gd=0.800 lr=8.49e-04
+  [d_model=256] epoch  92 | loss=0.9388 dist=0.7939 div=2.257 H=0.080 gd=0.777 lr=8.49e-04
+  [d_model=256] epoch  93 | loss=0.9308 dist=0.8036 div=2.271 H=0.078 gd=0.750 lr=8.49e-04
+  [d_model=256] epoch  94 | loss=0.8826 dist=0.7860 div=2.252 H=0.078 gd=0.802 lr=8.49e-04
+  [d_model=256] epoch  95 | loss=0.8782 dist=0.7870 div=2.294 H=0.078 gd=0.775 lr=8.49e-04
+  [d_model=256] epoch  96 | loss=0.9079 dist=0.7841 div=2.271 H=0.077 gd=0.769 lr=8.49e-04
+  [d_model=256] epoch  97 | loss=0.8862 dist=0.8052 div=2.266 H=0.082 gd=0.793 lr=8.49e-04
+  [d_model=256] epoch  98 | loss=0.9289 dist=0.7923 div=2.294 H=0.076 gd=0.705 lr=8.49e-04
+  [d_model=256] epoch  99 | loss=0.9177 dist=0.7947 div=2.289 H=0.079 gd=0.762 lr=8.49e-04
+  [d_model=256] epoch 100 | loss=0.8842 dist=0.7951 div=2.232 H=0.083 gd=0.777 lr=8.49e-04
+  [d_model=256] epoch 101 | loss=0.9150 dist=0.8205 div=2.299 H=0.077 gd=0.757 lr=8.49e-04
+  [d_model=256] epoch 102 | loss=0.8983 dist=0.8103 div=2.267 H=0.081 gd=0.865 lr=8.49e-04
+  [d_model=256] epoch 103 | loss=0.9017 dist=0.7711 div=2.279 H=0.078 gd=0.766 lr=8.49e-04
+  [d_model=256] epoch 104 | loss=0.9470 dist=0.7949 div=2.292 H=0.078 gd=0.740 lr=8.49e-04
+  [d_model=256] epoch 105 | loss=0.8720 dist=0.7754 div=2.287 H=0.077 gd=0.768 lr=8.49e-04
+  [d_model=256] epoch 106 | loss=0.8442 dist=0.7645 div=2.266 H=0.078 gd=0.808 lr=8.49e-04
+  [d_model=256] epoch 107 | loss=0.9215 dist=0.8285 div=2.222 H=0.085 gd=0.763 lr=8.49e-04
+  [d_model=256] epoch 108 | loss=0.8839 dist=0.7700 div=2.267 H=0.077 gd=0.788 lr=8.49e-04
+  [d_model=256] epoch 109 | loss=0.8547 dist=0.7935 div=2.287 H=0.077 gd=0.738 lr=8.49e-04
+  [d_model=256] epoch 110 | loss=0.8393 dist=0.7642 div=2.308 H=0.076 gd=0.761 lr=8.49e-04
+  [d_model=256] epoch 111 | loss=0.8344 dist=0.7565 div=2.289 H=0.076 gd=0.785 lr=8.49e-04
+  [d_model=256] epoch 112 | loss=0.8243 dist=0.7733 div=2.287 H=0.075 gd=0.760 lr=8.49e-04
+  [d_model=256] epoch 113 | loss=0.8108 dist=0.7508 div=2.300 H=0.074 gd=0.693 lr=8.49e-04
+  [d_model=256] epoch 114 | loss=0.8090 dist=0.7650 div=2.309 H=0.073 gd=0.717 lr=8.49e-04
+  [d_model=256] epoch 115 | loss=0.8001 dist=0.7459 div=2.295 H=0.074 gd=0.778 lr=8.49e-04
+  [d_model=256] epoch 116 | loss=0.8033 dist=0.7449 div=2.295 H=0.074 gd=0.790 lr=8.49e-04
+  [d_model=256] epoch 117 | loss=0.8165 dist=0.7504 div=2.303 H=0.073 gd=0.767 lr=8.49e-04
+  [d_model=256] epoch 118 | loss=0.8018 dist=0.7558 div=2.315 H=0.073 gd=0.768 lr=8.49e-04
+  [d_model=256] epoch 119 | loss=0.8091 dist=0.7562 div=2.294 H=0.073 gd=0.740 lr=8.49e-04
+  [d_model=256] epoch 120 | loss=0.8289 dist=0.7822 div=2.299 H=0.075 gd=0.835 lr=8.49e-04
+  [d_model=256] epoch 121 | loss=0.8183 dist=0.7560 div=2.300 H=0.072 gd=0.794 lr=8.49e-04
+  [d_model=256] epoch 122 | loss=0.8224 dist=0.7760 div=2.271 H=0.077 gd=0.800 lr=8.49e-04
+  [d_model=256] epoch 123 | loss=0.8731 dist=0.7804 div=2.292 H=0.078 gd=0.792 lr=8.49e-04
+  [d_model=256] epoch 124 | loss=0.8720 dist=0.7805 div=2.299 H=0.077 gd=0.762 lr=8.49e-04
+  [d_model=256] epoch 125 | loss=0.8465 dist=0.7604 div=2.300 H=0.077 gd=0.763 lr=8.49e-04
+  [d_model=256] epoch 126 | loss=0.8568 dist=0.8073 div=2.253 H=0.078 gd=0.737 lr=8.49e-04
+  [d_model=256] epoch 127 | loss=0.9005 dist=0.8078 div=2.256 H=0.079 gd=0.750 lr=8.49e-04
+  [d_model=256] epoch 128 | loss=0.9071 dist=0.8149 div=2.251 H=0.080 gd=0.794 lr=8.49e-04
+  [d_model=256] epoch 129 | loss=0.8923 dist=0.7782 div=2.268 H=0.076 gd=0.792 lr=8.49e-04
+  [d_model=256] epoch 130 | loss=0.9003 dist=0.7964 div=2.268 H=0.081 gd=0.816 lr=8.49e-04
+  [d_model=256] epoch 131 | loss=0.9118 dist=0.8077 div=2.297 H=0.075 gd=0.712 lr=8.49e-04
+  [d_model=256] epoch 132 | loss=0.9044 dist=0.7841 div=2.313 H=0.078 gd=0.843 lr=8.49e-04
+  [d_model=256] epoch 133 | loss=0.9539 dist=0.8241 div=2.286 H=0.082 gd=0.907 lr=8.49e-04
+  [d_model=256] epoch 134 | loss=0.9600 dist=0.7586 div=2.290 H=0.076 gd=0.811 lr=8.49e-04
+  [d_model=256] epoch 135 | loss=0.8806 dist=0.7682 div=2.291 H=0.075 gd=0.825 lr=8.49e-04
+  [d_model=256] epoch 136 | loss=0.9195 dist=0.8260 div=2.290 H=0.080 gd=0.691 lr=8.49e-04
+  [d_model=256] epoch 137 | loss=0.8694 dist=0.7682 div=2.283 H=0.075 gd=0.836 lr=8.49e-04
+  [d_model=256] epoch 138 | loss=0.8589 dist=0.7626 div=2.298 H=0.076 gd=0.807 lr=8.49e-04
+  [d_model=256] epoch 139 | loss=0.8600 dist=0.7994 div=2.303 H=0.075 gd=0.774 lr=8.49e-04
+  [d_model=256] epoch 140 | loss=0.8217 dist=0.7388 div=2.310 H=0.074 gd=0.785 lr=8.49e-04
+  [d_model=256] epoch 141 | loss=0.8522 dist=0.7635 div=2.301 H=0.075 gd=0.750 lr=8.49e-04
+  [d_model=256] epoch 142 | loss=0.8627 dist=0.7854 div=2.296 H=0.076 gd=0.764 lr=8.49e-04
+  [d_model=256] epoch 143 | loss=0.8479 dist=0.7883 div=2.304 H=0.077 gd=0.744 lr=8.49e-04
+  [d_model=256] epoch 144 | loss=0.8491 dist=0.7682 div=2.294 H=0.074 gd=0.718 lr=8.49e-04
+  [d_model=256] epoch 145 | loss=0.8488 dist=0.7768 div=2.314 H=0.075 gd=0.776 lr=8.49e-04
+  [d_model=256] epoch 146 | loss=0.8409 dist=0.7679 div=2.278 H=0.075 gd=0.724 lr=8.49e-04
+  [d_model=256] epoch 147 | loss=0.9038 dist=0.7735 div=2.307 H=0.072 gd=0.711 lr=8.49e-04
+  [d_model=256] epoch 148 | loss=0.8346 dist=0.7759 div=2.313 H=0.072 gd=0.745 lr=8.49e-04
+  [d_model=256] epoch 149 | loss=0.8381 dist=0.7564 div=2.286 H=0.074 gd=0.800 lr=8.49e-04
+  [d_model=256] epoch 150 | loss=0.8344 dist=0.7386 div=2.304 H=0.069 gd=0.652 lr=8.49e-04
+  [d_model=256] epoch 151 | loss=0.7949 dist=0.7272 div=2.310 H=0.069 gd=0.748 lr=8.49e-04
+  [d_model=256] epoch 152 | loss=0.7826 dist=0.7240 div=2.321 H=0.068 gd=0.702 lr=8.49e-04
+  [d_model=256] epoch 153 | loss=0.7505 dist=0.7049 div=2.329 H=0.065 gd=0.713 lr=8.49e-04
+  [d_model=256] epoch 154 | loss=0.7543 dist=0.7114 div=2.323 H=0.066 gd=0.718 lr=8.49e-04
+  [d_model=256] epoch 155 | loss=0.7498 dist=0.7111 div=2.340 H=0.066 gd=0.752 lr=8.49e-04
+  [d_model=256] epoch 156 | loss=0.7505 dist=0.7054 div=2.313 H=0.068 gd=0.771 lr=8.49e-04
+  [d_model=256] epoch 157 | loss=0.7817 dist=0.7243 div=2.314 H=0.067 gd=0.709 lr=8.49e-04
+  [d_model=256] epoch 158 | loss=0.7703 dist=0.7187 div=2.311 H=0.068 gd=0.714 lr=8.49e-04
+  [d_model=256] epoch 159 | loss=0.7509 dist=0.7124 div=2.336 H=0.065 gd=0.757 lr=8.49e-04
+  [d_model=256] epoch 160 | loss=0.7589 dist=0.7078 div=2.317 H=0.067 gd=0.814 lr=8.49e-04
+  [d_model=256] epoch 161 | loss=0.7674 dist=0.7265 div=2.298 H=0.068 gd=0.737 lr=8.49e-04
+  [d_model=256] epoch 162 | loss=0.7807 dist=0.7279 div=2.338 H=0.069 gd=0.747 lr=8.49e-04
+  [d_model=256] epoch 163 | loss=0.7625 dist=0.7105 div=2.319 H=0.067 gd=0.718 lr=8.49e-04
+  [d_model=256] epoch 164 | loss=0.7572 dist=0.7239 div=2.316 H=0.068 gd=0.747 lr=8.49e-04
+  [d_model=256] epoch 165 | loss=0.7604 dist=0.7325 div=2.300 H=0.070 gd=0.704 lr=8.49e-04
+  [d_model=256] epoch 166 | loss=0.7987 dist=0.7282 div=2.274 H=0.071 gd=0.738 lr=8.49e-04
+  [d_model=256] epoch 167 | loss=0.8168 dist=0.7453 div=2.283 H=0.070 gd=0.806 lr=8.49e-04
+  [d_model=256] epoch 168 | loss=0.7860 dist=0.7287 div=2.296 H=0.067 gd=0.810 lr=8.49e-04
+  [d_model=256] epoch 169 | loss=0.7791 dist=0.7405 div=2.310 H=0.071 gd=0.780 lr=8.49e-04
+  [d_model=256] epoch 170 | loss=0.7797 dist=0.7342 div=2.315 H=0.067 gd=0.724 lr=8.49e-04
+  [d_model=256] epoch 171 | loss=0.7807 dist=0.7476 div=2.290 H=0.068 gd=0.743 lr=8.49e-04
+  [d_model=256] epoch 172 | loss=0.7649 dist=0.7323 div=2.298 H=0.067 gd=0.767 lr=8.49e-04
+  [d_model=256] epoch 173 | loss=0.7906 dist=0.7456 div=2.291 H=0.068 gd=0.715 lr=8.49e-04
+  [d_model=256] epoch 174 | loss=0.7735 dist=0.7439 div=2.300 H=0.068 gd=0.724 lr=8.49e-04
+  [d_model=256] epoch 175 | loss=0.7740 dist=0.7306 div=2.288 H=0.068 gd=0.725 lr=8.49e-04
+  [d_model=256] epoch 176 | loss=0.7601 dist=0.7146 div=2.298 H=0.066 gd=0.747 lr=8.49e-04
+  [d_model=256] epoch 177 | loss=0.7655 dist=0.7354 div=2.303 H=0.069 gd=0.730 lr=8.49e-04
+  [d_model=256] epoch 178 | loss=0.7535 dist=0.7286 div=2.313 H=0.066 gd=0.767 lr=8.49e-04
+  [d_model=256] epoch 179 | loss=0.7546 dist=0.7682 div=2.318 H=0.066 gd=0.759 lr=8.49e-04
+  [d_model=256] epoch 180 | loss=0.7555 dist=0.7285 div=2.311 H=0.066 gd=0.737 lr=8.49e-04
+  [d_model=256] epoch 181 | loss=0.7497 dist=0.7290 div=2.322 H=0.065 gd=0.778 lr=8.49e-04
+  [d_model=256] epoch 182 | loss=0.7478 dist=0.7184 div=2.311 H=0.066 gd=0.718 lr=8.49e-04
+  [d_model=256] epoch 183 | loss=0.7475 dist=0.7141 div=2.307 H=0.066 gd=0.721 lr=8.49e-04
+  [d_model=256] early stopping at epoch 183 (no improvement for 30 epochs, best dist=0.7049)
+
+=== d_model=512 ===
+  [d_model=512] epoch   0 | loss=5.4451 dist=1.2789 div=1.741 H=0.204 gd=0.539 lr=8.49e-04
+  [d_model=512] epoch   1 | loss=2.2911 dist=1.1837 div=1.933 H=0.144 gd=0.689 lr=8.49e-04
+  [d_model=512] epoch   2 | loss=1.9396 dist=1.1152 div=1.909 H=0.143 gd=0.667 lr=8.49e-04
+  [d_model=512] epoch   3 | loss=2.6202 dist=1.1654 div=1.902 H=0.160 gd=0.732 lr=8.49e-04
+  [d_model=512] epoch   4 | loss=2.4059 dist=1.1532 div=1.944 H=0.166 gd=0.768 lr=8.49e-04
+  [d_model=512] epoch   5 | loss=2.7855 dist=1.1894 div=1.895 H=0.173 gd=0.705 lr=8.49e-04
+  [d_model=512] epoch   6 | loss=2.3216 dist=1.0789 div=2.045 H=0.145 gd=0.733 lr=8.49e-04
+  [d_model=512] epoch   7 | loss=2.0479 dist=1.0840 div=2.017 H=0.131 gd=0.855 lr=8.49e-04
+  [d_model=512] epoch   8 | loss=1.7843 dist=1.0165 div=2.066 H=0.122 gd=0.807 lr=8.49e-04
+  [d_model=512] epoch   9 | loss=1.7848 dist=1.0494 div=2.074 H=0.132 gd=0.802 lr=8.49e-04
+  [d_model=512] epoch  10 | loss=1.9170 dist=1.0494 div=2.047 H=0.125 gd=0.793 lr=8.49e-04
+  [d_model=512] epoch  11 | loss=1.8042 dist=1.0218 div=2.036 H=0.123 gd=0.770 lr=8.49e-04
+  [d_model=512] epoch  12 | loss=1.7085 dist=1.0143 div=2.141 H=0.118 gd=0.741 lr=8.49e-04
+  [d_model=512] epoch  13 | loss=1.6892 dist=1.0195 div=2.087 H=0.123 gd=0.691 lr=8.49e-04
+  [d_model=512] epoch  14 | loss=1.8144 dist=1.0688 div=1.978 H=0.141 gd=0.808 lr=8.49e-04
+  [d_model=512] epoch  15 | loss=1.7670 dist=1.0172 div=2.094 H=0.128 gd=0.746 lr=8.49e-04
+  [d_model=512] epoch  16 | loss=2.0865 dist=1.1013 div=1.943 H=0.140 gd=0.834 lr=8.49e-04
+  [d_model=512] epoch  17 | loss=1.9067 dist=1.0283 div=2.118 H=0.129 gd=0.786 lr=8.49e-04
+  [d_model=512] epoch  18 | loss=1.8037 dist=1.1837 div=1.910 H=0.155 gd=0.841 lr=8.49e-04
+  [d_model=512] epoch  19 | loss=1.8757 dist=1.0304 div=2.088 H=0.116 gd=0.777 lr=8.49e-04
+  [d_model=512] epoch  20 | loss=1.6233 dist=0.9677 div=2.093 H=0.120 gd=0.684 lr=8.49e-04
+  [d_model=512] epoch  21 | loss=1.6582 dist=1.0178 div=2.083 H=0.123 gd=0.725 lr=8.49e-04
+  [d_model=512] epoch  22 | loss=1.5757 dist=0.9643 div=2.151 H=0.108 gd=0.851 lr=8.49e-04
+  [d_model=512] epoch  23 | loss=1.5138 dist=0.9772 div=2.118 H=0.115 gd=0.678 lr=8.49e-04
+  [d_model=512] epoch  24 | loss=1.4958 dist=0.9383 div=2.139 H=0.106 gd=0.748 lr=8.49e-04
+  [d_model=512] epoch  25 | loss=1.8936 dist=1.0534 div=2.030 H=0.130 gd=0.776 lr=8.49e-04
+  [d_model=512] epoch  26 | loss=1.7527 dist=0.9574 div=2.144 H=0.114 gd=0.778 lr=8.49e-04
+  [d_model=512] epoch  27 | loss=1.5555 dist=0.9528 div=2.148 H=0.107 gd=0.713 lr=8.49e-04
+  [d_model=512] epoch  28 | loss=1.5258 dist=0.9305 div=2.138 H=0.110 gd=0.824 lr=8.49e-04
+  [d_model=512] epoch  29 | loss=1.7011 dist=0.9937 div=2.133 H=0.111 gd=0.787 lr=8.49e-04
+  [d_model=512] epoch  30 | loss=1.5238 dist=0.9137 div=2.187 H=0.105 gd=0.741 lr=8.49e-04
+  [d_model=512] epoch  31 | loss=1.4247 dist=0.9111 div=2.179 H=0.103 gd=0.737 lr=8.49e-04
+  [d_model=512] epoch  32 | loss=1.4373 dist=0.8806 div=2.184 H=0.095 gd=0.756 lr=8.49e-04
+  [d_model=512] epoch  33 | loss=1.3616 dist=0.8922 div=2.151 H=0.096 gd=0.765 lr=8.49e-04
+  [d_model=512] epoch  34 | loss=1.4639 dist=0.9810 div=2.157 H=0.111 gd=0.776 lr=8.49e-04
+  [d_model=512] epoch  35 | loss=1.3981 dist=0.8857 div=2.192 H=0.095 gd=0.786 lr=8.49e-04
+  [d_model=512] epoch  36 | loss=1.3165 dist=0.9064 div=2.175 H=0.104 gd=0.754 lr=8.49e-04
+  [d_model=512] epoch  37 | loss=1.4733 dist=0.9228 div=2.151 H=0.106 gd=0.758 lr=8.49e-04
+  [d_model=512] epoch  38 | loss=1.4007 dist=0.9160 div=2.110 H=0.099 gd=0.806 lr=8.49e-04
+  [d_model=512] epoch  39 | loss=1.3300 dist=0.8928 div=2.199 H=0.096 gd=0.684 lr=8.49e-04
+  [d_model=512] epoch  40 | loss=1.3658 dist=0.9136 div=2.194 H=0.100 gd=0.696 lr=8.49e-04
+  [d_model=512] epoch  41 | loss=1.3374 dist=0.9069 div=2.163 H=0.104 gd=0.694 lr=8.49e-04
+  [d_model=512] epoch  42 | loss=1.3972 dist=1.0023 div=2.097 H=0.119 gd=0.765 lr=8.49e-04
+  [d_model=512] epoch  43 | loss=1.4339 dist=0.9480 div=2.123 H=0.108 gd=0.741 lr=8.49e-04
+  [d_model=512] epoch  44 | loss=1.5980 dist=1.0116 div=2.116 H=0.109 gd=0.819 lr=8.49e-04
+  [d_model=512] epoch  45 | loss=1.6177 dist=1.0993 div=1.971 H=0.128 gd=0.908 lr=8.49e-04
+  [d_model=512] epoch  46 | loss=1.7828 dist=1.1293 div=2.024 H=0.118 gd=0.824 lr=8.49e-04
+  [d_model=512] epoch  47 | loss=1.7242 dist=0.9569 div=2.126 H=0.112 gd=0.827 lr=8.49e-04
+  [d_model=512] epoch  48 | loss=1.5316 dist=0.9314 div=2.131 H=0.103 gd=0.902 lr=8.49e-04
+  [d_model=512] epoch  49 | loss=1.6328 dist=1.0583 div=2.009 H=0.114 gd=0.952 lr=8.49e-04
+  [d_model=512] epoch  50 | loss=1.6991 dist=1.0375 div=2.045 H=0.121 gd=0.863 lr=8.49e-04
+  [d_model=512] epoch  51 | loss=1.6735 dist=0.9939 div=2.140 H=0.106 gd=0.855 lr=8.49e-04
+  [d_model=512] epoch  52 | loss=1.6662 dist=0.9776 div=2.091 H=0.113 gd=0.838 lr=8.49e-04
+  [d_model=512] epoch  53 | loss=1.6444 dist=0.9756 div=2.073 H=0.108 gd=0.842 lr=8.49e-04
+  [d_model=512] epoch  54 | loss=1.5153 dist=0.9426 div=2.116 H=0.107 gd=0.816 lr=8.49e-04
+  [d_model=512] epoch  55 | loss=1.4863 dist=0.9496 div=2.102 H=0.107 gd=0.793 lr=8.49e-04
+  [d_model=512] epoch  56 | loss=1.5264 dist=0.9412 div=2.089 H=0.106 gd=0.744 lr=8.49e-04
+  [d_model=512] epoch  57 | loss=1.4598 dist=0.9489 div=2.132 H=0.100 gd=0.847 lr=8.49e-04
+  [d_model=512] epoch  58 | loss=1.4819 dist=0.9348 div=2.106 H=0.101 gd=0.770 lr=8.49e-04
+  [d_model=512] epoch  59 | loss=1.4506 dist=0.9239 div=2.134 H=0.098 gd=0.779 lr=8.49e-04
+  [d_model=512] epoch  60 | loss=1.3877 dist=0.9168 div=2.140 H=0.097 gd=0.689 lr=8.49e-04
+  [d_model=512] epoch  61 | loss=1.3933 dist=0.9152 div=2.109 H=0.096 gd=0.825 lr=8.49e-04
+  [d_model=512] epoch  62 | loss=1.5475 dist=0.9755 div=2.143 H=0.108 gd=0.839 lr=8.49e-04
+  [d_model=512] early stopping at epoch 62 (no improvement for 30 epochs, best dist=0.8806)
+
+────────────────────────────────────────────────────────────
+Study complete in 34.0 min
+
+Name                           Final dist   Pred div   SM entropy   Grad div
+----------------------------------------------------------------------------
+d_model=128                        0.7124     2.3360       0.0726     0.6186
+d_model=256                        0.7141     2.3072       0.0661     0.7207
+d_model=64                         0.9540     2.1776       0.0956     0.6915
+d_model=512                        0.9755     2.1431       0.1077     0.8395
+
+Saved → results/model_scale.pkl
+[gpu3] Finished: model_scale
+[gpu3] Starting: hungarian_baseline
+Study:      hungarian_baseline
+Device:     cuda
+Epochs:     200
+Batch size: 512
+LR:         8.49e-04  (auto-scaled from 0.0003 at batch=64)
+Output:     results/hungarian_baseline.pkl
+────────────────────────────────────────────────────────────
+
+=== Chamfer ===
+/pscratch/sd/d/danieltm/conda_envs/envs/influencerformer/lib/python3.10/site-packages/torch/nn/modules/transformer.py:380: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at ../aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(output, src_key_padding_mask.logical_not(), mask_check=False)
+  [Chamfer] epoch   0 | loss=2.8163 dist=1.3025 div=1.860 H=0.221 gd=0.759 lr=8.49e-04
+  [Chamfer] epoch   1 | loss=1.8789 dist=1.1514 div=1.980 H=0.219 gd=0.799 lr=8.49e-04
+  [Chamfer] epoch   2 | loss=1.6054 dist=1.1091 div=2.036 H=0.210 gd=0.704 lr=8.49e-04
+  [Chamfer] epoch   3 | loss=1.4836 dist=1.1017 div=2.024 H=0.221 gd=0.717 lr=8.49e-04
+  [Chamfer] epoch   4 | loss=1.4165 dist=1.0966 div=2.027 H=0.253 gd=0.704 lr=8.49e-04
+  [Chamfer] epoch   5 | loss=1.3714 dist=1.1449 div=2.075 H=0.306 gd=0.680 lr=8.49e-04
+  [Chamfer] epoch   6 | loss=1.3705 dist=1.1534 div=2.034 H=0.315 gd=0.695 lr=8.49e-04
+  [Chamfer] epoch   7 | loss=1.3376 dist=1.1484 div=2.048 H=0.306 gd=0.702 lr=8.49e-04
+  [Chamfer] epoch   8 | loss=1.3434 dist=1.1470 div=2.054 H=0.312 gd=0.706 lr=8.49e-04
+  [Chamfer] epoch   9 | loss=1.3276 dist=1.1356 div=2.053 H=0.310 gd=0.727 lr=8.49e-04
+  [Chamfer] epoch  10 | loss=1.3060 dist=1.1248 div=2.050 H=0.313 gd=0.676 lr=8.49e-04
+  [Chamfer] epoch  11 | loss=1.3048 dist=1.1284 div=2.042 H=0.311 gd=0.699 lr=8.49e-04
+  [Chamfer] epoch  12 | loss=1.2831 dist=1.1238 div=2.062 H=0.309 gd=0.734 lr=8.49e-04
+  [Chamfer] epoch  13 | loss=1.2867 dist=1.1316 div=2.068 H=0.311 gd=0.734 lr=8.49e-04
+  [Chamfer] epoch  14 | loss=1.2832 dist=1.1287 div=2.056 H=0.312 gd=0.725 lr=8.49e-04
+  [Chamfer] epoch  15 | loss=1.2664 dist=1.1410 div=2.034 H=0.323 gd=0.694 lr=8.49e-04
+  [Chamfer] epoch  16 | loss=1.2690 dist=1.1320 div=2.051 H=0.313 gd=0.646 lr=8.49e-04
+  [Chamfer] epoch  17 | loss=1.2713 dist=1.1249 div=2.080 H=0.306 gd=0.692 lr=8.49e-04
+  [Chamfer] epoch  18 | loss=1.3487 dist=1.1444 div=2.061 H=0.309 gd=0.634 lr=8.49e-04
+  [Chamfer] epoch  19 | loss=1.3274 dist=1.1439 div=2.058 H=0.309 gd=0.673 lr=8.49e-04
+  [Chamfer] epoch  20 | loss=1.3162 dist=1.1470 div=2.044 H=0.309 gd=0.656 lr=8.49e-04
+  [Chamfer] epoch  21 | loss=1.3101 dist=1.1422 div=2.035 H=0.311 gd=0.706 lr=8.49e-04
+  [Chamfer] epoch  22 | loss=1.2537 dist=1.1186 div=2.057 H=0.305 gd=0.695 lr=8.49e-04
+  [Chamfer] epoch  23 | loss=1.2459 dist=1.1268 div=2.057 H=0.309 gd=0.681 lr=8.49e-04
+  [Chamfer] epoch  24 | loss=1.2452 dist=1.1149 div=2.077 H=0.303 gd=0.642 lr=8.49e-04
+  [Chamfer] epoch  25 | loss=1.2327 dist=1.1348 div=2.058 H=0.310 gd=0.664 lr=8.49e-04
+  [Chamfer] epoch  26 | loss=1.2387 dist=1.1114 div=2.063 H=0.305 gd=0.635 lr=8.49e-04
+  [Chamfer] epoch  27 | loss=1.2273 dist=1.1088 div=2.105 H=0.299 gd=0.733 lr=8.49e-04
+  [Chamfer] epoch  28 | loss=1.2517 dist=1.1317 div=2.055 H=0.303 gd=0.642 lr=8.49e-04
+  [Chamfer] epoch  29 | loss=1.2817 dist=1.1226 div=2.083 H=0.300 gd=0.696 lr=8.49e-04
+  [Chamfer] epoch  30 | loss=1.3087 dist=1.1508 div=2.047 H=0.310 gd=0.699 lr=8.49e-04
+  [Chamfer] epoch  31 | loss=1.2788 dist=1.1209 div=2.067 H=0.305 gd=0.718 lr=8.49e-04
+  [Chamfer] epoch  32 | loss=1.2403 dist=1.1137 div=2.064 H=0.302 gd=0.736 lr=8.49e-04
+  [Chamfer] epoch  33 | loss=1.2185 dist=1.1116 div=2.063 H=0.303 gd=0.713 lr=8.49e-04
+  [Chamfer] epoch  34 | loss=1.2101 dist=1.0893 div=2.090 H=0.295 gd=0.691 lr=8.49e-04
+  [Chamfer] epoch  35 | loss=1.1975 dist=1.1176 div=2.080 H=0.305 gd=0.717 lr=8.49e-04
+  [Chamfer] epoch  36 | loss=1.2109 dist=1.1286 div=2.048 H=0.311 gd=0.655 lr=8.49e-04
+  [Chamfer] epoch  37 | loss=1.2486 dist=1.1179 div=2.085 H=0.304 gd=0.703 lr=8.49e-04
+  [Chamfer] epoch  38 | loss=1.2212 dist=1.0994 div=2.082 H=0.301 gd=0.740 lr=8.49e-04
+  [Chamfer] epoch  39 | loss=1.2146 dist=1.1037 div=2.087 H=0.300 gd=0.693 lr=8.49e-04
+  [Chamfer] epoch  40 | loss=1.2244 dist=1.0966 div=2.110 H=0.300 gd=0.672 lr=8.49e-04
+  [Chamfer] epoch  41 | loss=1.2423 dist=1.1164 div=2.079 H=0.303 gd=0.697 lr=8.49e-04
+  [Chamfer] epoch  42 | loss=1.2377 dist=1.1116 div=2.068 H=0.302 gd=0.658 lr=8.49e-04
+  [Chamfer] epoch  43 | loss=1.2196 dist=1.1232 div=2.058 H=0.308 gd=0.705 lr=8.49e-04
+  [Chamfer] epoch  44 | loss=1.2139 dist=1.1098 div=2.070 H=0.303 gd=0.641 lr=8.49e-04
+  [Chamfer] epoch  45 | loss=1.2249 dist=1.1003 div=2.098 H=0.296 gd=0.752 lr=8.49e-04
+  [Chamfer] epoch  46 | loss=1.2354 dist=1.1093 div=2.072 H=0.299 gd=0.697 lr=8.49e-04
+  [Chamfer] epoch  47 | loss=1.2277 dist=1.1155 div=2.088 H=0.300 gd=0.688 lr=8.49e-04
+  [Chamfer] epoch  48 | loss=1.2108 dist=1.0956 div=2.086 H=0.296 gd=0.674 lr=8.49e-04
+  [Chamfer] epoch  49 | loss=1.2086 dist=1.1146 div=2.091 H=0.292 gd=0.621 lr=8.49e-04
+  [Chamfer] epoch  50 | loss=1.2155 dist=1.1155 div=2.077 H=0.299 gd=0.698 lr=8.49e-04
+  [Chamfer] epoch  51 | loss=1.2072 dist=1.1164 div=2.085 H=0.299 gd=0.690 lr=8.49e-04
+  [Chamfer] epoch  52 | loss=1.2422 dist=1.1252 div=2.092 H=0.300 gd=0.644 lr=8.49e-04
+  [Chamfer] epoch  53 | loss=1.2190 dist=1.1269 div=2.050 H=0.308 gd=0.699 lr=8.49e-04
+  [Chamfer] epoch  54 | loss=1.2126 dist=1.1119 div=2.089 H=0.301 gd=0.723 lr=8.49e-04
+  [Chamfer] epoch  55 | loss=1.2055 dist=1.1132 div=2.067 H=0.303 gd=0.682 lr=8.49e-04
+  [Chamfer] epoch  56 | loss=1.1996 dist=1.1231 div=2.065 H=0.304 gd=0.675 lr=8.49e-04
+  [Chamfer] epoch  57 | loss=1.2185 dist=1.1336 div=2.052 H=0.308 gd=0.663 lr=8.49e-04
+  [Chamfer] epoch  58 | loss=1.2620 dist=1.1519 div=2.037 H=0.310 gd=0.686 lr=8.49e-04
+  [Chamfer] epoch  59 | loss=1.2433 dist=1.1643 div=2.020 H=0.317 gd=0.682 lr=8.49e-04
+  [Chamfer] epoch  60 | loss=1.2461 dist=1.1771 div=1.985 H=0.316 gd=0.648 lr=8.49e-04
+  [Chamfer] epoch  61 | loss=1.2631 dist=1.1245 div=2.062 H=0.300 gd=0.652 lr=8.49e-04
+  [Chamfer] epoch  62 | loss=1.2163 dist=1.1511 div=2.081 H=0.298 gd=0.747 lr=8.49e-04
+  [Chamfer] epoch  63 | loss=1.2026 dist=1.1243 div=2.088 H=0.298 gd=0.683 lr=8.49e-04
+  [Chamfer] epoch  64 | loss=1.2015 dist=1.0932 div=2.082 H=0.294 gd=0.680 lr=8.49e-04
+  [Chamfer] early stopping at epoch 64 (no improvement for 30 epochs, best dist=1.0893)
+
+=== Hungarian ===
+  [Hungarian] epoch   0 | loss=1.5169 dist=1.2372 div=1.686 H=0.200 gd=0.651 lr=8.49e-04
+  [Hungarian] epoch   1 | loss=1.0711 dist=0.9571 div=1.894 H=0.167 gd=0.681 lr=8.49e-04
+  [Hungarian] epoch   2 | loss=0.9307 dist=0.8953 div=1.937 H=0.171 gd=0.625 lr=8.49e-04
+  [Hungarian] epoch   3 | loss=0.8998 dist=0.8782 div=1.954 H=0.167 gd=0.654 lr=8.49e-04
+  [Hungarian] epoch   4 | loss=0.8699 dist=0.8486 div=1.999 H=0.158 gd=0.639 lr=8.49e-04
+  [Hungarian] epoch   5 | loss=0.8596 dist=0.8460 div=1.979 H=0.157 gd=0.634 lr=8.49e-04
+  [Hungarian] epoch   6 | loss=0.8503 dist=0.8334 div=1.997 H=0.155 gd=0.639 lr=8.49e-04
+  [Hungarian] epoch   7 | loss=0.8427 dist=0.8330 div=1.984 H=0.155 gd=0.669 lr=8.49e-04
+  [Hungarian] epoch   8 | loss=0.8410 dist=0.8351 div=1.976 H=0.155 gd=0.687 lr=8.49e-04
+  [Hungarian] epoch   9 | loss=0.8401 dist=0.8195 div=2.008 H=0.150 gd=0.677 lr=8.49e-04
+  [Hungarian] epoch  10 | loss=0.8325 dist=0.8291 div=1.998 H=0.154 gd=0.622 lr=8.49e-04
+  [Hungarian] epoch  11 | loss=0.8313 dist=0.8285 div=2.007 H=0.151 gd=0.662 lr=8.49e-04
+  [Hungarian] epoch  12 | loss=0.8298 dist=0.8332 div=1.988 H=0.156 gd=0.672 lr=8.49e-04
+  [Hungarian] epoch  13 | loss=0.8376 dist=0.8444 div=1.975 H=0.156 gd=0.673 lr=8.49e-04
+  [Hungarian] epoch  14 | loss=0.8426 dist=0.8433 div=1.967 H=0.159 gd=0.651 lr=8.49e-04
+  [Hungarian] epoch  15 | loss=0.8322 dist=0.7981 div=2.025 H=0.143 gd=0.630 lr=8.49e-04
+  [Hungarian] epoch  16 | loss=0.8184 dist=0.8245 div=1.992 H=0.155 gd=0.642 lr=8.49e-04
+  [Hungarian] epoch  17 | loss=0.8183 dist=0.8098 div=2.008 H=0.153 gd=0.655 lr=8.49e-04
+  [Hungarian] epoch  18 | loss=0.8163 dist=0.7973 div=2.002 H=0.147 gd=0.618 lr=8.49e-04
+  [Hungarian] epoch  19 | loss=0.8199 dist=0.8033 div=2.011 H=0.146 gd=0.637 lr=8.49e-04
+  [Hungarian] epoch  20 | loss=0.8225 dist=0.8359 div=1.990 H=0.159 gd=0.614 lr=8.49e-04
+  [Hungarian] epoch  21 | loss=0.8176 dist=0.7916 div=2.010 H=0.146 gd=0.644 lr=8.49e-04
+  [Hungarian] epoch  22 | loss=0.8162 dist=0.8153 div=1.995 H=0.155 gd=0.641 lr=8.49e-04
+  [Hungarian] epoch  23 | loss=0.8155 dist=0.7930 div=2.023 H=0.146 gd=0.640 lr=8.49e-04
+  [Hungarian] epoch  24 | loss=0.7997 dist=0.8081 div=1.997 H=0.155 gd=0.629 lr=8.49e-04
+  [Hungarian] epoch  25 | loss=0.8064 dist=0.7895 div=2.029 H=0.146 gd=0.654 lr=8.49e-04
+  [Hungarian] epoch  26 | loss=0.8035 dist=0.7904 div=2.030 H=0.144 gd=0.629 lr=8.49e-04
+  [Hungarian] epoch  27 | loss=0.7945 dist=0.7999 div=2.009 H=0.155 gd=0.680 lr=8.49e-04
+  [Hungarian] epoch  28 | loss=0.8252 dist=0.7977 div=1.993 H=0.154 gd=0.639 lr=8.49e-04
+  [Hungarian] epoch  29 | loss=0.8100 dist=0.7891 div=2.014 H=0.151 gd=0.642 lr=8.49e-04
+  [Hungarian] epoch  30 | loss=0.7913 dist=0.7865 div=2.014 H=0.148 gd=0.660 lr=8.49e-04
+  [Hungarian] epoch  31 | loss=0.7864 dist=0.7733 div=2.039 H=0.144 gd=0.654 lr=8.49e-04
+  [Hungarian] epoch  32 | loss=0.7889 dist=0.7746 div=2.032 H=0.145 gd=0.668 lr=8.49e-04
+  [Hungarian] epoch  33 | loss=0.7891 dist=0.7797 div=2.025 H=0.148 gd=0.664 lr=8.49e-04
+  [Hungarian] epoch  34 | loss=0.7862 dist=0.7788 div=2.022 H=0.144 gd=0.662 lr=8.49e-04
+  [Hungarian] epoch  35 | loss=0.7896 dist=0.7751 div=2.019 H=0.146 gd=0.650 lr=8.49e-04
+  [Hungarian] epoch  36 | loss=0.7830 dist=0.7665 div=2.041 H=0.141 gd=0.632 lr=8.49e-04
+  [Hungarian] epoch  37 | loss=0.7848 dist=0.7805 div=2.018 H=0.146 gd=0.664 lr=8.49e-04
+  [Hungarian] epoch  38 | loss=0.7841 dist=0.7703 div=2.037 H=0.142 gd=0.672 lr=8.49e-04
+  [Hungarian] epoch  39 | loss=0.7939 dist=0.7811 div=2.020 H=0.145 gd=0.649 lr=8.49e-04
+  [Hungarian] epoch  40 | loss=0.7931 dist=0.7996 div=2.029 H=0.147 gd=0.636 lr=8.49e-04
+  [Hungarian] epoch  41 | loss=0.7929 dist=0.7850 div=2.028 H=0.149 gd=0.668 lr=8.49e-04
+  [Hungarian] epoch  42 | loss=0.7899 dist=0.7853 div=2.013 H=0.154 gd=0.625 lr=8.49e-04
+  [Hungarian] epoch  43 | loss=0.8068 dist=0.7862 div=2.018 H=0.151 gd=0.635 lr=8.49e-04
+  [Hungarian] epoch  44 | loss=0.7885 dist=0.7646 div=2.026 H=0.145 gd=0.636 lr=8.49e-04
+  [Hungarian] epoch  45 | loss=0.7975 dist=0.8036 div=2.015 H=0.153 gd=0.685 lr=8.49e-04
+  [Hungarian] epoch  46 | loss=0.7918 dist=0.7701 div=2.026 H=0.145 gd=0.645 lr=8.49e-04
+  [Hungarian] epoch  47 | loss=0.7828 dist=0.7756 div=2.034 H=0.143 gd=0.654 lr=8.49e-04
+  [Hungarian] epoch  48 | loss=0.7859 dist=0.7770 div=2.048 H=0.143 gd=0.634 lr=8.49e-04
+  [Hungarian] epoch  49 | loss=0.8181 dist=0.7886 div=2.023 H=0.147 gd=0.635 lr=8.49e-04
+  [Hungarian] epoch  50 | loss=0.8087 dist=0.8220 div=1.985 H=0.150 gd=0.640 lr=8.49e-04
+  [Hungarian] epoch  51 | loss=0.8203 dist=0.8003 div=1.996 H=0.150 gd=0.648 lr=8.49e-04
+  [Hungarian] epoch  52 | loss=0.7968 dist=0.7720 div=2.024 H=0.139 gd=0.650 lr=8.49e-04
+  [Hungarian] epoch  53 | loss=0.7946 dist=0.8062 div=2.011 H=0.152 gd=0.651 lr=8.49e-04
+  [Hungarian] epoch  54 | loss=0.7891 dist=0.7861 div=2.016 H=0.150 gd=0.647 lr=8.49e-04
+  [Hungarian] epoch  55 | loss=0.7829 dist=0.7645 div=2.042 H=0.138 gd=0.587 lr=8.49e-04
+  [Hungarian] epoch  56 | loss=0.7821 dist=0.7637 div=2.048 H=0.140 gd=0.646 lr=8.49e-04
+  [Hungarian] epoch  57 | loss=0.7827 dist=0.7753 div=2.019 H=0.146 gd=0.622 lr=8.49e-04
+  [Hungarian] epoch  58 | loss=0.7921 dist=0.7959 div=2.021 H=0.150 gd=0.641 lr=8.49e-04
+  [Hungarian] epoch  59 | loss=0.7987 dist=0.7651 div=2.025 H=0.142 gd=0.635 lr=8.49e-04
+  [Hungarian] epoch  60 | loss=0.7857 dist=0.7603 div=2.044 H=0.138 gd=0.636 lr=8.49e-04
+  [Hungarian] epoch  61 | loss=0.7751 dist=0.7583 div=2.048 H=0.138 gd=0.631 lr=8.49e-04
+  [Hungarian] epoch  62 | loss=0.7859 dist=0.7744 div=2.045 H=0.140 gd=0.656 lr=8.49e-04
+  [Hungarian] epoch  63 | loss=0.7920 dist=0.7759 div=2.027 H=0.144 gd=0.636 lr=8.49e-04
+  [Hungarian] epoch  64 | loss=0.7894 dist=0.7635 div=2.023 H=0.144 gd=0.629 lr=8.49e-04
+  [Hungarian] epoch  65 | loss=0.7884 dist=0.7735 div=2.034 H=0.142 gd=0.642 lr=8.49e-04
+  [Hungarian] epoch  66 | loss=0.7856 dist=0.7791 div=2.019 H=0.145 gd=0.677 lr=8.49e-04
+  [Hungarian] epoch  67 | loss=0.7894 dist=0.7722 div=2.013 H=0.142 gd=0.641 lr=8.49e-04
+  [Hungarian] epoch  68 | loss=0.7835 dist=0.7564 div=2.044 H=0.137 gd=0.657 lr=8.49e-04
+  [Hungarian] epoch  69 | loss=0.7746 dist=0.7773 div=2.016 H=0.144 gd=0.656 lr=8.49e-04
+  [Hungarian] epoch  70 | loss=0.8261 dist=0.8306 div=1.980 H=0.157 gd=0.657 lr=8.49e-04
+  [Hungarian] epoch  71 | loss=0.8465 dist=0.8133 div=2.017 H=0.146 gd=0.634 lr=8.49e-04
+  [Hungarian] epoch  72 | loss=0.8142 dist=0.7837 div=2.012 H=0.147 gd=0.649 lr=8.49e-04
+  [Hungarian] epoch  73 | loss=0.8044 dist=0.7934 div=2.012 H=0.148 gd=0.638 lr=8.49e-04
+  [Hungarian] epoch  74 | loss=0.8023 dist=0.7893 div=2.044 H=0.147 gd=0.630 lr=8.49e-04
+  [Hungarian] epoch  75 | loss=0.7964 dist=0.7718 div=2.044 H=0.140 gd=0.649 lr=8.49e-04
+  [Hungarian] epoch  76 | loss=0.8005 dist=0.7800 div=2.029 H=0.148 gd=0.665 lr=8.49e-04
+  [Hungarian] epoch  77 | loss=0.7901 dist=0.7766 div=2.005 H=0.147 gd=0.657 lr=8.49e-04
+  [Hungarian] epoch  78 | loss=0.7914 dist=0.7729 div=2.039 H=0.141 gd=0.677 lr=8.49e-04
+  [Hungarian] epoch  79 | loss=0.7880 dist=0.7722 div=2.026 H=0.139 gd=0.669 lr=8.49e-04
+  [Hungarian] epoch  80 | loss=0.7978 dist=0.7933 div=2.032 H=0.142 gd=0.642 lr=8.49e-04
+  [Hungarian] epoch  81 | loss=0.7998 dist=0.8222 div=2.017 H=0.149 gd=0.658 lr=8.49e-04
+  [Hungarian] epoch  82 | loss=0.8309 dist=0.7941 div=2.016 H=0.144 gd=0.694 lr=8.49e-04
+  [Hungarian] epoch  83 | loss=0.8007 dist=0.8049 div=2.031 H=0.148 gd=0.642 lr=8.49e-04
+  [Hungarian] epoch  84 | loss=0.7972 dist=0.7893 div=2.009 H=0.148 gd=0.622 lr=8.49e-04
+  [Hungarian] epoch  85 | loss=0.7918 dist=0.7884 div=2.014 H=0.143 gd=0.658 lr=8.49e-04
+  [Hungarian] epoch  86 | loss=0.7933 dist=0.7956 div=2.023 H=0.146 gd=0.653 lr=8.49e-04
+  [Hungarian] epoch  87 | loss=0.7911 dist=0.7758 div=2.024 H=0.144 gd=0.666 lr=8.49e-04
+  [Hungarian] epoch  88 | loss=0.7881 dist=0.7935 div=2.021 H=0.145 gd=0.665 lr=8.49e-04
+  [Hungarian] epoch  89 | loss=0.7937 dist=0.7728 div=2.043 H=0.140 gd=0.640 lr=8.49e-04
+  [Hungarian] epoch  90 | loss=0.7854 dist=0.7745 div=2.023 H=0.139 gd=0.605 lr=8.49e-04
+  [Hungarian] epoch  91 | loss=0.7892 dist=0.7780 div=2.045 H=0.142 gd=0.634 lr=8.49e-04
+  [Hungarian] epoch  92 | loss=0.7917 dist=0.8027 div=2.012 H=0.145 gd=0.614 lr=8.49e-04
+  [Hungarian] epoch  93 | loss=0.7900 dist=0.7678 div=2.055 H=0.136 gd=0.637 lr=8.49e-04
+  [Hungarian] epoch  94 | loss=0.7828 dist=0.7770 div=2.026 H=0.141 gd=0.623 lr=8.49e-04
+  [Hungarian] epoch  95 | loss=0.7897 dist=0.7695 div=2.038 H=0.137 gd=0.632 lr=8.49e-04
+  [Hungarian] epoch  96 | loss=0.7831 dist=0.7760 div=2.036 H=0.138 gd=0.629 lr=8.49e-04
+  [Hungarian] epoch  97 | loss=0.7818 dist=0.7635 div=2.024 H=0.139 gd=0.621 lr=8.49e-04
+  [Hungarian] epoch  98 | loss=0.7927 dist=0.7735 div=2.036 H=0.135 gd=0.621 lr=8.49e-04
+  [Hungarian] early stopping at epoch 98 (no improvement for 30 epochs, best dist=0.7564)
+
+=== PM3 τ=0.12 ===
+  [PM3 τ=0.12] epoch   0 | loss=6.8069 dist=1.3440 div=1.772 H=0.209 gd=0.616 lr=8.49e-04
+  [PM3 τ=0.12] epoch   1 | loss=3.0251 dist=1.1974 div=1.901 H=0.184 gd=0.582 lr=8.49e-04
+  [PM3 τ=0.12] epoch   2 | loss=2.3492 dist=1.1236 div=1.992 H=0.165 gd=0.475 lr=8.49e-04
+  [PM3 τ=0.12] epoch   3 | loss=2.0551 dist=1.0613 div=1.992 H=0.152 gd=0.503 lr=8.49e-04
+  [PM3 τ=0.12] epoch   4 | loss=1.8833 dist=1.0192 div=2.054 H=0.148 gd=0.475 lr=8.49e-04
+  [PM3 τ=0.12] epoch   5 | loss=1.7816 dist=1.0033 div=2.078 H=0.143 gd=0.491 lr=8.49e-04
+  [PM3 τ=0.12] epoch   6 | loss=1.7086 dist=0.9962 div=2.108 H=0.138 gd=0.525 lr=8.49e-04
+  [PM3 τ=0.12] epoch   7 | loss=1.6678 dist=0.9783 div=2.088 H=0.140 gd=0.516 lr=8.49e-04
+  [PM3 τ=0.12] epoch   8 | loss=1.6306 dist=0.9698 div=2.127 H=0.129 gd=0.552 lr=8.49e-04
+  [PM3 τ=0.12] epoch   9 | loss=1.5712 dist=0.9695 div=2.134 H=0.117 gd=0.574 lr=8.49e-04
+  [PM3 τ=0.12] epoch  10 | loss=1.4738 dist=0.9499 div=2.163 H=0.109 gd=0.572 lr=8.49e-04
+  [PM3 τ=0.12] epoch  11 | loss=1.4031 dist=0.9366 div=2.153 H=0.109 gd=0.591 lr=8.49e-04
+  [PM3 τ=0.12] epoch  12 | loss=1.3434 dist=0.9399 div=2.181 H=0.106 gd=0.570 lr=8.49e-04
+  [PM3 τ=0.12] epoch  13 | loss=1.3135 dist=0.9268 div=2.167 H=0.105 gd=0.577 lr=8.49e-04
+  [PM3 τ=0.12] epoch  14 | loss=1.3037 dist=0.9361 div=2.177 H=0.109 gd=0.583 lr=8.49e-04
+  [PM3 τ=0.12] epoch  15 | loss=1.2965 dist=0.9246 div=2.170 H=0.108 gd=0.562 lr=8.49e-04
+  [PM3 τ=0.12] epoch  16 | loss=1.2957 dist=0.9270 div=2.166 H=0.108 gd=0.581 lr=8.49e-04
+  [PM3 τ=0.12] epoch  17 | loss=1.2826 dist=0.9233 div=2.166 H=0.106 gd=0.584 lr=8.49e-04
+  [PM3 τ=0.12] epoch  18 | loss=1.2615 dist=0.9038 div=2.175 H=0.102 gd=0.584 lr=8.49e-04
+  [PM3 τ=0.12] epoch  19 | loss=1.2392 dist=0.8898 div=2.200 H=0.101 gd=0.574 lr=8.49e-04
+  [PM3 τ=0.12] epoch  20 | loss=1.2096 dist=0.8994 div=2.188 H=0.104 gd=0.579 lr=8.49e-04
+  [PM3 τ=0.12] epoch  21 | loss=1.1948 dist=0.8871 div=2.215 H=0.099 gd=0.599 lr=8.49e-04
+  [PM3 τ=0.12] epoch  22 | loss=1.1761 dist=0.8833 div=2.208 H=0.098 gd=0.603 lr=8.49e-04
+  [PM3 τ=0.12] epoch  23 | loss=1.1732 dist=0.8622 div=2.200 H=0.094 gd=0.608 lr=8.49e-04
+  [PM3 τ=0.12] epoch  24 | loss=1.1553 dist=0.8638 div=2.226 H=0.095 gd=0.596 lr=8.49e-04
+  [PM3 τ=0.12] epoch  25 | loss=1.1298 dist=0.8591 div=2.242 H=0.093 gd=0.599 lr=8.49e-04
+  [PM3 τ=0.12] epoch  26 | loss=1.1263 dist=0.8892 div=2.222 H=0.094 gd=0.608 lr=8.49e-04
+  [PM3 τ=0.12] epoch  27 | loss=1.1547 dist=0.8595 div=2.242 H=0.091 gd=0.624 lr=8.49e-04
+  [PM3 τ=0.12] epoch  28 | loss=1.1354 dist=0.8473 div=2.227 H=0.094 gd=0.622 lr=8.49e-04
+  [PM3 τ=0.12] epoch  29 | loss=1.1383 dist=0.8566 div=2.220 H=0.091 gd=0.626 lr=8.49e-04
+  [PM3 τ=0.12] epoch  30 | loss=1.1341 dist=0.8551 div=2.212 H=0.093 gd=0.618 lr=8.49e-04
+  [PM3 τ=0.12] epoch  31 | loss=1.1132 dist=0.8532 div=2.214 H=0.093 gd=0.614 lr=8.49e-04
+  [PM3 τ=0.12] epoch  32 | loss=1.1106 dist=0.8455 div=2.220 H=0.093 gd=0.619 lr=8.49e-04
+  [PM3 τ=0.12] epoch  33 | loss=1.1023 dist=0.8520 div=2.231 H=0.091 gd=0.638 lr=8.49e-04
+  [PM3 τ=0.12] epoch  34 | loss=1.1033 dist=0.8510 div=2.234 H=0.091 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch  35 | loss=1.0905 dist=0.8359 div=2.217 H=0.089 gd=0.620 lr=8.49e-04
+  [PM3 τ=0.12] epoch  36 | loss=1.0681 dist=0.8302 div=2.243 H=0.089 gd=0.625 lr=8.49e-04
+  [PM3 τ=0.12] epoch  37 | loss=1.1204 dist=0.8443 div=2.214 H=0.092 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch  38 | loss=1.2269 dist=0.8535 div=2.206 H=0.092 gd=0.646 lr=8.49e-04
+  [PM3 τ=0.12] epoch  39 | loss=1.1760 dist=0.8466 div=2.216 H=0.092 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch  40 | loss=1.1032 dist=0.8367 div=2.217 H=0.092 gd=0.627 lr=8.49e-04
+  [PM3 τ=0.12] epoch  41 | loss=1.0752 dist=0.8272 div=2.246 H=0.089 gd=0.667 lr=8.49e-04
+  [PM3 τ=0.12] epoch  42 | loss=1.0765 dist=0.8380 div=2.201 H=0.092 gd=0.617 lr=8.49e-04
+  [PM3 τ=0.12] epoch  43 | loss=1.0740 dist=0.8339 div=2.252 H=0.089 gd=0.650 lr=8.49e-04
+  [PM3 τ=0.12] epoch  44 | loss=1.0758 dist=0.8533 div=2.229 H=0.090 gd=0.643 lr=8.49e-04
+  [PM3 τ=0.12] epoch  45 | loss=1.0539 dist=0.8207 div=2.259 H=0.089 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  46 | loss=1.0432 dist=0.8192 div=2.239 H=0.087 gd=0.641 lr=8.49e-04
+  [PM3 τ=0.12] epoch  47 | loss=1.0512 dist=0.8285 div=2.206 H=0.091 gd=0.627 lr=8.49e-04
+  [PM3 τ=0.12] epoch  48 | loss=1.0417 dist=0.8187 div=2.246 H=0.087 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch  49 | loss=1.0446 dist=0.8088 div=2.234 H=0.088 gd=0.649 lr=8.49e-04
+  [PM3 τ=0.12] epoch  50 | loss=1.0336 dist=0.8062 div=2.238 H=0.086 gd=0.675 lr=8.49e-04
+  [PM3 τ=0.12] epoch  51 | loss=1.0134 dist=0.8131 div=2.246 H=0.088 gd=0.681 lr=8.49e-04
+  [PM3 τ=0.12] epoch  52 | loss=1.0086 dist=0.7934 div=2.256 H=0.085 gd=0.626 lr=8.49e-04
+  [PM3 τ=0.12] epoch  53 | loss=0.9971 dist=0.8054 div=2.250 H=0.083 gd=0.657 lr=8.49e-04
+  [PM3 τ=0.12] epoch  54 | loss=1.0062 dist=0.7998 div=2.249 H=0.086 gd=0.655 lr=8.49e-04
+  [PM3 τ=0.12] epoch  55 | loss=1.0068 dist=0.7896 div=2.248 H=0.084 gd=0.613 lr=8.49e-04
+  [PM3 τ=0.12] epoch  56 | loss=1.0041 dist=0.8030 div=2.268 H=0.084 gd=0.670 lr=8.49e-04
+  [PM3 τ=0.12] epoch  57 | loss=1.0033 dist=0.7780 div=2.263 H=0.083 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch  58 | loss=0.9914 dist=0.7843 div=2.264 H=0.081 gd=0.620 lr=8.49e-04
+  [PM3 τ=0.12] epoch  59 | loss=0.9825 dist=0.7776 div=2.259 H=0.083 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch  60 | loss=0.9853 dist=0.7930 div=2.263 H=0.082 gd=0.664 lr=8.49e-04
+  [PM3 τ=0.12] epoch  61 | loss=0.9633 dist=0.8026 div=2.267 H=0.083 gd=0.680 lr=8.49e-04
+  [PM3 τ=0.12] epoch  62 | loss=0.9664 dist=0.7773 div=2.270 H=0.083 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch  63 | loss=1.0093 dist=0.7890 div=2.242 H=0.085 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch  64 | loss=0.9821 dist=0.7793 div=2.275 H=0.084 gd=0.658 lr=8.49e-04
+  [PM3 τ=0.12] epoch  65 | loss=0.9754 dist=0.7906 div=2.248 H=0.085 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch  66 | loss=0.9641 dist=0.7961 div=2.243 H=0.083 gd=0.726 lr=8.49e-04
+  [PM3 τ=0.12] epoch  67 | loss=0.9676 dist=0.8022 div=2.251 H=0.082 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch  68 | loss=0.9623 dist=0.7864 div=2.245 H=0.085 gd=0.651 lr=8.49e-04
+  [PM3 τ=0.12] epoch  69 | loss=0.9932 dist=0.8013 div=2.262 H=0.086 gd=0.680 lr=8.49e-04
+  [PM3 τ=0.12] epoch  70 | loss=1.0108 dist=0.7789 div=2.238 H=0.082 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch  71 | loss=1.0372 dist=0.7904 div=2.245 H=0.085 gd=0.658 lr=8.49e-04
+  [PM3 τ=0.12] epoch  72 | loss=1.0221 dist=0.7762 div=2.254 H=0.085 gd=0.659 lr=8.49e-04
+  [PM3 τ=0.12] epoch  73 | loss=0.9742 dist=0.7686 div=2.241 H=0.084 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  74 | loss=0.9794 dist=0.8003 div=2.266 H=0.088 gd=0.648 lr=8.49e-04
+  [PM3 τ=0.12] epoch  75 | loss=1.0011 dist=0.8026 div=2.305 H=0.086 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch  76 | loss=0.9771 dist=0.7646 div=2.257 H=0.082 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch  77 | loss=0.9549 dist=0.7766 div=2.248 H=0.086 gd=0.660 lr=8.49e-04
+  [PM3 τ=0.12] epoch  78 | loss=0.9677 dist=0.7762 div=2.273 H=0.084 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch  79 | loss=0.9337 dist=0.7560 div=2.277 H=0.083 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  80 | loss=0.9727 dist=0.7829 div=2.258 H=0.084 gd=0.646 lr=8.49e-04
+  [PM3 τ=0.12] epoch  81 | loss=0.9706 dist=0.7562 div=2.258 H=0.085 gd=0.660 lr=8.49e-04
+  [PM3 τ=0.12] epoch  82 | loss=0.9427 dist=0.7635 div=2.280 H=0.084 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch  83 | loss=0.9492 dist=0.7621 div=2.258 H=0.084 gd=0.677 lr=8.49e-04
+  [PM3 τ=0.12] epoch  84 | loss=0.9463 dist=0.7497 div=2.249 H=0.083 gd=0.630 lr=8.49e-04
+  [PM3 τ=0.12] epoch  85 | loss=0.9271 dist=0.7617 div=2.268 H=0.083 gd=0.653 lr=8.49e-04
+  [PM3 τ=0.12] epoch  86 | loss=0.9184 dist=0.7478 div=2.285 H=0.081 gd=0.648 lr=8.49e-04
+  [PM3 τ=0.12] epoch  87 | loss=0.9158 dist=0.7626 div=2.271 H=0.083 gd=0.639 lr=8.49e-04
+  [PM3 τ=0.12] epoch  88 | loss=0.9080 dist=0.7711 div=2.251 H=0.088 gd=0.685 lr=8.49e-04
+  [PM3 τ=0.12] epoch  89 | loss=0.9591 dist=0.7578 div=2.246 H=0.085 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch  90 | loss=0.9365 dist=0.7574 div=2.259 H=0.084 gd=0.655 lr=8.49e-04
+  [PM3 τ=0.12] epoch  91 | loss=0.9285 dist=0.7854 div=2.257 H=0.083 gd=0.587 lr=8.49e-04
+  [PM3 τ=0.12] epoch  92 | loss=0.8993 dist=0.7430 div=2.272 H=0.080 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch  93 | loss=0.9014 dist=0.7526 div=2.254 H=0.083 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch  94 | loss=0.9219 dist=0.7530 div=2.285 H=0.083 gd=0.621 lr=8.49e-04
+  [PM3 τ=0.12] epoch  95 | loss=0.9148 dist=0.7481 div=2.286 H=0.081 gd=0.669 lr=8.49e-04
+  [PM3 τ=0.12] epoch  96 | loss=0.9205 dist=0.7624 div=2.273 H=0.084 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch  97 | loss=0.9102 dist=0.7418 div=2.266 H=0.081 gd=0.661 lr=8.49e-04
+  [PM3 τ=0.12] epoch  98 | loss=0.8988 dist=0.7479 div=2.264 H=0.083 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch  99 | loss=0.9046 dist=0.7539 div=2.274 H=0.081 gd=0.652 lr=8.49e-04
+  [PM3 τ=0.12] epoch 100 | loss=0.8921 dist=0.7418 div=2.258 H=0.080 gd=0.682 lr=8.49e-04
+  [PM3 τ=0.12] epoch 101 | loss=0.8756 dist=0.7389 div=2.288 H=0.083 gd=0.664 lr=8.49e-04
+  [PM3 τ=0.12] epoch 102 | loss=0.8767 dist=0.7439 div=2.298 H=0.079 gd=0.689 lr=8.49e-04
+  [PM3 τ=0.12] epoch 103 | loss=0.8732 dist=0.7518 div=2.289 H=0.079 gd=0.716 lr=8.49e-04
+  [PM3 τ=0.12] epoch 104 | loss=0.9043 dist=0.7450 div=2.282 H=0.081 gd=0.666 lr=8.49e-04
+  [PM3 τ=0.12] epoch 105 | loss=0.9146 dist=0.7359 div=2.286 H=0.081 gd=0.667 lr=8.49e-04
+  [PM3 τ=0.12] epoch 106 | loss=0.8764 dist=0.7519 div=2.266 H=0.080 gd=0.694 lr=8.49e-04
+  [PM3 τ=0.12] epoch 107 | loss=0.8914 dist=0.7381 div=2.285 H=0.083 gd=0.689 lr=8.49e-04
+  [PM3 τ=0.12] epoch 108 | loss=0.8778 dist=0.7407 div=2.279 H=0.083 gd=0.684 lr=8.49e-04
+  [PM3 τ=0.12] epoch 109 | loss=0.8708 dist=0.7467 div=2.259 H=0.080 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch 110 | loss=0.8767 dist=0.7574 div=2.273 H=0.082 gd=0.656 lr=8.49e-04
+  [PM3 τ=0.12] epoch 111 | loss=0.8717 dist=0.7366 div=2.286 H=0.082 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch 112 | loss=0.8932 dist=0.7659 div=2.271 H=0.081 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch 113 | loss=0.9300 dist=0.7543 div=2.269 H=0.080 gd=0.659 lr=8.49e-04
+  [PM3 τ=0.12] epoch 114 | loss=0.9300 dist=0.7663 div=2.281 H=0.085 gd=0.673 lr=8.49e-04
+  [PM3 τ=0.12] epoch 115 | loss=0.9032 dist=0.7427 div=2.286 H=0.080 gd=0.674 lr=8.49e-04
+  [PM3 τ=0.12] epoch 116 | loss=0.8749 dist=0.7362 div=2.295 H=0.081 gd=0.649 lr=8.49e-04
+  [PM3 τ=0.12] epoch 117 | loss=0.8862 dist=0.7609 div=2.277 H=0.082 gd=0.665 lr=8.49e-04
+  [PM3 τ=0.12] epoch 118 | loss=0.8744 dist=0.7379 div=2.282 H=0.081 gd=0.700 lr=8.49e-04
+  [PM3 τ=0.12] epoch 119 | loss=0.8635 dist=0.7345 div=2.282 H=0.080 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch 120 | loss=0.8734 dist=0.7487 div=2.282 H=0.080 gd=0.663 lr=8.49e-04
+  [PM3 τ=0.12] epoch 121 | loss=0.8726 dist=0.7258 div=2.288 H=0.080 gd=0.654 lr=8.49e-04
+  [PM3 τ=0.12] epoch 122 | loss=0.8457 dist=0.7279 div=2.301 H=0.077 gd=0.651 lr=8.49e-04
+  [PM3 τ=0.12] epoch 123 | loss=0.8727 dist=0.7675 div=2.290 H=0.081 gd=0.616 lr=8.49e-04
+  [PM3 τ=0.12] epoch 124 | loss=0.8544 dist=0.7271 div=2.291 H=0.080 gd=0.650 lr=8.49e-04
+  [PM3 τ=0.12] epoch 125 | loss=0.8483 dist=0.7579 div=2.306 H=0.080 gd=0.661 lr=8.49e-04
+  [PM3 τ=0.12] epoch 126 | loss=0.8426 dist=0.7398 div=2.308 H=0.075 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch 127 | loss=0.8672 dist=0.7481 div=2.290 H=0.078 gd=0.630 lr=8.49e-04
+  [PM3 τ=0.12] epoch 128 | loss=0.8862 dist=0.7403 div=2.285 H=0.079 gd=0.608 lr=8.49e-04
+  [PM3 τ=0.12] epoch 129 | loss=0.8723 dist=0.7341 div=2.283 H=0.078 gd=0.618 lr=8.49e-04
+  [PM3 τ=0.12] epoch 130 | loss=0.8607 dist=0.7506 div=2.312 H=0.075 gd=0.676 lr=8.49e-04
+  [PM3 τ=0.12] epoch 131 | loss=0.8457 dist=0.7278 div=2.300 H=0.077 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch 132 | loss=0.8460 dist=0.7577 div=2.298 H=0.077 gd=0.622 lr=8.49e-04
+  [PM3 τ=0.12] epoch 133 | loss=0.8480 dist=0.7345 div=2.293 H=0.076 gd=0.639 lr=8.49e-04
+  [PM3 τ=0.12] epoch 134 | loss=0.8558 dist=0.7268 div=2.303 H=0.075 gd=0.673 lr=8.49e-04
+  [PM3 τ=0.12] epoch 135 | loss=0.8393 dist=0.7465 div=2.272 H=0.080 gd=0.698 lr=8.49e-04
+  [PM3 τ=0.12] epoch 136 | loss=0.8337 dist=0.7235 div=2.308 H=0.075 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch 137 | loss=0.8257 dist=0.7337 div=2.289 H=0.077 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch 138 | loss=0.8246 dist=0.7330 div=2.289 H=0.077 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch 139 | loss=0.8242 dist=0.7318 div=2.303 H=0.078 gd=0.643 lr=8.49e-04
+  [PM3 τ=0.12] epoch 140 | loss=0.8227 dist=0.7276 div=2.289 H=0.076 gd=0.690 lr=8.49e-04
+  [PM3 τ=0.12] epoch 141 | loss=0.8188 dist=0.7240 div=2.298 H=0.075 gd=0.706 lr=8.49e-04
+  [PM3 τ=0.12] epoch 142 | loss=0.8214 dist=0.7355 div=2.305 H=0.076 gd=0.662 lr=8.49e-04
+  [PM3 τ=0.12] epoch 143 | loss=0.8343 dist=0.7376 div=2.305 H=0.076 gd=0.683 lr=8.49e-04
+  [PM3 τ=0.12] epoch 144 | loss=0.8374 dist=0.7316 div=2.286 H=0.077 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch 145 | loss=0.8396 dist=0.7370 div=2.293 H=0.076 gd=0.647 lr=8.49e-04
+  [PM3 τ=0.12] epoch 146 | loss=0.8227 dist=0.7341 div=2.302 H=0.076 gd=0.592 lr=8.49e-04
+  [PM3 τ=0.12] epoch 147 | loss=0.8307 dist=0.7263 div=2.291 H=0.077 gd=0.677 lr=8.49e-04
+  [PM3 τ=0.12] epoch 148 | loss=0.8378 dist=0.7292 div=2.296 H=0.077 gd=0.654 lr=8.49e-04
+  [PM3 τ=0.12] epoch 149 | loss=0.8238 dist=0.7159 div=2.303 H=0.075 gd=0.655 lr=8.49e-04
+  [PM3 τ=0.12] epoch 150 | loss=0.8207 dist=0.7257 div=2.311 H=0.075 gd=0.665 lr=8.49e-04
+  [PM3 τ=0.12] epoch 151 | loss=0.8304 dist=0.7319 div=2.303 H=0.075 gd=0.625 lr=8.49e-04
+  [PM3 τ=0.12] epoch 152 | loss=0.8211 dist=0.7274 div=2.313 H=0.075 gd=0.683 lr=8.49e-04
+  [PM3 τ=0.12] epoch 153 | loss=0.8090 dist=0.7273 div=2.308 H=0.074 gd=0.674 lr=8.49e-04
+  [PM3 τ=0.12] epoch 154 | loss=0.8059 dist=0.7257 div=2.304 H=0.072 gd=0.631 lr=8.49e-04
+  [PM3 τ=0.12] epoch 155 | loss=0.8148 dist=0.7416 div=2.313 H=0.074 gd=0.664 lr=8.49e-04
+  [PM3 τ=0.12] epoch 156 | loss=0.8088 dist=0.7226 div=2.283 H=0.075 gd=0.651 lr=8.49e-04
+  [PM3 τ=0.12] epoch 157 | loss=0.8040 dist=0.7442 div=2.315 H=0.071 gd=0.637 lr=8.49e-04
+  [PM3 τ=0.12] epoch 158 | loss=0.7952 dist=0.7143 div=2.311 H=0.075 gd=0.640 lr=8.49e-04
+  [PM3 τ=0.12] epoch 159 | loss=0.7951 dist=0.7081 div=2.310 H=0.075 gd=0.671 lr=8.49e-04
+  [PM3 τ=0.12] epoch 160 | loss=0.8170 dist=0.7123 div=2.290 H=0.076 gd=0.673 lr=8.49e-04
+  [PM3 τ=0.12] epoch 161 | loss=0.8097 dist=0.7300 div=2.285 H=0.075 gd=0.621 lr=8.49e-04
+  [PM3 τ=0.12] epoch 162 | loss=0.8040 dist=0.7297 div=2.287 H=0.073 gd=0.624 lr=8.49e-04
+  [PM3 τ=0.12] epoch 163 | loss=0.8037 dist=0.7249 div=2.301 H=0.075 gd=0.636 lr=8.49e-04
+  [PM3 τ=0.12] epoch 164 | loss=0.8075 dist=0.7086 div=2.284 H=0.073 gd=0.610 lr=8.49e-04
+  [PM3 τ=0.12] epoch 165 | loss=0.7999 dist=0.7208 div=2.308 H=0.077 gd=0.611 lr=8.49e-04
+  [PM3 τ=0.12] epoch 166 | loss=0.7979 dist=0.7304 div=2.312 H=0.073 gd=0.593 lr=8.49e-04
+  [PM3 τ=0.12] epoch 167 | loss=0.7895 dist=0.7124 div=2.298 H=0.075 gd=0.683 lr=8.49e-04
+  [PM3 τ=0.12] epoch 168 | loss=0.7933 dist=0.7213 div=2.292 H=0.072 gd=0.654 lr=8.49e-04
+  [PM3 τ=0.12] epoch 169 | loss=0.7884 dist=0.7096 div=2.302 H=0.074 gd=0.633 lr=8.49e-04
+  [PM3 τ=0.12] epoch 170 | loss=0.8230 dist=0.7205 div=2.316 H=0.076 gd=0.586 lr=8.49e-04
+  [PM3 τ=0.12] epoch 171 | loss=0.8046 dist=0.7110 div=2.283 H=0.075 gd=0.648 lr=8.49e-04
+  [PM3 τ=0.12] epoch 172 | loss=0.8110 dist=0.7382 div=2.313 H=0.075 gd=0.643 lr=8.49e-04
+  [PM3 τ=0.12] epoch 173 | loss=0.8070 dist=0.7098 div=2.278 H=0.075 gd=0.599 lr=8.49e-04
+  [PM3 τ=0.12] epoch 174 | loss=0.7957 dist=0.7064 div=2.312 H=0.072 gd=0.632 lr=8.49e-04
+  [PM3 τ=0.12] epoch 175 | loss=0.8059 dist=0.7260 div=2.318 H=0.073 gd=0.634 lr=8.49e-04
+  [PM3 τ=0.12] epoch 176 | loss=0.7820 dist=0.7010 div=2.295 H=0.073 gd=0.634 lr=8.49e-04
+  [PM3 τ=0.12] epoch 177 | loss=0.8027 dist=0.7301 div=2.290 H=0.074 gd=0.652 lr=8.49e-04
+  [PM3 τ=0.12] epoch 178 | loss=0.7887 dist=0.7089 div=2.313 H=0.073 gd=0.607 lr=8.49e-04
+  [PM3 τ=0.12] epoch 179 | loss=0.7846 dist=0.7261 div=2.292 H=0.075 gd=0.667 lr=8.49e-04
+  [PM3 τ=0.12] epoch 180 | loss=0.7850 dist=0.7090 div=2.294 H=0.075 gd=0.688 lr=8.49e-04
+  [PM3 τ=0.12] epoch 181 | loss=0.8088 dist=0.7202 div=2.302 H=0.074 gd=0.668 lr=8.49e-04
+  [PM3 τ=0.12] epoch 182 | loss=0.7948 dist=0.7182 div=2.300 H=0.075 gd=0.645 lr=8.49e-04
+  [PM3 τ=0.12] epoch 183 | loss=0.8042 dist=0.7240 div=2.295 H=0.075 gd=0.644 lr=8.49e-04
+  [PM3 τ=0.12] epoch 184 | loss=0.7969 dist=0.7183 div=2.311 H=0.075 gd=0.646 lr=8.49e-04
+  [PM3 τ=0.12] epoch 185 | loss=0.7981 dist=0.7091 div=2.295 H=0.073 gd=0.613 lr=8.49e-04
+  [PM3 τ=0.12] epoch 186 | loss=0.7939 dist=0.7311 div=2.299 H=0.076 gd=0.641 lr=8.49e-04
+  [PM3 τ=0.12] epoch 187 | loss=0.7964 dist=0.7332 div=2.307 H=0.072 gd=0.577 lr=8.49e-04
+  [PM3 τ=0.12] epoch 188 | loss=0.7983 dist=0.7102 div=2.289 H=0.072 gd=0.689 lr=8.49e-04
+  [PM3 τ=0.12] epoch 189 | loss=0.7877 dist=0.7125 div=2.308 H=0.073 gd=0.639 lr=8.49e-04
+  [PM3 τ=0.12] epoch 190 | loss=0.8004 dist=0.7289 div=2.306 H=0.076 gd=0.659 lr=8.49e-04
+  [PM3 τ=0.12] epoch 191 | loss=0.7967 dist=0.7169 div=2.302 H=0.073 gd=0.695 lr=8.49e-04
+  [PM3 τ=0.12] epoch 192 | loss=0.7891 dist=0.7216 div=2.308 H=0.074 gd=0.658 lr=8.49e-04
+  [PM3 τ=0.12] epoch 193 | loss=0.7986 dist=0.7147 div=2.289 H=0.076 gd=0.653 lr=8.49e-04
+  [PM3 τ=0.12] epoch 194 | loss=0.7991 dist=0.7165 div=2.294 H=0.075 gd=0.701 lr=8.49e-04
+  [PM3 τ=0.12] epoch 195 | loss=0.7943 dist=0.7235 div=2.313 H=0.071 gd=0.620 lr=8.49e-04
+  [PM3 τ=0.12] epoch 196 | loss=0.7914 dist=0.7159 div=2.307 H=0.076 gd=0.690 lr=8.49e-04
+  [PM3 τ=0.12] epoch 197 | loss=0.8023 dist=0.7209 div=2.314 H=0.074 gd=0.672 lr=8.49e-04
+  [PM3 τ=0.12] epoch 198 | loss=0.8083 dist=0.7157 div=2.277 H=0.073 gd=0.593 lr=8.49e-04
+  [PM3 τ=0.12] epoch 199 | loss=0.8423 dist=0.7124 div=2.336 H=0.073 gd=0.619 lr=8.49e-04
+
+────────────────────────────────────────────────────────────
+Study complete in 54.7 min
+
+Name                           Final dist   Pred div   SM entropy   Grad div
+----------------------------------------------------------------------------
+PM3 τ=0.12                         0.7124     2.3360       0.0726     0.6186
+Hungarian                          0.7735     2.0360       0.1355     0.6213
+Chamfer                            1.0932     2.0817       0.2945     0.6797
+
+Saved → results/hungarian_baseline.pkl
+[gpu3] Finished: hungarian_baseline

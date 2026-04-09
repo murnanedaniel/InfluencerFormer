@@ -16,6 +16,10 @@ setup(
         "scipy",
         "matplotlib",
         "tqdm",
+        "torchmetrics",
+        "pycocotools",
+        "timm",
+        "transformers>=4.49,<4.50",
     ],
     extras_require={
         "pointcloud": [

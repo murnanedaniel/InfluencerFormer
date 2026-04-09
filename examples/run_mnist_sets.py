@@ -26,6 +26,8 @@ import numpy as np
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
+import wandb
+from pytorch_lightning.loggers import WandbLogger
 from scipy.optimize import linear_sum_assignment
 from torch.utils.data import DataLoader, Dataset
 
@@ -153,16 +155,16 @@ class PointSetAutoencoder(nn.Module):
 def main():
     N_POINTS = 100
     BATCH_SIZE = 256
-    MAX_EPOCHS = 10
-    NUM_SEEDS = 1
+    MAX_EPOCHS = 100
+    NUM_SEEDS = 5
 
     pl.seed_everything(42)
 
     # Data
     train_images, test_images = download_mnist()
-    # Use subsets for speed (full MNIST is 60K train, 10K test — too slow on CPU)
-    train_ds = MNISTPointSetDataset(train_images[:10000], n_points=N_POINTS)
-    val_ds = MNISTPointSetDataset(test_images[:1000], n_points=N_POINTS)
+    # Full MNIST on GPU
+    train_ds = MNISTPointSetDataset(train_images, n_points=N_POINTS)
+    val_ds = MNISTPointSetDataset(test_images, n_points=N_POINTS)
 
     print(f"Train: {len(train_ds)}, Val: {len(val_ds)}, N_points: {N_POINTS}")
     sample_input, sample_target = train_ds[0]
@@ -200,15 +202,22 @@ def main():
                 match_threshold=0.05,  # ~1.4 pixel distance on 28x28 grid
             )
 
-            train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
-            val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, num_workers=0)
+            train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=4)
+            val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, num_workers=4)
+
+            logger = WandbLogger(
+                project="influencerformer-benchmarks",
+                group="mnist",
+                name=f"mnist_{loss_name}_seed{seed}",
+                tags=["mnist", loss_name, f"seed{seed}", f"N{N_POINTS}"],
+            )
 
             trainer = pl.Trainer(
                 max_epochs=MAX_EPOCHS,
-                accelerator="cpu",
+                accelerator="auto",
                 enable_checkpointing=False,
                 enable_model_summary=False,
-                logger=False,  # disable TB logging for speed
+                logger=logger,
                 enable_progress_bar=True,
             )
 
@@ -226,6 +235,7 @@ def main():
                   f"dist={final['val_matched_dist']:.4f} "
                   f"acc={final['val_match_acc']:.3f} "
                   f"dup={final['val_dup_rate']:.3f}")
+            wandb.finish()
 
         results[loss_name] = seed_results
 

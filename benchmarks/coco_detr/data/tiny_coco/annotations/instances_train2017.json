@@ -1,0 +1,51 @@
+{
+  "images": [
+    {
+      "id": 1,
+      "file_name": "000000000001.jpg",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "id": 2,
+      "file_name": "000000000002.jpg",
+      "width": 128,
+      "height": 128
+    }
+  ],
+  "annotations": [
+    {
+      "id": 1,
+      "image_id": 1,
+      "category_id": 1,
+      "bbox": [
+        20,
+        18,
+        54,
+        70
+      ],
+      "area": 3780,
+      "iscrowd": 0
+    },
+    {
+      "id": 2,
+      "image_id": 2,
+      "category_id": 1,
+      "bbox": [
+        36,
+        30,
+        48,
+        56
+      ],
+      "area": 2688,
+      "iscrowd": 0
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "person",
+      "supercategory": "person"
+    }
+  ]
+}

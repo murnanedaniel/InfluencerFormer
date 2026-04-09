@@ -4,12 +4,39 @@ Explores different aggregations that replace `min` in Chamfer distance
 with smoother alternatives that provide better gradient flow and
 bijectivity enforcement.
 
+Optional mask (B, N) where 1=real, 0=padding. When provided:
+- Padding entries are excluded from softmax via masked_fill(inf)
+- Averages are over n_real, not N
+
 Reference:
     Derived from the Influencer Loss (Murnane, 2024).
 """
 
 import torch
 import torch.nn as nn
+
+
+def _masked_mean(values, mask, dim):
+    """Mean over real entries only. values: (B, K), mask: (B, K)."""
+    return (values * mask).sum(dim=dim) / mask.sum(dim=dim).clamp(min=1)
+
+
+def _prepare_softmax_masks(D, mask):
+    """Prepare masked D tensors for softmax in coverage and precision directions.
+
+    Returns (D_sm_over_preds, D_sm_over_targets) where padding entries are
+    +inf so softmax(-D/tau) gives them zero weight.
+
+    Coverage: for each target j, softmin over predictions i → softmax dim=1
+      → need to mask prediction ROWS (padding preds get inf)
+    Precision: for each prediction i, softmin over targets j → softmax dim=2
+      → need to mask target COLUMNS (padding targets get inf)
+    """
+    col_mask = mask.unsqueeze(1).bool()   # (B, 1, N) — target columns
+    row_mask = mask.unsqueeze(2).bool()   # (B, N, 1) — prediction rows
+    D_sm_preds = D.masked_fill(~row_mask, float('inf'))    # for softmax over dim=1
+    D_sm_targets = D.masked_fill(~col_mask, float('inf'))  # for softmax over dim=2
+    return D_sm_preds, D_sm_targets
 
 
 # =============================================================================
@@ -126,12 +153,26 @@ class SoftMinChamferLoss(nn.Module):
         super().__init__()
         self.temperature = temperature
 
-    def forward(self, D: torch.Tensor) -> torch.Tensor:
-        weights_cov = torch.softmax(-D / self.temperature, dim=1)
-        coverage = (weights_cov * D).sum(dim=1).mean(dim=-1)
+    def forward(self, D: torch.Tensor, mask=None) -> torch.Tensor:
+        if mask is not None:
+            D_sm_preds, D_sm_targets = _prepare_softmax_masks(D, mask)
+        else:
+            D_sm_preds = D_sm_targets = D
 
-        weights_prec = torch.softmax(-D / self.temperature, dim=2)
-        precision = (weights_prec * D).sum(dim=2).mean(dim=-1)
+        # Coverage: for each target, softmin over preds (dim=1)
+        weights_cov = torch.softmax(-D_sm_preds / self.temperature, dim=1)
+        sm_cov = (weights_cov * D).sum(dim=1)  # (B, N)
+
+        # Precision: for each pred, softmin over targets (dim=2)
+        weights_prec = torch.softmax(-D_sm_targets / self.temperature, dim=2)
+        sm_prec = (weights_prec * D).sum(dim=2)  # (B, M)
+
+        if mask is not None:
+            coverage = _masked_mean(sm_cov, mask, dim=1)
+            precision = _masked_mean(sm_prec, mask, dim=1)
+        else:
+            coverage = sm_cov.mean(dim=-1)
+            precision = sm_prec.mean(dim=-1)
 
         return (coverage + precision).mean()
 
@@ -147,22 +188,39 @@ class ProductWeightedSoftMinLoss(nn.Module):
         self.temperature = temperature
         self.eps = eps
 
-    def forward(self, D: torch.Tensor) -> torch.Tensor:
-        w_cov = torch.softmax(-D / self.temperature, dim=1)
+    def forward(self, D: torch.Tensor, mask=None) -> torch.Tensor:
+        if mask is not None:
+            D_sm_preds, D_sm_targets = _prepare_softmax_masks(D, mask)
+        else:
+            D_sm_preds = D_sm_targets = D
+
+        w_cov = torch.softmax(-D_sm_preds / self.temperature, dim=1)
         softmin_cov = (w_cov * D).sum(dim=1)
 
-        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        w_prec = torch.softmax(-D_sm_targets / self.temperature, dim=2)
         softmin_prec = (w_prec * D).sum(dim=2)
 
         log_D = torch.log(D + self.eps)
-        col_gm = torch.exp(log_D.mean(dim=1)).detach()
-        row_gm = torch.exp(log_D.mean(dim=2)).detach()
+        if mask is not None:
+            # GM only over real entries
+            row_mask = mask.unsqueeze(2)  # (B, N, 1)
+            col_mask = mask.unsqueeze(1)  # (B, 1, N)
+            n_real = mask.sum(dim=1, keepdim=True).clamp(min=1)
+            col_gm = torch.exp((log_D * row_mask).sum(dim=1) / n_real).detach()
+            row_gm = torch.exp((log_D * col_mask).sum(dim=2) / n_real).detach()
+        else:
+            col_gm = torch.exp(log_D.mean(dim=1)).detach()
+            row_gm = torch.exp(log_D.mean(dim=2)).detach()
 
         col_w = col_gm / (col_gm.mean(dim=-1, keepdim=True) + self.eps)
         row_w = row_gm / (row_gm.mean(dim=-1, keepdim=True) + self.eps)
 
-        coverage = (col_w * softmin_cov).mean(dim=-1)
-        precision = (row_w * softmin_prec).mean(dim=-1)
+        if mask is not None:
+            coverage = _masked_mean(col_w * softmin_cov, mask, dim=1)
+            precision = _masked_mean(row_w * softmin_prec, mask, dim=1)
+        else:
+            coverage = (col_w * softmin_cov).mean(dim=-1)
+            precision = (row_w * softmin_prec).mean(dim=-1)
 
         return (coverage + precision).mean()
 
@@ -235,32 +293,58 @@ class SoftDCDLoss(nn.Module):
         self.temperature = temperature
         self.eps = eps
 
-    def forward(self, D: torch.Tensor) -> torch.Tensor:
-        # Soft assignments: how much does each prediction claim each target?
-        # pred_claims[i,j] = probability that prediction i is "assigned to" target j
-        pred_claims = torch.softmax(-D / self.temperature, dim=2)  # (B, M, N)
+    def forward(self, D: torch.Tensor, mask=None) -> torch.Tensor:
+        if mask is not None:
+            D_sm_preds, D_sm_targets = _prepare_softmax_masks(D, mask)
+        else:
+            D_sm_preds = D_sm_targets = D
 
-        # Soft claim count per target: how many predictions claim target j?
-        claim_count = pred_claims.sum(dim=1)  # (B, N) — should be ~1 if unique, >1 if duplicated
+        # --- Coverage direction ---
+        # Soft assignments: softmax over targets → claim count per target
+        pred_claims = torch.softmax(-D_sm_targets / self.temperature, dim=2)  # (B, M, N)
+        if mask is not None:
+            # Sum only over real predictions (dim=1 = M axis)
+            claim_count = (pred_claims * mask.unsqueeze(2)).sum(dim=1)  # (B, N)
+        else:
+            claim_count = pred_claims.sum(dim=1)
 
-        # Inverse claim frequency weight (DCD's 1/n_ŷ, but soft)
-        inv_freq = 1.0 / (claim_count + self.eps)  # (B, N)
-        inv_freq_norm = inv_freq / (inv_freq.mean(dim=-1, keepdim=True) + self.eps)
+        inv_freq = 1.0 / (claim_count + self.eps)
+        if mask is not None:
+            inv_freq_mean = _masked_mean(inv_freq, mask, dim=1).unsqueeze(1)
+            inv_freq_norm = inv_freq / (inv_freq_mean + self.eps)
+        else:
+            inv_freq_norm = inv_freq / (inv_freq.mean(dim=-1, keepdim=True) + self.eps)
 
-        # SoftMin coverage loss, weighted by inverse frequency
-        w_cov = torch.softmax(-D / self.temperature, dim=1)  # (B, M, N)
+        w_cov = torch.softmax(-D_sm_preds / self.temperature, dim=1)
         softmin_cov = (w_cov * D).sum(dim=1)  # (B, N)
-        coverage = (inv_freq_norm.detach() * softmin_cov).mean(dim=-1)
 
-        # Symmetric: soft claim count for precision direction
-        tgt_claims = torch.softmax(-D / self.temperature, dim=1)  # (B, M, N)
-        claim_count_prec = tgt_claims.sum(dim=2)  # (B, M)
+        if mask is not None:
+            coverage = _masked_mean(inv_freq_norm.detach() * softmin_cov, mask, dim=1)
+        else:
+            coverage = (inv_freq_norm.detach() * softmin_cov).mean(dim=-1)
+
+        # --- Precision direction (symmetric) ---
+        tgt_claims = torch.softmax(-D_sm_preds / self.temperature, dim=1)  # (B, M, N)
+        if mask is not None:
+            # Sum only over real targets (dim=2 = N axis)
+            claim_count_prec = (tgt_claims * mask.unsqueeze(1)).sum(dim=2)  # (B, M)
+        else:
+            claim_count_prec = tgt_claims.sum(dim=2)
+
         inv_freq_prec = 1.0 / (claim_count_prec + self.eps)
-        inv_freq_prec_norm = inv_freq_prec / (inv_freq_prec.mean(dim=-1, keepdim=True) + self.eps)
+        if mask is not None:
+            inv_freq_prec_mean = _masked_mean(inv_freq_prec, mask, dim=1).unsqueeze(1)
+            inv_freq_prec_norm = inv_freq_prec / (inv_freq_prec_mean + self.eps)
+        else:
+            inv_freq_prec_norm = inv_freq_prec / (inv_freq_prec.mean(dim=-1, keepdim=True) + self.eps)
 
-        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        w_prec = torch.softmax(-D_sm_targets / self.temperature, dim=2)
         softmin_prec = (w_prec * D).sum(dim=2)  # (B, M)
-        precision = (inv_freq_prec_norm.detach() * softmin_prec).mean(dim=-1)
+
+        if mask is not None:
+            precision = _masked_mean(inv_freq_prec_norm.detach() * softmin_prec, mask, dim=1)
+        else:
+            precision = (inv_freq_prec_norm.detach() * softmin_prec).mean(dim=-1)
 
         return (coverage + precision).mean()
 
@@ -285,42 +369,81 @@ class CombinedSoftMinLoss(nn.Module):
         self.freq_weight = freq_weight
         self.eps = eps
 
-    def forward(self, D: torch.Tensor) -> torch.Tensor:
-        # SoftMin base loss
-        w_cov = torch.softmax(-D / self.temperature, dim=1)
+    def forward(self, D: torch.Tensor, mask=None) -> torch.Tensor:
+        if mask is not None:
+            D_sm_preds, D_sm_targets = _prepare_softmax_masks(D, mask)
+        else:
+            D_sm_preds = D_sm_targets = D
+
+        log_D = torch.log(D + self.eps)
+
+        # --- Coverage direction ---
+        w_cov = torch.softmax(-D_sm_preds / self.temperature, dim=1)
         softmin_cov = (w_cov * D).sum(dim=1)  # (B, N)
 
-        # GM coverage weight
-        log_D = torch.log(D + self.eps)
-        gm = torch.exp(log_D.mean(dim=1)).detach()  # (B, N)
-        gm_w = gm / (gm.mean(-1, keepdim=True) + self.eps)
+        # GM weight: mean log_D over real predictions (dim=1)
+        if mask is not None:
+            n_real = mask.sum(dim=1, keepdim=True).clamp(min=1)
+            gm = torch.exp((log_D * mask.unsqueeze(2)).sum(dim=1) / n_real).detach()
+        else:
+            gm = torch.exp(log_D.mean(dim=1)).detach()
+        if mask is not None:
+            gm_w = gm / (_masked_mean(gm, mask, dim=1).unsqueeze(1) + self.eps)
+        else:
+            gm_w = gm / (gm.mean(-1, keepdim=True) + self.eps)
 
-        # Query-frequency weight
-        claims = torch.softmax(-D / self.temperature, dim=2).sum(dim=1)  # (B, N)
+        # Query-frequency weight (sum over real predictions)
+        pred_claims = torch.softmax(-D_sm_targets / self.temperature, dim=2)
+        if mask is not None:
+            claims = (pred_claims * mask.unsqueeze(2)).sum(dim=1)
+        else:
+            claims = pred_claims.sum(dim=1)
         inv_freq = (1.0 / (claims + self.eps)).detach()
-        freq_w = inv_freq / (inv_freq.mean(-1, keepdim=True) + self.eps)
+        if mask is not None:
+            freq_w = inv_freq / (_masked_mean(inv_freq, mask, dim=1).unsqueeze(1) + self.eps)
+        else:
+            freq_w = inv_freq / (inv_freq.mean(-1, keepdim=True) + self.eps)
 
-        # Combined weight
         combined_w = self.gm_weight * gm_w + self.freq_weight * freq_w
-        combined_w = combined_w / (combined_w.mean(-1, keepdim=True) + self.eps)
+        if mask is not None:
+            combined_w = combined_w / (_masked_mean(combined_w, mask, dim=1).unsqueeze(1) + self.eps)
+            coverage = _masked_mean(combined_w * softmin_cov, mask, dim=1)
+        else:
+            combined_w = combined_w / (combined_w.mean(-1, keepdim=True) + self.eps)
+            coverage = (combined_w * softmin_cov).mean(dim=-1)
 
-        coverage = (combined_w * softmin_cov).mean(dim=-1)
-
-        # Precision (symmetric)
-        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        # --- Precision direction (symmetric) ---
+        w_prec = torch.softmax(-D_sm_targets / self.temperature, dim=2)
         softmin_prec = (w_prec * D).sum(dim=2)  # (B, M)
 
-        gm_prec = torch.exp(log_D.mean(dim=2)).detach()
-        gm_w_prec = gm_prec / (gm_prec.mean(-1, keepdim=True) + self.eps)
+        # GM weight: mean log_D over real targets (dim=2)
+        if mask is not None:
+            gm_prec = torch.exp((log_D * mask.unsqueeze(1)).sum(dim=2) / n_real).detach()
+        else:
+            gm_prec = torch.exp(log_D.mean(dim=2)).detach()
+        if mask is not None:
+            gm_w_prec = gm_prec / (_masked_mean(gm_prec, mask, dim=1).unsqueeze(1) + self.eps)
+        else:
+            gm_w_prec = gm_prec / (gm_prec.mean(-1, keepdim=True) + self.eps)
 
-        claims_prec = torch.softmax(-D / self.temperature, dim=1).sum(dim=2)
+        tgt_claims = torch.softmax(-D_sm_preds / self.temperature, dim=1)
+        if mask is not None:
+            claims_prec = (tgt_claims * mask.unsqueeze(1)).sum(dim=2)
+        else:
+            claims_prec = tgt_claims.sum(dim=2)
         inv_freq_prec = (1.0 / (claims_prec + self.eps)).detach()
-        freq_w_prec = inv_freq_prec / (inv_freq_prec.mean(-1, keepdim=True) + self.eps)
+        if mask is not None:
+            freq_w_prec = inv_freq_prec / (_masked_mean(inv_freq_prec, mask, dim=1).unsqueeze(1) + self.eps)
+        else:
+            freq_w_prec = inv_freq_prec / (inv_freq_prec.mean(-1, keepdim=True) + self.eps)
 
         combined_w_prec = self.gm_weight * gm_w_prec + self.freq_weight * freq_w_prec
-        combined_w_prec = combined_w_prec / (combined_w_prec.mean(-1, keepdim=True) + self.eps)
-
-        precision = (combined_w_prec * softmin_prec).mean(dim=-1)
+        if mask is not None:
+            combined_w_prec = combined_w_prec / (_masked_mean(combined_w_prec, mask, dim=1).unsqueeze(1) + self.eps)
+            precision = _masked_mean(combined_w_prec * softmin_prec, mask, dim=1)
+        else:
+            combined_w_prec = combined_w_prec / (combined_w_prec.mean(-1, keepdim=True) + self.eps)
+            precision = (combined_w_prec * softmin_prec).mean(dim=-1)
 
         return (coverage + precision).mean()
 
@@ -397,15 +520,29 @@ class PowerSoftMinLoss(nn.Module):
         self.temperature = temperature
         self.power = power
 
-    def forward(self, D: torch.Tensor) -> torch.Tensor:
-        w_cov = torch.softmax(-D / self.temperature, dim=1)
+    def forward(self, D: torch.Tensor, mask=None) -> torch.Tensor:
+        if mask is not None:
+            D_sm_preds, D_sm_targets = _prepare_softmax_masks(D, mask)
+        else:
+            D_sm_preds = D_sm_targets = D
+
+        # Coverage: for each target, softmin over preds (dim=1)
+        w_cov = torch.softmax(-D_sm_preds / self.temperature, dim=1)
         sm_cov = (w_cov * D).sum(dim=1)  # (B, N)
 
-        w_prec = torch.softmax(-D / self.temperature, dim=2)
+        # Precision: for each pred, softmin over targets (dim=2)
+        w_prec = torch.softmax(-D_sm_targets / self.temperature, dim=2)
         sm_prec = (w_prec * D).sum(dim=2)  # (B, M)
 
-        coverage = sm_cov.pow(self.power).mean(dim=-1)
-        precision = sm_prec.pow(self.power).mean(dim=-1)
+        cov = sm_cov.pow(self.power)
+        pre = sm_prec.pow(self.power)
+
+        if mask is not None:
+            coverage = _masked_mean(cov, mask, dim=1)
+            precision = _masked_mean(pre, mask, dim=1)
+        else:
+            coverage = cov.mean(dim=-1)
+            precision = pre.mean(dim=-1)
 
         return (coverage + precision).mean()
 

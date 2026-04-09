@@ -1,0 +1,843 @@
+[rank: 0] Seed set to 42
+[rank: 0] Seed set to 42
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+You are using a CUDA device ('NVIDIA A100-SXM4-40GB') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+wandb: WARNING The anonymous setting has no effect and will be removed in a future version.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /global/homes/d/danieltm/.netrc.
+wandb: Currently logged in as: murnanedaniel to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run o2gjvrq2
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_132837-o2gjvrq2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run chamfer_seed0
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/o2gjvrq2
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+Train: 20000, Val: 5000, Max objects: 10, Obj dim: 18
+Config: batch=32, lr=0.0003, epochs=100, latent=512, seeds=3
+
+Total: 7 configs x 3 seeds = 21 runs
+Configs: ['chamfer', 'hungarian', 'power_sm_3', 'power_sm_2', 'pw_softmin', 'softmin', 'dspn_chamfer']
+
+============================================================
+  CHAMFER (decoder=mlp)
+============================================================
+/pscratch/sd/d/danieltm/conda_envs/envs/influencerformer/lib/python3.10/site-packages/torch/nn/modules/transformer.py:380: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at ../aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(output, src_key_padding_mask.logical_not(), mask_check=False)
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:05 •       113.86it/s v_num: vrq2      
+                                    0:00:00                    train_loss: 0.107
+                                                               val_matched_dist:
+                                                               0.063            
+wandb: updating run metadata
+wandb: updating run metadata; uploading history steps 1422-1449, summary, console lines 4-9
+wandb: updating run metadata
+wandb: uploading output.log
+wandb: uploading data
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▂▂▂▂▂▂▂▂▃▃▄▄▄▄▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇███
+wandb:    time/backward_ms █▃▄▃▄▄▄▅▅▄▄▃▃▃▂▂▂▂▂▂▂▂▁▂▂▂▂▂▃▂▃▃▃▃▃▃▃▃▃▂
+wandb:        time/dist_ms ▁▇▆▆▄▆▅▆▆▇▇▆▇▇▇▇▇▆▆▆▆▆▆▇▇▇▇▇▇███████████
+wandb:        time/loss_ms ▁▄▆▂▃▄▄▄▄▅▅▅▅▅▅▅▅▅▅▅▅▅▅▆▆▇▇▇▇▇▇▇▇▇██████
+wandb:       time/model_ms █▃▃▂▂▁▂▁▁▁▂▂▁▁▁▁▁▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▃▃▃▃▃▃▃▃
+wandb:          time/steps ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇████
+wandb:       time/total_ms █▃▃▃▁▁▁▁▁▂▂▂▁▁▁▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▃▃▃▃▃▃▄▄▃▃
+wandb:          train_loss ▁▁▅▄▃▅▅▅▄▄▄▆▅▄▆█▄▄█▆▅▆▆▅▅▅▆▆▄▆▅█▇▇▆▇█▆▆█
+wandb: trainer/global_step ▁▁▁▁▁▂▂▂▂▃▃▃▃▃▄▄▄▅▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇█████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.21276
+wandb:        time/dist_ms 0.08276
+wandb:        time/loss_ms 0.27647
+wandb:       time/model_ms 2.18922
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.54961
+wandb:          train_loss 0.10652
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run chamfer_seed0 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/o2gjvrq2
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_132837-o2gjvrq2/logs
+[rank: 0] Seed set to 142
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run a12jc04n
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_134206-a12jc04n
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run chamfer_seed1
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/a12jc04n
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [chamfer] seed 0: dist=0.0634 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:05 •       108.33it/s v_num: c04n      
+                                    0:00:00                    train_loss: 0.082
+                                                               val_matched_dist:
+                                                               0.062            
+wandb: updating run metadata
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▁▁▁▁▂▂▂▃▃▃▃▄▄▄▄▄▄▄▄▄▅▅▅▅▆▆▆▇▇▇▇▇▇██
+wandb:    time/backward_ms █▇▃▄▂▁▂▁▂▃▂▁▂▂▂▂▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃
+wandb:        time/dist_ms █▂▂▃▃▂▂▂▂▂▂▁▂▂▂▁▁▁▁▁▁▁▂▂▃▄▄▄▄▄▄▄▄▅▅▄▄▄▄▄
+wandb:        time/loss_ms ▆▆█▆▇▄▅▄▅▅▃▃▂▂▁▁▁▂▂▁▁▃▄▄▅▅▅▆▆▆▆▆▆▆▆▆▆▆▆▆
+wandb:       time/model_ms █▃▄▂▂▂▃▂▁▁▁▂▁▂▂▂▂▂▁▂▃▃▃▄▄▄▅▅▅▅▅▅▅▅▅▅▄▄▄▄
+wandb:          time/steps ▁▁▁▂▂▂▃▃▃▃▄▄▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇█████
+wandb:       time/total_ms ▆▃▅█▁▄▄▄▄▃▂▂▂▂▃▃▃▃▂▂▆▇▇▇▇██████████▇▇▇▇▇
+wandb:          train_loss ▁▁▃▇▅▄▅▆▅▇▆▆▇▇█▇▇▆█▇███▅▇▇▇█▇▅▅▆▆▆█▅▅▅▅▇
+wandb: trainer/global_step ▁▂▂▂▂▃▃▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇█
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.22338
+wandb:        time/dist_ms 0.08388
+wandb:        time/loss_ms 0.27986
+wandb:       time/model_ms 2.22035
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.58525
+wandb:          train_loss 0.08178
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run chamfer_seed1 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/a12jc04n
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_134206-a12jc04n/logs
+[rank: 0] Seed set to 242
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run vb1br6et
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_135527-vb1br6et
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run chamfer_seed2
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/vb1br6et
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [chamfer] seed 1: dist=0.0619 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       106.62it/s v_num: r6et      
+                                    0:00:00                    train_loss: 0.089
+                                                               val_matched_dist:
+                                                               0.063            
+wandb: updating run metadata
+wandb: updating run metadata; uploading history steps 1428-1449, summary, console lines 2-7
+wandb: updating run metadata
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▇▇▇██
+wandb:    time/backward_ms █▅▄▃▃▂▂▂▂▂▂▁▁▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+wandb:        time/dist_ms █▇▅▅▅▅▅▄▃▃▂▁▁▁▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁
+wandb:        time/loss_ms ██▆▅▆▅▃▃▃▃▃▂▂▁▁▁▁▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁
+wandb:       time/model_ms █▆▆▆▅▅▄▄▃▃▃▂▂▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁
+wandb:          time/steps ▁▁▁▁▁▂▂▂▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇███
+wandb:       time/total_ms █▇██▆▄▄▄▃▃▂▁▁▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂▂▂▂▂▁
+wandb:          train_loss ▃▂▁▁▅▄▅▅▆▆▅▄▅▅▄▇▅▅▅▆▅▆▆▆▆▇▆▄▆▇▇▆▇▇▆██▇▇▇
+wandb: trainer/global_step ▁▁▁▂▂▂▂▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇█████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.22845
+wandb:        time/dist_ms 0.08421
+wandb:        time/loss_ms 0.28196
+wandb:       time/model_ms 2.22588
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.59323
+wandb:          train_loss 0.08873
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run chamfer_seed2 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/vb1br6et
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_135527-vb1br6et/logs
+[rank: 0] Seed set to 42
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_140929-o8gxhevb
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run hungarian_seed0
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/o8gxhevb
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [chamfer] seed 2: dist=0.0627 acc=1.000 dup=1.000
+
+============================================================
+  HUNGARIAN (decoder=mlp)
+============================================================
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━━ 625/625 0:00:11 •       53.57it/s v_num: hevb      
+                                     0:00:00                   train_loss: 0.038
+                                                               val_matched_dist:
+                                                               0.038            
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▄▄▅▅▅▆▆▆▆▆▇▇▇▇▇▇█████
+wandb:    time/backward_ms █▄▃▁▂▂▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▂▂
+wandb:        time/dist_ms ▃█▄▃▂▃▂▁▁▁▂▂▂▂▂▂▂▂▂▂▂▃▃▃▃▃▃▃▂▃▂▂▂▂▂▂▂▂▂▃
+wandb:        time/loss_ms █▂▂▂▁▁▁▁▂▂▂▂▂▁▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▂▂▁▁
+wandb:       time/model_ms ▅█▇▅▅▁▂▂▂▂▂▂▂▂▂▁▂▂▂▂▃▃▃▃▃▃▃▃▂▂▃▃▃▂▂▃▃▂▂▂
+wandb:          time/steps ▁▁▂▂▂▂▂▂▂▂▃▃▃▃▃▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇█
+wandb:       time/total_ms ▅█▃▃▂▁▁▂▂▂▂▂▃▂▂▂▂▂▂▂▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂
+wandb:          train_loss ▄▄▆▇▇██▇███▇▇▇▇▇▇█▇▆▅▆▅▅▅▃▄▄▄▃▄▂▃▃▂▂▂▂▂▁
+wandb: trainer/global_step ▁▁▁▁▁▂▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 6.89305
+wandb:        time/dist_ms 0.08264
+wandb:        time/loss_ms 5.77493
+wandb:       time/model_ms 2.19061
+wandb:          time/steps 62500
+wandb:       time/total_ms 8.04934
+wandb:          train_loss 0.03781
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run hungarian_seed0 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/o8gxhevb
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_140929-o8gxhevb/logs
+[rank: 0] Seed set to 142
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_143433-pxq44do5
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run hungarian_seed1
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/pxq44do5
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [hungarian] seed 0: dist=0.0377 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━━ 625/625 0:00:11 •       55.42it/s v_num: 4do5      
+                                     0:00:00                   train_loss: 0.049
+                                                               val_matched_dist:
+                                                               0.044            
+wandb: updating run metadata
+wandb: uploading config.yaml; uploading output.log; uploading wandb-summary.json
+wandb: uploading wandb-summary.json
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▂▂▂▂▂▂▂▂▃▃▃▃▃▃▃▄▄▄▄▄▄▄▄▅▅▅▅▆▆▆▆▇▇▇▇▇██
+wandb:    time/backward_ms ▁█▇▆▅▄▄▃▄▅▄▃▃▃▃▂▃▃▃▄▃▄▄▄▄▄▄▃▃▃▃▃▃▃▃▃▃▃▂▂
+wandb:        time/dist_ms ▄█▂▂▂▂▄▄▄▄▂▂▁▃▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▂▁▁▁▁
+wandb:        time/loss_ms █▇▆▄▂▁▄▃▃▄▃▃▂▂▃▂▃▃▃▃▄▄▄▅▅▅▅▅▅▅▅▅▅▅▆▇▇███
+wandb:       time/model_ms █▇▄▅▄▂▁▂▂▁▂▁▁▂▂▂▂▂▂▃▃▃▃▄▄▄▄▄▅▅▅▅▆▆▆▅▅▅▅▅
+wandb:          time/steps ▁▁▁▁▁▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇███
+wandb:       time/total_ms ▁█▇▆▆▄▅▅▅▅▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇
+wandb:          train_loss ▅▇▅▅▇▃▆▇▇█▇▆▇▇▇▇▇▇▇▆▆▅▃▆▅▅▅▆▄▃▅▂▂▁▃▁▂▂▂▂
+wandb: trainer/global_step ▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▆▆▆▇▇▇▇▇▇████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 6.84285
+wandb:        time/dist_ms 0.08258
+wandb:        time/loss_ms 5.79213
+wandb:       time/model_ms 2.18615
+wandb:          time/steps 62500
+wandb:       time/total_ms 8.06199
+wandb:          train_loss 0.04948
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run hungarian_seed1 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/pxq44do5
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_143433-pxq44do5/logs
+[rank: 0] Seed set to 242
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run spf65ius
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_145749-spf65ius
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run hungarian_seed2
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/spf65ius
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [hungarian] seed 1: dist=0.0440 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━━ 625/625 0:00:11 •       54.21it/s v_num: 5ius      
+                                     0:00:00                   train_loss: 0.055
+                                                               val_matched_dist:
+                                                               0.052            
+wandb: updating run metadata
+wandb: uploading output.log
+wandb: uploading history steps 1440-1449, summary, console lines 2-7
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▂▂▂▂▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇▇▇▇█████
+wandb:    time/backward_ms ▁▄▇█▇▆▇▇▇▇▇▇█▇██████▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇▇
+wandb:        time/dist_ms █▆▇▅▃▂▂▁▂▄▄▄▅▅▅▅▆▆▆▆▆▆▅▅▅▅▅▄▄▄▄▄▄▃▃▃▃▃▃▃
+wandb:        time/loss_ms ▁▄▅▅▇█▇▇▇▇█▇▇▇███████▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇▇▇
+wandb:       time/model_ms ▇▇▆█▄▂▃▃▄▃▃▃▃▃▃▄▃▃▃▃▁▁▁▁▁▂▂▂▄▄▄▃▃▃▃▃▂▃▃▂
+wandb:          time/steps ▁▁▁▂▂▂▃▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇████
+wandb:       time/total_ms ▅▁▄▅▆█▇▄▄▂▂▃▄▆▆▅▄▅▆▅▆▆▅▅▅▃▃▄▃▄▄▄▄▅▆▆▅▅▄▄
+wandb:          train_loss ▁▁▄█▇▆▄▂▄▃▄▃▃▆▅▄▇▄▅▅▅▅█▆▅▆▇▆▆▆▅▇▆▇▆▆▇▇▇▇
+wandb: trainer/global_step ▁▁▁▁▁▂▂▂▂▂▃▃▃▃▃▄▄▄▄▄▄▄▄▅▅▅▆▆▆▆▆▆▇▇▇▇████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 6.79943
+wandb:        time/dist_ms 0.08207
+wandb:        time/loss_ms 5.78742
+wandb:       time/model_ms 2.17626
+wandb:          time/steps 62500
+wandb:       time/total_ms 8.0469
+wandb:          train_loss 0.05544
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run hungarian_seed2 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/spf65ius
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_145749-spf65ius/logs
+[rank: 0] Seed set to 42
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: W&B API key is configured. Use `wandb login --relogin` to force relogin
+wandb: setting up run v0xl1946
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_152107-v0xl1946
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run power_sm_3_seed0
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/v0xl1946
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [hungarian] seed 2: dist=0.0522 acc=1.000 dup=1.000
+
+============================================================
+  POWER_SM_3 (decoder=mlp)
+============================================================
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       105.02it/s v_num: 1946      
+                                    0:00:00                    train_loss: 0.001
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇▇████
+wandb:    time/backward_ms █▃▁▁▂▂▁▁▂▂▃▂▂▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃
+wandb:        time/dist_ms █▂▂▃▂▁▁▁▂▃▅▄▅▄▄▅▅▅▅▅▅▅▅▅▄▃▃▃▃▃▃▃▃▃▃▄▄▄▄▅
+wandb:        time/loss_ms █▅▃▂▁▁▁▁▁▃▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▅▅▅▅
+wandb:       time/model_ms █▆▂▂▁▁▁▂▃▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅
+wandb:          time/steps ▁▁▁▁▁▂▂▂▂▃▃▃▃▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇▇▇████
+wandb:       time/total_ms █▃▂▁▁▁▁▁▁▂▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃
+wandb:          train_loss ▂▁▄▃▄▄▃▃▅▃▁▅▃▂▃▄▃▅▄▃▄▂▃▅▄▃▃▄▅▃▅▂▁▅█▃▃▄▂▃
+wandb: trainer/global_step ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇▇▇███
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.34078
+wandb:        time/dist_ms 0.08351
+wandb:        time/loss_ms 0.3725
+wandb:       time/model_ms 2.20261
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.65976
+wandb:          train_loss 0.00105
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run power_sm_3_seed0 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/v0xl1946
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_152107-v0xl1946/logs
+[rank: 0] Seed set to 142
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run h5yrldnq
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_153348-h5yrldnq
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run power_sm_3_seed1
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/h5yrldnq
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [power_sm_3] seed 0: dist=0.0771 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       104.44it/s v_num: ldnq      
+                                    0:00:00                    train_loss: 0.001
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading wandb-summary.json; uploading config.yaml; uploading output.log
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▁▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▄▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇██
+wandb:    time/backward_ms █▃▂▁▂▁▂▃▃▂▃▂▃▃▃▃▂▂▂▂▂▂▂▂▁▁▂▂▂▂▁▁▁▂▂▁▁▁▁▁
+wandb:        time/dist_ms ▁▅█▆▇▇▆▇▇▆▆▇▇████▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇
+wandb:        time/loss_ms █▁▂▃▃▂▂▃▂▃▃▃▄▄▄▄▄▃▃▂▂▂▁▁▁▂▁▂▂▂▂▂▂▃▃▃▃▃▂▂
+wandb:       time/model_ms ▆▁▁▄▂▃▃▅▅▄▄▄▇▇▇▆▆▅▅▅▄▅▅▅▆▆▆▆▆▆▆▇▇████▇▆▇
+wandb:          time/steps ▁▁▁▁▁▂▂▂▂▂▂▂▂▃▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇██
+wandb:       time/total_ms ▁▄▃▃▅▄▅▆▆▅▆▆▅▆▇▇▇▆▆▆▆▆▅▆▆▆▇▇▇▇▆▇▇███▇▇▇▇
+wandb:          train_loss ▅▄▄▂▆▃▃▄▄▄▃▃▁▄▅▂▃▄▃▃▃▂▃▅▃▃▃▂▄▄▃▅█▂▃▅▄▃▄▁
+wandb: trainer/global_step ▁▁▁▁▁▂▂▃▃▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇█
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.38201
+wandb:        time/dist_ms 0.08334
+wandb:        time/loss_ms 0.37213
+wandb:       time/model_ms 2.19744
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.65405
+wandb:          train_loss 0.001
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run power_sm_3_seed1 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/h5yrldnq
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_153348-h5yrldnq/logs
+[rank: 0] Seed set to 242
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_154631-a6xk9qtp
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run power_sm_3_seed2
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/a6xk9qtp
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [power_sm_3] seed 1: dist=0.0771 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       106.02it/s v_num: 9qtp      
+                                    0:00:00                    train_loss: 0.001
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading history steps 1425-1449, summary, console lines 2-7
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▂▂▂▃▃▃▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇███
+wandb:    time/backward_ms ▁▆█▆█▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▆▆▆▆▇
+wandb:        time/dist_ms ▁█▅▄▄▇▆▆▆▆▆▅▅▄▄▄▅▄▄▄▄▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃
+wandb:        time/loss_ms ▁▇▅▇██▇█▇▇▇▇█▇▆▆▆▆▆▆▆▇▇▇▇▇▇▇▇▆▇▇▇▇▇▇▇▇▇▇
+wandb:       time/model_ms ▆▃▂▁▃█▇▆▆▇▅▅▄▅▄▅▅▅▄▅▄▄▅▅▅▄▄▃▃▅▅▅▄▄▄▄▄▅▅▅
+wandb:          time/steps ▁▁▁▁▁▂▂▂▂▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▇▇▇▇▇▇▇███
+wandb:       time/total_ms ▂▁▃▅▃▇█▇▆▅▅▅▅▅▅▅▅▅▅▅▄▄▅▅▄▄▅▅▅▅▄▄▄▄▅▅▅▅▅▅
+wandb:          train_loss ▂▇▃█▄▄▅▃▆▅▄▃▆▆▅▅▄▂▅▅▆▅▆▅▃▅▂▅▄▁▆▄▃▄▆▃▅▄▅▂
+wandb: trainer/global_step ▁▁▁▂▂▂▂▂▂▂▃▃▃▃▃▃▃▃▄▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▇▇▇███
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.37502
+wandb:        time/dist_ms 0.08351
+wandb:        time/loss_ms 0.37466
+wandb:       time/model_ms 2.20652
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.66583
+wandb:          train_loss 0.00105
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run power_sm_3_seed2 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/a6xk9qtp
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_154631-a6xk9qtp/logs
+[rank: 0] Seed set to 42
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run uxjm5hnx
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_155917-uxjm5hnx
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run power_sm_2_seed0
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/uxjm5hnx
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [power_sm_3] seed 2: dist=0.0771 acc=1.000 dup=1.000
+
+============================================================
+  POWER_SM_2 (decoder=mlp)
+============================================================
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       101.29it/s v_num: 5hnx      
+                                    0:00:00                    train_loss: 0.013
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading config.yaml; uploading output.log; uploading wandb-summary.json
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▂▂▂▂▃▃▃▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▅▅▆▆▇▇▇▇▇███
+wandb:    time/backward_ms █▁▃▂▃▃▃▂▃▁▂▂▂▂▂▂▂▂▂▂▁▁▂▁▂▂▂▃▂▂▃▃▃▃▃▄▄▄▄▄
+wandb:        time/dist_ms ▁▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇████
+wandb:        time/loss_ms ▂▁▁▂▃▃▄▄▄▅▄▄▄▄▄▄▄▄▄▄▄▄▄▅▅▆▆▆▆▆▆▇▆▇▇▇▇███
+wandb:       time/model_ms ▅▁▄▅▅▆▅▅▅▅▅▄▄▄▄▄▄▄▄▆▆▆▆▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇██
+wandb:          time/steps ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▃▃▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇▇███
+wandb:       time/total_ms ▁▄▆▅▅▅▄▄▄▄▄▄▄▄▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▆▆▇▇█████
+wandb:          train_loss ▂▃▃▃▄▃▄▁▁▄▁▃▁▃▃▅█▂▃▁▄▃▃▃▅▄▂▁▃▅▄▃▅▄▅▅▃▄▂▃
+wandb: trainer/global_step ▁▁▁▁▁▂▂▂▂▂▂▂▂▃▃▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.42641
+wandb:        time/dist_ms 0.08486
+wandb:        time/loss_ms 0.37826
+wandb:       time/model_ms 2.24257
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.70684
+wandb:          train_loss 0.0125
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run power_sm_2_seed0 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/uxjm5hnx
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_155917-uxjm5hnx/logs
+[rank: 0] Seed set to 142
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run 4bq99zlh
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_161224-4bq99zlh
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run power_sm_2_seed1
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/4bq99zlh
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [power_sm_2] seed 0: dist=0.0770 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       104.27it/s v_num: 9zlh      
+                                    0:00:00                    train_loss: 0.012
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading history steps 1438-1449, summary, console lines 2-7
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▂▂▂▃▃▃▄▄▄▄▄▅▅▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇████
+wandb:    time/backward_ms ▁▆█▇▆▆▆▆▆▆▆▇▆▆▆▆▆▆▆▆▆▆▆▅▅▅▅▅▆▆▆▆▆▆▆▆▆▆▆▆
+wandb:        time/dist_ms █▇██▇▄▄▄▄▃▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▃▃▃
+wandb:        time/loss_ms ▁██▆▄▃▃▃▂▂▁▁▁▁▁▂▂▁▁▁▁▁▁▁▂▂▃▃▃▃▃▄▄▄▄▄▄▄▄▄
+wandb:       time/model_ms █▄▃▃▄▃▃▃▃▂▂▂▂▂▂▂▂▂▂▂▁▁▁▁▁▂▂▃▃▃▄▄▄▄▄▄▄▄▄▄
+wandb:          time/steps ▁▁▁▁▁▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇█████
+wandb:       time/total_ms ▇▇█▇▆▃▃▃▃▂▂▂▂▂▂▂▂▂▂▁▂▁▁▁▁▂▂▂▂▂▃▃▃▄▄▄▄▄▄▄
+wandb:          train_loss █▆▃▆▃▃▃▅▄▅▅▃▃▄▁▃▃▃▄▅▄▄▃▃▅▅▄▃▅▃▁▃▄▄▄▃▂▄▃▅
+wandb: trainer/global_step ▁▁▁▂▂▂▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▆▆▆▆▇▇▇█████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.42269
+wandb:        time/dist_ms 0.08428
+wandb:        time/loss_ms 0.38019
+wandb:       time/model_ms 2.23572
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.70135
+wandb:          train_loss 0.01212
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run power_sm_2_seed1 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/4bq99zlh
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_161224-4bq99zlh/logs
+[rank: 0] Seed set to 242
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run 3n0fj6sa
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_162519-3n0fj6sa
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run power_sm_2_seed2
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/3n0fj6sa
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [power_sm_2] seed 1: dist=0.0770 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       101.05it/s v_num: j6sa      
+                                    0:00:00                    train_loss: 0.013
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▂▂▂▂▂▂▂▃▃▃▃▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇▇▇██
+wandb:    time/backward_ms █▃▁▁▂▄▄▃▄▄▃▃▃▃▃▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▃▄▄▄▄▄▄▄▄▅
+wandb:        time/dist_ms ▂▁▁▂▆▅▅▅▅▇▇▇▇▇▇▇▇▆▆▇▇▇▇▇▇▇▇▇▇▇▆▆▆▇▇▇▇███
+wandb:        time/loss_ms ▄▂▁▂▄▆▆▅▆▅▇▇▇▆▆▇▆▇▇▆▆▆▆▇▆▆▆▆▆▆▆▆▆▆▇▇▇███
+wandb:       time/model_ms ▁▁▁▂▃▄▆▅▅▅▅▄▄▅▅▆▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▆▆▆▇████
+wandb:          time/steps ▁▁▁▁▁▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▆▇▇▇▇▇█████
+wandb:       time/total_ms ▄▃▂▁▃▄▄▅▅▇▆▆▆▆▆▆▆▆▆▆▆▆▆▆▇▆▆▆▆▆▆▆▆▇▇▇████
+wandb:          train_loss ▆▆█▁▆▄▆▃▆▅▄▄▂▅▅▅▆▅▇▃▂▂▄▅▇▆▄▃▄▇▃▃▂▆▁▃▇▆▃▂
+wandb: trainer/global_step ▁▁▁▂▂▂▃▃▃▃▃▃▃▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▆▆▆▆▆▆▇▇▇▇██
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.39255
+wandb:        time/dist_ms 0.08545
+wandb:        time/loss_ms 0.38054
+wandb:       time/model_ms 2.25635
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.72351
+wandb:          train_loss 0.01264
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run power_sm_2_seed2 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/3n0fj6sa
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_162519-3n0fj6sa/logs
+[rank: 0] Seed set to 42
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_163814-85t1clgk
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run pw_softmin_seed0
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/85t1clgk
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [power_sm_2] seed 2: dist=0.0770 acc=1.000 dup=1.000
+
+============================================================
+  PW_SOFTMIN (decoder=mlp)
+============================================================
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       100.51it/s v_num: clgk      
+                                    0:00:00                    train_loss: 0.167
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▂▂▂▂▂▂▂▃▃▃▃▄▄▄▄▄▄▄▄▄▄▄▄▅▅▆▆▆▇▇▇████
+wandb:    time/backward_ms █▂▃▃▄▂▁▂▁▁▂▃▃▃▃▃▃▄▄▄▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▄
+wandb:        time/dist_ms █▄▃▄▃▁▁▁▂▄▄▄▄▄▄▄▅▅▅▄▄▄▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅▅
+wandb:        time/loss_ms █▄▃▂▁▃▃▄▄▄▅▅▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇██████████
+wandb:       time/model_ms ▆▂▂▂▂▁▂▂▃▃▄▄▄▅▆▆▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇█▇▇████
+wandb:          time/steps ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇██
+wandb:       time/total_ms ▂▁▃▂▂▁▂▂▄▄▅▅▆▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇█████████
+wandb:          train_loss ▆▄▇▅▆▅▆▄▇▆▁▅▆▄▆▃▄▄▅▆▅▅▇▅▆▃█▃▄▄▆▆▄▆▆▇▄▅▆▆
+wandb: trainer/global_step ▁▁▁▁▂▂▃▃▃▃▃▃▃▃▄▄▄▄▅▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇▇███
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.4196
+wandb:        time/dist_ms 0.08688
+wandb:        time/loss_ms 0.58966
+wandb:       time/model_ms 2.29129
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.96901
+wandb:          train_loss 0.16683
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run pw_softmin_seed0 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/85t1clgk
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_163814-85t1clgk/logs
+[rank: 0] Seed set to 142
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run ovs9ba5m
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_165133-ovs9ba5m
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run pw_softmin_seed1
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/ovs9ba5m
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [pw_softmin] seed 0: dist=0.0770 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       106.35it/s v_num: ba5m      
+                                    0:00:00                    train_loss: 0.164
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▂▂▂▂▂▂▂▃▃▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▅▆▆▆▇▇▇▇██
+wandb:    time/backward_ms █▇▄▃▂▃▂▁▃▂▂▁▂▃▄▄▄▄▅▅▅▆▆▅▅▅▅▅▅▆▆▆▅▅▅▅▅▅▅▅
+wandb:        time/dist_ms ▇██▆▃▄▂▃▄▄▄▃▃▃▃▂▁▁▁▁▂▂▂▃▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+wandb:        time/loss_ms █▅▅▅▄▂▂▁▃▂▃▃▃▃▂▂▃▃▂▂▂▂▂▂▂▂▂▂▃▃▃▃▃▂▂▂▂▂▂▂
+wandb:       time/model_ms ▂▆▄█▇▄▄▂▃▁▁▂▂▃▂▂▂▂▂▃▃▃▃▃▃▃▃▃▃▃▃▃▃▃▂▂▂▂▂▂
+wandb:          time/steps ▁▁▁▁▂▂▂▂▂▂▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▆▇▇▇▇▇███
+wandb:       time/total_ms █▄█▆▅▅▄▃▃▂▂▁▁▃▂▃▃▃▂▃▂▃▂▂▂▃▃▃▃▃▃▄▃▃▃▃▂▂▂▂
+wandb:          train_loss ▄▃▅▂█▁▂▁▅▃▃▅▄▄▅▅▂▁▄▃▄▂▆▅▇▅▅▃▄▂▃▅▄▅▂▂▆▅▃▄
+wandb: trainer/global_step ▁▁▁▁▁▁▁▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▄▅▅▅▅▅▅▅▆▆▇▇▇▇▇███
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.45248
+wandb:        time/dist_ms 0.08728
+wandb:        time/loss_ms 0.59086
+wandb:       time/model_ms 2.31177
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.99109
+wandb:          train_loss 0.16351
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run pw_softmin_seed1 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/ovs9ba5m
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_165133-ovs9ba5m/logs
+[rank: 0] Seed set to 242
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run 5uwbskys
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_170458-5uwbskys
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run pw_softmin_seed2
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/5uwbskys
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [pw_softmin] seed 1: dist=0.0770 acc=1.000 dup=1.000
+`Trainer.fit` stopped: `max_epochs=100` reached.
+Epoch 99/99 ━━━━━━━━━━━━━━━ 625/625 0:00:06 •       102.82it/s v_num: skys      
+                                    0:00:00                    train_loss: 0.168
+                                                               val_matched_dist:
+                                                               0.077            
+wandb: updating run metadata
+wandb: uploading output.log; uploading wandb-summary.json; uploading config.yaml
+wandb: 
+wandb: Run history:
+wandb:               epoch ▁▁▁▁▁▁▁▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇███
+wandb:    time/backward_ms ▄█▆▅▆▁▃▃▃▃▂▂▂▂▁▁▁▂▁▂▂▂▂▁▁▁▁▂▂▂▂▂▂▂▂▂▂▂▂▂
+wandb:        time/dist_ms █▁▃▅▅▄▅▅▅▅▅▆▅▅▆▄▄▄▄▃▃▄▃▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+wandb:        time/loss_ms ▁▂▂▂▄▆▇▇▆▆▆▆▅▅▅▅▆▅▅▅▆▆▅▆▆▇▇▇▇▇▇▇▇▇▇▇▇███
+wandb:       time/model_ms ▂▂▁▃▅▄▅▆▇▇█▇▆▆▆▄▅▄▄▄▄▅▆▅▅▄▅▅▅▅▇▇▇▇▇▇▇▇██
+wandb:          time/steps ▁▁▁▁▁▁▂▂▂▃▃▃▃▃▄▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇▇▇██
+wandb:       time/total_ms ▁▄▄▆▇██▇▆▅▄▅▄▃▃▅▅▄▄▅▆▆▆▅▅▇▇▇▇▆▆▇▇▇▇█████
+wandb:          train_loss ▇█▄▅▄▄▅▆▆▃▅▅▇▄█▄▃▅▁▂▆▄▁▄▄▄▅▄▄▇▂▄▇▆▄▅▆▆▄▇
+wandb: trainer/global_step ▁▁▁▂▂▂▂▂▃▃▄▄▄▄▄▄▄▄▅▅▅▅▆▆▆▆▆▆▆▇▇▇▇▇▇▇████
+wandb:        val_dup_rate ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                  +3 ...
+wandb: 
+wandb: Run summary:
+wandb:               epoch 99
+wandb:    time/backward_ms 3.44764
+wandb:        time/dist_ms 0.08655
+wandb:        time/loss_ms 0.59265
+wandb:       time/model_ms 2.29884
+wandb:          time/steps 62500
+wandb:       time/total_ms 2.97924
+wandb:          train_loss 0.16793
+wandb: trainer/global_step 62499
+wandb:        val_dup_rate 1
+wandb:                  +3 ...
+wandb: 
+wandb: 🚀 View run pw_softmin_seed2 at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/5uwbskys
+wandb: ⭐️ View project at: https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: Synced 5 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: wandb/run-20260330_170458-5uwbskys/logs
+[rank: 0] Seed set to 42
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+wandb: setting up run 0pduh1ck
+wandb: Tracking run with wandb version 0.25.1
+wandb: Run data is saved locally in wandb/run-20260330_171821-0pduh1ck
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run softmin_seed0
+wandb: ⭐️ View project at https://wandb.ai/murnanedaniel/influencerformer-benchmarks
+wandb: 🚀 View run at https://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/0pduh1ck
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+SLURM auto-requeueing enabled. Setting signal handlers.
+  [pw_softmin] seed 2: dist=0.0770 acc=1.000 dup=1.000
+
+============================================================
+  SOFTMIN (decoder=mlp)
+============================================================
+[2026-03-31T00:28:34.741] error: *** STEP 50728767.0 ON nid001049 CANCELLED AT 2026-03-31T00:28:34 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+[rank: 0] Received SIGTERM: 15
+Bypassing SIGTERM: 15
+[rank: 0] Received SIGTERM: 15
+Bypassing SIGTERM: 15
+Epoch 78/99 ━╸               76/625 0:00:00 •       101.97it/s v_num: h1ck      
+                                    0:00:06                    train_loss: 0.149
+                                                               val_matched_dist:
+                                                               0.078            
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33msoftmin_seed0[0m at: [34mhttps://wandb.ai/murnanedaniel/influencerformer-benchmarks/runs/0pduh1ck[0m

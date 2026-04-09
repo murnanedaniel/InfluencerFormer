@@ -1,0 +1,39 @@
+{
+  "experiment_name": "coco_detr_pm3_tiny",
+  "output_dir": "benchmarks/coco_detr/runs",
+  "seed": 42,
+  "backbone": "resnet50",
+  "notes": "Tiny end-to-end validation run with PM3 matching.",
+  "data": {
+    "coco_root": "benchmarks/coco_detr/data/tiny_coco",
+    "train_split": "train2017",
+    "val_split": "val2017",
+    "num_workers": 0,
+    "smoke": false,
+    "smoke_train_images": 2,
+    "smoke_val_images": 2
+  },
+  "train": {
+    "model_name": "facebook/detr-resnet-50",
+    "batch_size": 1,
+    "eval_batch_size": 1,
+    "epochs": 1,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 0.1,
+    "log_every_steps": 1,
+    "eval_every_epochs": 1,
+    "device": "cpu",
+    "cache_dir": null,
+    "save_every_epochs": 1
+  },
+  "matcher": {
+    "name": "pm3",
+    "classification_cost": 1.0,
+    "bbox_l1_cost": 5.0,
+    "giou_cost": 2.0,
+    "eos_coefficient": 0.1,
+    "pm3_temperature": 0.12,
+    "pm3_power": 3.0
+  }
+}

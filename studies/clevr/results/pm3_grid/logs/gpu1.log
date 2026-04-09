@@ -1,0 +1,362 @@
+[gpu1] Starting: tau0.12_slots1_warmup0
+Run:        pm3_tau0.12_slots1_warmup0
+Device:     cuda
+Epochs:     200
+Batch size: 512
+LR:         8.49e-04  (auto-scaled from 0.0003 at batch=64)
+Output:     results/pm3_grid/pm3_tau0.12_slots1_warmup0.pkl
+────────────────────────────────────────────────────────────
+/global/homes/d/danieltm/.conda/envs/influencer/lib/python3.11/site-packages/torch/nn/modules/transformer.py:296: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at /opt/conda/conda-bld/pytorch_1682343970094/work/aten/src/ATen/NestedTensorImpl.cpp:177.)
+  output = torch._nested_tensor_from_mask(output, src_key_padding_mask.logical_not(), mask_check=False)
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   0 | loss=6.3498 dist=1.4097 div=1.599 H=0.219 gd=0.793 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   1 | loss=2.9980 dist=1.3004 div=1.752 H=0.201 gd=0.730 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   2 | loss=2.3539 dist=1.2225 div=1.824 H=0.183 gd=0.680 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   3 | loss=2.0757 dist=1.1814 div=1.856 H=0.174 gd=0.616 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   4 | loss=1.9536 dist=1.1455 div=1.878 H=0.165 gd=0.487 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   5 | loss=1.8933 dist=1.1340 div=1.908 H=0.155 gd=0.479 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   6 | loss=1.8559 dist=1.1329 div=1.916 H=0.156 gd=0.464 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   7 | loss=1.8319 dist=1.1245 div=1.934 H=0.151 gd=0.498 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   8 | loss=1.7988 dist=1.1186 div=1.949 H=0.142 gd=0.452 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch   9 | loss=1.7592 dist=1.1138 div=1.951 H=0.139 gd=0.466 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  10 | loss=1.6955 dist=1.1108 div=1.974 H=0.132 gd=0.521 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  11 | loss=1.6462 dist=1.0995 div=1.987 H=0.131 gd=0.534 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  12 | loss=1.6186 dist=1.0995 div=1.992 H=0.125 gd=0.577 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  13 | loss=1.6054 dist=1.0887 div=2.009 H=0.123 gd=0.562 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  14 | loss=1.5975 dist=1.0877 div=2.007 H=0.126 gd=0.564 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  15 | loss=1.5914 dist=1.0824 div=2.005 H=0.124 gd=0.625 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  16 | loss=1.5490 dist=1.0674 div=2.022 H=0.116 gd=0.656 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  17 | loss=1.5224 dist=1.0676 div=2.030 H=0.111 gd=0.618 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  18 | loss=1.5138 dist=1.0615 div=2.040 H=0.106 gd=0.591 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  19 | loss=1.4882 dist=1.0627 div=2.056 H=0.105 gd=0.632 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  20 | loss=1.4728 dist=1.0465 div=2.067 H=0.104 gd=0.640 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  21 | loss=1.4440 dist=1.0466 div=2.051 H=0.106 gd=0.644 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  22 | loss=1.4550 dist=1.0452 div=2.037 H=0.106 gd=0.661 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  23 | loss=1.4386 dist=1.0409 div=2.069 H=0.103 gd=0.643 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  24 | loss=1.4050 dist=1.0293 div=2.060 H=0.103 gd=0.615 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  25 | loss=1.3700 dist=1.0218 div=2.064 H=0.105 gd=0.667 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  26 | loss=1.3480 dist=1.0236 div=2.075 H=0.103 gd=0.632 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  27 | loss=1.3350 dist=1.0271 div=2.078 H=0.106 gd=0.641 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  28 | loss=1.3386 dist=1.0170 div=2.086 H=0.104 gd=0.697 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  29 | loss=1.3106 dist=1.0021 div=2.106 H=0.100 gd=0.650 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  30 | loss=1.3088 dist=0.9914 div=2.102 H=0.100 gd=0.646 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  31 | loss=1.2799 dist=0.9907 div=2.111 H=0.101 gd=0.625 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  32 | loss=1.2705 dist=0.9844 div=2.116 H=0.098 gd=0.659 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  33 | loss=1.2397 dist=0.9803 div=2.115 H=0.099 gd=0.689 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  34 | loss=1.2288 dist=0.9867 div=2.098 H=0.099 gd=0.665 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  35 | loss=1.2339 dist=0.9730 div=2.116 H=0.100 gd=0.639 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  36 | loss=1.2326 dist=0.9655 div=2.109 H=0.100 gd=0.653 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  37 | loss=1.2184 dist=0.9666 div=2.118 H=0.101 gd=0.683 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  38 | loss=1.2127 dist=0.9705 div=2.109 H=0.100 gd=0.689 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  39 | loss=1.2100 dist=0.9638 div=2.125 H=0.101 gd=0.618 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  40 | loss=1.1881 dist=0.9579 div=2.126 H=0.101 gd=0.602 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  41 | loss=1.1923 dist=0.9565 div=2.124 H=0.101 gd=0.655 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  42 | loss=1.1843 dist=0.9548 div=2.143 H=0.101 gd=0.617 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  43 | loss=1.1756 dist=0.9513 div=2.138 H=0.100 gd=0.634 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  44 | loss=1.1718 dist=0.9451 div=2.124 H=0.101 gd=0.604 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  45 | loss=1.1701 dist=0.9461 div=2.125 H=0.100 gd=0.620 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  46 | loss=1.1690 dist=0.9423 div=2.129 H=0.099 gd=0.597 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  47 | loss=1.1615 dist=0.9424 div=2.129 H=0.100 gd=0.600 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  48 | loss=1.1711 dist=0.9438 div=2.124 H=0.099 gd=0.668 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  49 | loss=1.1565 dist=0.9464 div=2.148 H=0.096 gd=0.606 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  50 | loss=1.1471 dist=0.9368 div=2.145 H=0.099 gd=0.634 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  51 | loss=1.1809 dist=0.9375 div=2.143 H=0.098 gd=0.637 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  52 | loss=1.1251 dist=0.9058 div=2.176 H=0.096 gd=0.600 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  53 | loss=1.1290 dist=0.9097 div=2.147 H=0.098 gd=0.608 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  54 | loss=1.1396 dist=0.9507 div=2.142 H=0.098 gd=0.652 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  55 | loss=1.1416 dist=0.9395 div=2.133 H=0.100 gd=0.627 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  56 | loss=1.1499 dist=0.9374 div=2.126 H=0.097 gd=0.642 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  57 | loss=1.1219 dist=0.9319 div=2.140 H=0.097 gd=0.638 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  58 | loss=1.1176 dist=0.9353 div=2.129 H=0.095 gd=0.632 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  59 | loss=1.1254 dist=0.9404 div=2.140 H=0.094 gd=0.660 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  60 | loss=1.1355 dist=0.9294 div=2.144 H=0.095 gd=0.603 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  61 | loss=1.1129 dist=0.9258 div=2.146 H=0.096 gd=0.662 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  62 | loss=1.1046 dist=0.9186 div=2.153 H=0.095 gd=0.669 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  63 | loss=1.1085 dist=0.9194 div=2.142 H=0.095 gd=0.645 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  64 | loss=1.0975 dist=0.9099 div=2.163 H=0.094 gd=0.634 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  65 | loss=1.0894 dist=0.9184 div=2.168 H=0.096 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  66 | loss=1.0836 dist=0.9145 div=2.153 H=0.096 gd=0.699 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  67 | loss=1.0884 dist=0.9199 div=2.148 H=0.094 gd=0.653 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  68 | loss=1.1157 dist=0.9217 div=2.169 H=0.096 gd=0.691 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  69 | loss=1.0987 dist=0.9152 div=2.159 H=0.094 gd=0.659 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  70 | loss=1.0991 dist=0.9127 div=2.178 H=0.097 gd=0.699 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  71 | loss=1.0767 dist=0.8985 div=2.174 H=0.096 gd=0.657 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  72 | loss=1.0668 dist=0.8998 div=2.175 H=0.096 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  73 | loss=1.0612 dist=0.8893 div=2.184 H=0.094 gd=0.631 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  74 | loss=1.0663 dist=0.9049 div=2.166 H=0.097 gd=0.690 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  75 | loss=1.0567 dist=0.8842 div=2.189 H=0.095 gd=0.752 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  76 | loss=1.0587 dist=0.8913 div=2.185 H=0.092 gd=0.665 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  77 | loss=1.0586 dist=0.8961 div=2.168 H=0.094 gd=0.696 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  78 | loss=1.0561 dist=0.8966 div=2.185 H=0.094 gd=0.664 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  79 | loss=1.0496 dist=0.8900 div=2.180 H=0.094 gd=0.659 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  80 | loss=1.0420 dist=0.8920 div=2.185 H=0.095 gd=0.721 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  81 | loss=1.0351 dist=0.8844 div=2.173 H=0.093 gd=0.705 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  82 | loss=1.0361 dist=0.9042 div=2.176 H=0.093 gd=0.740 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  83 | loss=1.0555 dist=0.8928 div=2.171 H=0.094 gd=0.673 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  84 | loss=1.0523 dist=0.8882 div=2.173 H=0.092 gd=0.641 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  85 | loss=1.0505 dist=0.8902 div=2.179 H=0.095 gd=0.668 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  86 | loss=1.0451 dist=0.9029 div=2.185 H=0.093 gd=0.718 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  87 | loss=1.0402 dist=0.8866 div=2.180 H=0.093 gd=0.710 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  88 | loss=1.0432 dist=0.8890 div=2.183 H=0.093 gd=0.703 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  89 | loss=1.0364 dist=0.8906 div=2.192 H=0.092 gd=0.697 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  90 | loss=1.0254 dist=0.8719 div=2.199 H=0.092 gd=0.674 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  91 | loss=1.0185 dist=0.8665 div=2.192 H=0.090 gd=0.640 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  92 | loss=1.0375 dist=0.8880 div=2.164 H=0.091 gd=0.769 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  93 | loss=1.0292 dist=0.8855 div=2.181 H=0.091 gd=0.672 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  94 | loss=1.0281 dist=0.8866 div=2.174 H=0.091 gd=0.675 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  95 | loss=1.0437 dist=0.9058 div=2.188 H=0.092 gd=0.693 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  96 | loss=1.0352 dist=0.8842 div=2.184 H=0.091 gd=0.684 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  97 | loss=1.0198 dist=0.8786 div=2.191 H=0.091 gd=0.724 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  98 | loss=1.0305 dist=0.8895 div=2.182 H=0.093 gd=0.655 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch  99 | loss=1.0261 dist=0.8746 div=2.188 H=0.089 gd=0.697 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 100 | loss=1.0197 dist=0.8785 div=2.183 H=0.090 gd=0.680 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 101 | loss=1.0144 dist=0.8784 div=2.199 H=0.090 gd=0.658 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 102 | loss=1.0309 dist=0.8858 div=2.195 H=0.089 gd=0.704 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 103 | loss=1.0135 dist=0.8763 div=2.180 H=0.089 gd=0.695 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 104 | loss=1.0179 dist=0.8781 div=2.199 H=0.090 gd=0.721 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 105 | loss=1.0053 dist=0.8725 div=2.200 H=0.089 gd=0.700 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 106 | loss=1.0192 dist=0.8738 div=2.188 H=0.089 gd=0.674 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 107 | loss=1.0106 dist=0.8665 div=2.191 H=0.087 gd=0.629 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 108 | loss=1.0046 dist=0.8866 div=2.213 H=0.088 gd=0.711 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 109 | loss=1.0033 dist=0.8571 div=2.195 H=0.088 gd=0.680 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 110 | loss=0.9936 dist=0.8865 div=2.194 H=0.089 gd=0.755 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 111 | loss=0.9924 dist=0.8595 div=2.211 H=0.086 gd=0.700 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 112 | loss=0.9851 dist=0.8700 div=2.193 H=0.088 gd=0.735 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 113 | loss=0.9831 dist=0.8634 div=2.188 H=0.086 gd=0.681 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 114 | loss=0.9820 dist=0.8683 div=2.205 H=0.087 gd=0.741 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 115 | loss=0.9765 dist=0.8571 div=2.205 H=0.085 gd=0.689 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 116 | loss=0.9778 dist=0.8623 div=2.213 H=0.087 gd=0.704 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 117 | loss=0.9767 dist=0.8679 div=2.213 H=0.087 gd=0.785 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 118 | loss=0.9678 dist=0.8475 div=2.219 H=0.083 gd=0.716 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 119 | loss=0.9575 dist=0.8499 div=2.208 H=0.084 gd=0.695 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 120 | loss=0.9600 dist=0.8742 div=2.209 H=0.085 gd=0.732 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 121 | loss=0.9835 dist=0.8612 div=2.186 H=0.085 gd=0.792 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 122 | loss=0.9808 dist=0.8825 div=2.224 H=0.088 gd=0.730 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 123 | loss=0.9678 dist=0.8597 div=2.206 H=0.088 gd=0.682 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 124 | loss=0.9641 dist=0.8515 div=2.217 H=0.087 gd=0.732 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 125 | loss=0.9606 dist=0.8450 div=2.221 H=0.087 gd=0.690 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 126 | loss=0.9674 dist=0.8503 div=2.229 H=0.085 gd=0.714 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 127 | loss=0.9700 dist=0.8506 div=2.213 H=0.085 gd=0.676 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 128 | loss=0.9713 dist=0.8503 div=2.214 H=0.086 gd=0.714 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 129 | loss=0.9888 dist=0.8506 div=2.208 H=0.086 gd=0.697 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 130 | loss=0.9961 dist=0.8635 div=2.214 H=0.085 gd=0.745 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 131 | loss=1.0488 dist=0.8099 div=2.247 H=0.080 gd=0.771 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 132 | loss=0.9552 dist=0.7896 div=2.216 H=0.078 gd=0.672 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 133 | loss=0.9257 dist=0.7906 div=2.249 H=0.079 gd=0.688 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 134 | loss=0.9006 dist=0.7741 div=2.261 H=0.078 gd=0.667 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 135 | loss=0.8811 dist=0.7547 div=2.275 H=0.077 gd=0.676 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 136 | loss=0.8697 dist=0.7670 div=2.299 H=0.075 gd=0.690 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 137 | loss=0.8483 dist=0.7209 div=2.294 H=0.073 gd=0.701 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 138 | loss=0.8170 dist=0.6975 div=2.303 H=0.073 gd=0.694 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 139 | loss=0.7446 dist=0.6866 div=2.314 H=0.071 gd=0.787 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 140 | loss=0.7609 dist=0.7036 div=2.281 H=0.071 gd=0.629 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 141 | loss=0.7529 dist=0.6844 div=2.311 H=0.069 gd=0.706 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 142 | loss=0.7343 dist=0.6613 div=2.333 H=0.067 gd=0.721 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 143 | loss=0.7063 dist=0.6707 div=2.344 H=0.066 gd=0.628 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 144 | loss=0.7092 dist=0.6643 div=2.342 H=0.066 gd=0.725 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 145 | loss=0.6958 dist=0.6549 div=2.346 H=0.064 gd=0.689 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 146 | loss=0.6833 dist=0.6699 div=2.334 H=0.068 gd=0.679 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 147 | loss=0.6855 dist=0.6547 div=2.336 H=0.063 gd=0.654 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 148 | loss=0.7024 dist=0.6698 div=2.317 H=0.067 gd=0.668 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 149 | loss=0.7145 dist=0.6572 div=2.349 H=0.064 gd=0.678 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 150 | loss=0.6865 dist=0.6570 div=2.333 H=0.066 gd=0.704 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 151 | loss=0.6857 dist=0.6590 div=2.329 H=0.065 gd=0.713 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 152 | loss=0.6846 dist=0.6444 div=2.352 H=0.068 gd=0.608 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 153 | loss=0.7003 dist=0.6703 div=2.330 H=0.067 gd=0.694 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 154 | loss=0.7134 dist=0.6622 div=2.333 H=0.067 gd=0.686 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 155 | loss=0.6749 dist=0.6483 div=2.347 H=0.064 gd=0.672 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 156 | loss=0.6685 dist=0.6575 div=2.329 H=0.068 gd=0.612 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 157 | loss=0.6697 dist=0.6491 div=2.353 H=0.065 gd=0.724 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 158 | loss=0.6643 dist=0.6446 div=2.343 H=0.062 gd=0.628 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 159 | loss=0.6785 dist=0.6368 div=2.349 H=0.064 gd=0.639 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 160 | loss=0.6564 dist=0.6507 div=2.348 H=0.061 gd=0.646 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 161 | loss=0.6560 dist=0.6485 div=2.345 H=0.063 gd=0.656 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 162 | loss=0.6555 dist=0.6440 div=2.323 H=0.062 gd=0.624 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 163 | loss=0.6566 dist=0.6670 div=2.341 H=0.067 gd=0.670 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 164 | loss=0.6600 dist=0.6318 div=2.360 H=0.061 gd=0.683 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 165 | loss=0.6605 dist=0.6610 div=2.339 H=0.063 gd=0.602 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 166 | loss=0.6721 dist=0.6638 div=2.340 H=0.067 gd=0.653 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 167 | loss=0.6601 dist=0.6381 div=2.353 H=0.063 gd=0.633 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 168 | loss=0.6578 dist=0.6538 div=2.361 H=0.062 gd=0.673 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 169 | loss=0.6406 dist=0.6417 div=2.362 H=0.061 gd=0.694 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 170 | loss=0.6375 dist=0.6292 div=2.353 H=0.064 gd=0.675 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 171 | loss=0.6428 dist=0.6417 div=2.337 H=0.063 gd=0.601 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 172 | loss=0.6438 dist=0.6396 div=2.355 H=0.062 gd=0.704 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 173 | loss=0.6357 dist=0.6345 div=2.359 H=0.062 gd=0.677 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 174 | loss=0.6372 dist=0.6387 div=2.342 H=0.064 gd=0.609 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 175 | loss=0.6208 dist=0.6427 div=2.338 H=0.062 gd=0.606 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 176 | loss=0.6108 dist=0.6409 div=2.347 H=0.061 gd=0.608 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 177 | loss=0.6213 dist=0.6391 div=2.354 H=0.061 gd=0.565 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 178 | loss=0.6189 dist=0.6199 div=2.360 H=0.061 gd=0.646 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 179 | loss=0.6296 dist=0.6292 div=2.364 H=0.060 gd=0.581 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 180 | loss=0.6235 dist=0.6467 div=2.332 H=0.063 gd=0.638 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 181 | loss=0.6392 dist=0.6520 div=2.351 H=0.065 gd=0.612 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 182 | loss=0.7050 dist=0.6731 div=2.322 H=0.067 gd=0.642 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 183 | loss=0.7063 dist=0.6709 div=2.324 H=0.065 gd=0.660 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 184 | loss=0.6690 dist=0.6329 div=2.356 H=0.062 gd=0.661 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 185 | loss=0.6517 dist=0.6472 div=2.346 H=0.063 gd=0.627 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 186 | loss=0.6884 dist=0.6622 div=2.355 H=0.063 gd=0.597 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 187 | loss=0.6947 dist=0.6726 div=2.338 H=0.064 gd=0.603 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 188 | loss=0.7100 dist=0.6729 div=2.327 H=0.067 gd=0.622 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 189 | loss=0.7291 dist=0.6867 div=2.345 H=0.065 gd=0.660 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 190 | loss=0.7094 dist=0.6613 div=2.321 H=0.066 gd=0.634 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 191 | loss=0.6805 dist=0.6581 div=2.306 H=0.063 gd=0.660 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 192 | loss=0.6951 dist=0.6827 div=2.325 H=0.066 gd=0.678 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 193 | loss=0.6942 dist=0.6631 div=2.315 H=0.065 gd=0.612 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 194 | loss=0.6947 dist=0.6616 div=2.344 H=0.064 gd=0.655 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 195 | loss=0.6752 dist=0.7078 div=2.339 H=0.068 gd=0.621 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 196 | loss=0.6964 dist=0.6546 div=2.317 H=0.063 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 197 | loss=0.6670 dist=0.6480 div=2.347 H=0.064 gd=0.657 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 198 | loss=0.6632 dist=0.6589 div=2.341 H=0.062 gd=0.609 lr=8.49e-04
+  [PM3 tau=0.12 | slotted=True | warmup_cosine=False] epoch 199 | loss=0.6488 dist=0.6473 div=2.351 H=0.064 gd=0.633 lr=8.49e-04
+
+────────────────────────────────────────────────────────────
+Run complete in 10.8 min
+Best dist:  0.6199 at epoch 178
+Final dist: 0.6473
+Saved → results/pm3_grid/pm3_tau0.12_slots1_warmup0.pkl
+[gpu1] Finished: tau0.12_slots1_warmup0
+[gpu1] Starting: tau0.15_slots1_warmup0
+Run:        pm3_tau0.15_slots1_warmup0
+Device:     cuda
+Epochs:     200
+Batch size: 512
+LR:         8.49e-04  (auto-scaled from 0.0003 at batch=64)
+Output:     results/pm3_grid/pm3_tau0.15_slots1_warmup0.pkl
+────────────────────────────────────────────────────────────
+/global/homes/d/danieltm/.conda/envs/influencer/lib/python3.11/site-packages/torch/nn/modules/transformer.py:296: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at /opt/conda/conda-bld/pytorch_1682343970094/work/aten/src/ATen/NestedTensorImpl.cpp:177.)
+  output = torch._nested_tensor_from_mask(output, src_key_padding_mask.logical_not(), mask_check=False)
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   0 | loss=6.6162 dist=1.4145 div=1.584 H=0.271 gd=0.831 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   1 | loss=3.0905 dist=1.2972 div=1.742 H=0.235 gd=0.726 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   2 | loss=2.4300 dist=1.2238 div=1.820 H=0.217 gd=0.669 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   3 | loss=2.1526 dist=1.1791 div=1.870 H=0.201 gd=0.637 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   4 | loss=2.0168 dist=1.1475 div=1.884 H=0.191 gd=0.499 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   5 | loss=1.9529 dist=1.1383 div=1.914 H=0.183 gd=0.546 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   6 | loss=1.9179 dist=1.1358 div=1.929 H=0.178 gd=0.551 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   7 | loss=1.8867 dist=1.1298 div=1.949 H=0.174 gd=0.609 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   8 | loss=1.8627 dist=1.1261 div=1.962 H=0.165 gd=0.578 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch   9 | loss=1.8177 dist=1.1115 div=1.968 H=0.153 gd=0.600 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  10 | loss=1.7696 dist=1.1131 div=1.978 H=0.151 gd=0.576 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  11 | loss=1.7313 dist=1.1077 div=2.007 H=0.149 gd=0.572 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  12 | loss=1.6862 dist=1.0932 div=2.012 H=0.143 gd=0.618 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  13 | loss=1.6842 dist=1.1032 div=2.010 H=0.146 gd=0.603 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  14 | loss=1.6376 dist=1.0904 div=2.004 H=0.142 gd=0.601 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  15 | loss=1.6088 dist=1.0823 div=2.017 H=0.138 gd=0.627 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  16 | loss=1.5974 dist=1.0860 div=2.042 H=0.137 gd=0.666 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  17 | loss=1.5847 dist=1.0858 div=2.046 H=0.135 gd=0.636 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  18 | loss=1.5701 dist=1.0855 div=2.035 H=0.136 gd=0.616 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  19 | loss=1.5858 dist=1.0835 div=2.035 H=0.136 gd=0.621 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  20 | loss=1.5566 dist=1.0743 div=2.034 H=0.139 gd=0.624 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  21 | loss=1.5595 dist=1.0772 div=2.030 H=0.137 gd=0.647 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  22 | loss=1.5497 dist=1.0720 div=2.044 H=0.134 gd=0.633 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  23 | loss=1.5753 dist=1.0565 div=2.026 H=0.141 gd=0.621 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  24 | loss=1.5475 dist=1.0532 div=2.076 H=0.136 gd=0.619 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  25 | loss=1.5715 dist=1.0675 div=2.058 H=0.131 gd=0.682 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  26 | loss=1.5672 dist=1.0577 div=2.054 H=0.130 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  27 | loss=1.5136 dist=1.0649 div=2.052 H=0.134 gd=0.637 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  28 | loss=1.5020 dist=1.0474 div=2.066 H=0.135 gd=0.632 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  29 | loss=1.5227 dist=1.0373 div=2.064 H=0.129 gd=0.639 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  30 | loss=1.5163 dist=1.0388 div=2.027 H=0.132 gd=0.644 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  31 | loss=1.5154 dist=1.0351 div=2.076 H=0.128 gd=0.643 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  32 | loss=1.4889 dist=1.0622 div=2.095 H=0.130 gd=0.683 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  33 | loss=1.4705 dist=1.0594 div=2.062 H=0.132 gd=0.634 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  34 | loss=1.4536 dist=1.0404 div=2.063 H=0.132 gd=0.676 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  35 | loss=1.4313 dist=1.0423 div=2.077 H=0.130 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  36 | loss=1.4225 dist=1.0403 div=2.067 H=0.128 gd=0.663 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  37 | loss=1.4444 dist=1.0330 div=2.072 H=0.128 gd=0.652 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  38 | loss=1.4276 dist=1.0345 div=2.080 H=0.126 gd=0.692 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  39 | loss=1.4449 dist=0.9932 div=2.111 H=0.131 gd=0.667 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  40 | loss=1.4314 dist=1.0096 div=2.096 H=0.129 gd=0.662 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  41 | loss=1.3999 dist=0.9907 div=2.129 H=0.128 gd=0.603 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  42 | loss=1.4289 dist=1.0213 div=2.067 H=0.135 gd=0.629 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  43 | loss=1.4082 dist=1.0204 div=2.082 H=0.134 gd=0.670 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  44 | loss=1.4393 dist=0.9847 div=2.121 H=0.129 gd=0.630 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  45 | loss=1.3926 dist=0.9936 div=2.113 H=0.128 gd=0.706 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  46 | loss=1.4281 dist=0.9127 div=2.166 H=0.125 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  47 | loss=1.4181 dist=0.9874 div=2.117 H=0.133 gd=0.643 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  48 | loss=1.4111 dist=0.9504 div=2.150 H=0.124 gd=0.691 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  49 | loss=1.3673 dist=0.9580 div=2.115 H=0.129 gd=0.619 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  50 | loss=1.3460 dist=0.9147 div=2.165 H=0.122 gd=0.655 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  51 | loss=1.3160 dist=0.8924 div=2.172 H=0.131 gd=0.660 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  52 | loss=1.3810 dist=0.9425 div=2.191 H=0.130 gd=0.634 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  53 | loss=1.3460 dist=0.9661 div=2.110 H=0.123 gd=0.678 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  54 | loss=1.3201 dist=0.8813 div=2.205 H=0.123 gd=0.633 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  55 | loss=1.3558 dist=0.9223 div=2.144 H=0.124 gd=0.671 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  56 | loss=1.3759 dist=0.9719 div=2.113 H=0.134 gd=0.758 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  57 | loss=1.4016 dist=0.9285 div=2.144 H=0.143 gd=0.682 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  58 | loss=1.3852 dist=0.9101 div=2.163 H=0.140 gd=0.658 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  59 | loss=1.3145 dist=0.9116 div=2.172 H=0.121 gd=0.687 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  60 | loss=1.2897 dist=0.9106 div=2.158 H=0.121 gd=0.673 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  61 | loss=1.2822 dist=0.8908 div=2.182 H=0.117 gd=0.715 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  62 | loss=1.2841 dist=0.9036 div=2.164 H=0.122 gd=0.705 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  63 | loss=1.2965 dist=0.9668 div=2.170 H=0.125 gd=0.635 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  64 | loss=1.3451 dist=0.9342 div=2.148 H=0.126 gd=0.651 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  65 | loss=1.2947 dist=0.9428 div=2.135 H=0.121 gd=0.777 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  66 | loss=1.3186 dist=0.8755 div=2.192 H=0.117 gd=0.672 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  67 | loss=1.2818 dist=1.0021 div=2.145 H=0.115 gd=0.710 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  68 | loss=1.2853 dist=0.9124 div=2.168 H=0.118 gd=0.700 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  69 | loss=1.2678 dist=0.9869 div=2.124 H=0.115 gd=0.751 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  70 | loss=1.2629 dist=0.9111 div=2.190 H=0.112 gd=0.733 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  71 | loss=1.2208 dist=0.8984 div=2.168 H=0.115 gd=0.661 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  72 | loss=1.1855 dist=0.8905 div=2.179 H=0.106 gd=0.780 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  73 | loss=1.2013 dist=0.8504 div=2.226 H=0.109 gd=0.661 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  74 | loss=1.1905 dist=0.8711 div=2.210 H=0.114 gd=0.671 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  75 | loss=1.1735 dist=0.8685 div=2.215 H=0.117 gd=0.689 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  76 | loss=1.1634 dist=0.8756 div=2.226 H=0.111 gd=0.703 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  77 | loss=1.1394 dist=0.8704 div=2.218 H=0.111 gd=0.656 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  78 | loss=1.1262 dist=0.8714 div=2.231 H=0.107 gd=0.661 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  79 | loss=1.1312 dist=0.8519 div=2.212 H=0.099 gd=0.702 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  80 | loss=1.1028 dist=0.8527 div=2.217 H=0.098 gd=0.640 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  81 | loss=1.1264 dist=0.8691 div=2.187 H=0.103 gd=0.707 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  82 | loss=1.1103 dist=0.8488 div=2.239 H=0.101 gd=0.681 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  83 | loss=1.1321 dist=0.8746 div=2.191 H=0.102 gd=0.717 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  84 | loss=1.0968 dist=0.8225 div=2.234 H=0.097 gd=0.661 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  85 | loss=1.0723 dist=0.8478 div=2.238 H=0.098 gd=0.673 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  86 | loss=1.0639 dist=0.8707 div=2.231 H=0.103 gd=0.678 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  87 | loss=1.1004 dist=0.8473 div=2.231 H=0.106 gd=0.720 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  88 | loss=1.0695 dist=0.8393 div=2.212 H=0.097 gd=0.678 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  89 | loss=1.0805 dist=0.8660 div=2.215 H=0.100 gd=0.648 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  90 | loss=1.1140 dist=0.8609 div=2.254 H=0.101 gd=0.705 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  91 | loss=1.0482 dist=0.8250 div=2.261 H=0.102 gd=0.674 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  92 | loss=1.0288 dist=0.8168 div=2.247 H=0.096 gd=0.732 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  93 | loss=1.0488 dist=0.8394 div=2.233 H=0.096 gd=0.650 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  94 | loss=1.0196 dist=0.7995 div=2.247 H=0.094 gd=0.706 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  95 | loss=1.0197 dist=0.8214 div=2.249 H=0.099 gd=0.665 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  96 | loss=1.0292 dist=0.7954 div=2.249 H=0.097 gd=0.668 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  97 | loss=1.0149 dist=0.8184 div=2.259 H=0.099 gd=0.670 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  98 | loss=0.9964 dist=0.7971 div=2.260 H=0.095 gd=0.656 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch  99 | loss=0.9899 dist=0.8170 div=2.258 H=0.093 gd=0.660 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 100 | loss=1.0927 dist=0.8998 div=2.231 H=0.096 gd=0.706 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 101 | loss=1.0813 dist=0.8321 div=2.269 H=0.098 gd=0.675 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 102 | loss=1.1074 dist=0.9044 div=2.235 H=0.100 gd=0.690 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 103 | loss=1.1151 dist=0.9143 div=2.192 H=0.099 gd=0.671 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 104 | loss=1.1467 dist=0.8347 div=2.233 H=0.099 gd=0.645 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 105 | loss=1.0666 dist=0.8396 div=2.237 H=0.102 gd=0.711 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 106 | loss=1.0744 dist=0.8788 div=2.203 H=0.105 gd=0.751 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 107 | loss=1.1216 dist=0.8505 div=2.206 H=0.098 gd=0.707 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 108 | loss=1.0985 dist=0.8304 div=2.235 H=0.094 gd=0.722 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 109 | loss=1.0923 dist=0.8870 div=2.199 H=0.101 gd=0.724 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 110 | loss=1.0713 dist=0.8056 div=2.267 H=0.095 gd=0.702 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 111 | loss=1.0620 dist=0.9149 div=2.235 H=0.104 gd=0.689 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 112 | loss=1.1177 dist=0.8909 div=2.217 H=0.108 gd=0.747 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 113 | loss=1.1214 dist=0.8800 div=2.210 H=0.102 gd=0.693 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 114 | loss=1.1061 dist=0.8355 div=2.229 H=0.101 gd=0.701 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 115 | loss=1.0797 dist=0.8653 div=2.224 H=0.103 gd=0.674 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 116 | loss=1.0483 dist=0.8389 div=2.238 H=0.100 gd=0.708 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 117 | loss=1.0514 dist=0.8556 div=2.230 H=0.099 gd=0.740 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 118 | loss=1.0422 dist=0.8474 div=2.234 H=0.099 gd=0.720 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 119 | loss=1.0349 dist=0.8918 div=2.233 H=0.104 gd=0.722 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 120 | loss=1.0883 dist=0.8511 div=2.229 H=0.099 gd=0.692 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 121 | loss=1.0820 dist=0.8435 div=2.230 H=0.099 gd=0.628 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 122 | loss=1.0385 dist=0.8300 div=2.236 H=0.094 gd=0.695 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 123 | loss=1.0152 dist=0.8175 div=2.241 H=0.093 gd=0.646 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 124 | loss=1.0289 dist=0.8712 div=2.244 H=0.103 gd=0.712 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 125 | loss=1.0562 dist=0.9182 div=2.215 H=0.111 gd=0.735 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] epoch 126 | loss=1.1013 dist=0.8536 div=2.214 H=0.103 gd=0.741 lr=8.49e-04
+  [PM3 tau=0.15 | slotted=True | warmup_cosine=False] early stopping at epoch 126 (no improvement for 30 epochs, best dist=0.7954)
+
+────────────────────────────────────────────────────────────
+Run complete in 6.8 min
+Best dist:  0.7954 at epoch 96
+Final dist: 0.8536
+Saved → results/pm3_grid/pm3_tau0.15_slots1_warmup0.pkl
+[gpu1] Finished: tau0.15_slots1_warmup0

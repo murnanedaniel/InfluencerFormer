@@ -1,0 +1,1 @@
+"""COCO DETR benchmark package."""
