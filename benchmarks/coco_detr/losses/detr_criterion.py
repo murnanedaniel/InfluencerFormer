@@ -94,19 +94,24 @@ class DetrCriterion(nn.Module):
         coverage_weights = torch.softmax(-match_cost / tau, dim=0)
         precision_weights = torch.softmax(-match_cost / tau, dim=1)
 
-        combined_cov = (
-            self.cfg.classification_cost * (coverage_weights * class_ce).sum(dim=0)
-            + self.cfg.bbox_l1_cost * (coverage_weights * bbox_l1).sum(dim=0)
-            + self.cfg.giou_cost * (coverage_weights * giou_cost).sum(dim=0)
-        )
-        combined_prec = (
-            self.cfg.classification_cost * (precision_weights * class_ce).sum(dim=1)
-            + self.cfg.bbox_l1_cost * (precision_weights * bbox_l1).sum(dim=1)
-            + self.cfg.giou_cost * (precision_weights * giou_cost).sum(dim=1)
-        )
+        # Apply power per-component, then combine (matches PowerSoftMinLoss pattern)
+        sm_ce_cov = (coverage_weights * class_ce).sum(dim=0)
+        sm_bbox_cov = (coverage_weights * bbox_l1).sum(dim=0)
+        sm_giou_cov = (coverage_weights * giou_cost).sum(dim=0)
+        loss_cov = (
+            self.cfg.classification_cost * sm_ce_cov.pow(power)
+            + self.cfg.bbox_l1_cost * sm_bbox_cov.pow(power)
+            + self.cfg.giou_cost * sm_giou_cov.pow(power)
+        ).mean()
 
-        loss_cov = combined_cov.pow(power).mean()
-        loss_prec = combined_prec.pow(power).mean()
+        sm_ce_prec = (precision_weights * class_ce).sum(dim=1)
+        sm_bbox_prec = (precision_weights * bbox_l1).sum(dim=1)
+        sm_giou_prec = (precision_weights * giou_cost).sum(dim=1)
+        loss_prec = (
+            self.cfg.classification_cost * sm_ce_prec.pow(power)
+            + self.cfg.bbox_l1_cost * sm_bbox_prec.pow(power)
+            + self.cfg.giou_cost * sm_giou_prec.pow(power)
+        ).mean()
         matched_strength = precision_weights.max(dim=1).values.detach().clamp(0.0, 1.0)
         bg_targets = torch.full((logits.shape[0],), no_object, dtype=torch.long, device=logits.device)
         bg_ce = F.cross_entropy(logits, bg_targets, reduction='none')

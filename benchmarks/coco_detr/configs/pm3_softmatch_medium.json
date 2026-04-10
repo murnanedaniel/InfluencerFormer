@@ -1,0 +1,45 @@
+{
+  "experiment_name": "coco_detr_pm3_softmatch_medium",
+  "output_dir": "benchmarks/coco_detr/runs",
+  "seed": 42,
+  "backbone": "resnet50",
+  "notes": "Medium real-COCO subset (512 train, 256 val) for overfitting study.",
+  "data": {
+    "coco_root": "data/coco",
+    "train_split": "train2017",
+    "val_split": "val2017",
+    "num_workers": 4,
+    "smoke": true,
+    "smoke_train_images": 512,
+    "smoke_val_images": 256
+  },
+  "train": {
+    "model_name": "facebook/detr-resnet-50",
+    "batch_size": 2,
+    "eval_batch_size": 2,
+    "epochs": 6,
+    "lr": 1e-05,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 0.1,
+    "log_every_steps": 10,
+    "eval_every_epochs": 1,
+    "device": "auto",
+    "cache_dir": null,
+    "save_every_epochs": 1
+  },
+  "matcher": {
+    "name": "pm3",
+    "classification_cost": 1.0,
+    "bbox_l1_cost": 5.0,
+    "giou_cost": 2.0,
+    "eos_coefficient": 0.1,
+    "pm3_temperature": 0.12,
+    "pm3_power": 3.0
+  },
+  "wandb": {
+    "enabled": true,
+    "project": "coco-detr-benchmark",
+    "group": "scaling-study",
+    "tags": ["pm3", "medium", "scaling"]
+  }
+}

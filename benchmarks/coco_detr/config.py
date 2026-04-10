@@ -94,6 +94,17 @@ class TrainConfig:
 
 
 @dataclass
+class WandbConfig:
+    """Weights & Biases logging configuration."""
+
+    enabled: bool = False
+    project: str = 'coco-detr-benchmark'
+    entity: str | None = None
+    group: str | None = None
+    tags: list[str] = field(default_factory=list)
+
+
+@dataclass
 class ExperimentConfig:
     """Top-level experiment configuration.
 
@@ -106,6 +117,7 @@ class ExperimentConfig:
         data: Dataset configuration.
         train: Training configuration.
         matcher: Matcher configuration.
+        wandb: Weights & Biases configuration.
     Outputs:
         Structured experiment configuration.
     """
@@ -118,6 +130,7 @@ class ExperimentConfig:
     data: DataConfig = field(default_factory=DataConfig)
     train: TrainConfig = field(default_factory=TrainConfig)
     matcher: MatcherConfig = field(default_factory=MatcherConfig)
+    wandb: WandbConfig = field(default_factory=WandbConfig)
 
 
 def _merge_dict(base: Dict[str, Any], updates: Dict[str, Any]) -> Dict[str, Any]:
@@ -148,6 +161,7 @@ def load_config(config_path: str | None = None, overrides: Dict[str, Any] | None
         data=DataConfig(**raw['data']),
         train=TrainConfig(**raw['train']),
         matcher=MatcherConfig(**raw['matcher']),
+        wandb=WandbConfig(**raw.get('wandb', asdict(WandbConfig()))),
     )
 
 

@@ -11,7 +11,13 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from dataclasses import asdict
 from torchmetrics.detection.mean_ap import MeanAveragePrecision
+
+try:
+    import wandb
+except ImportError:
+    wandb = None
 
 _ROOT = Path(__file__).resolve().parent
 _REPO = _ROOT.parents[1]
@@ -119,6 +125,25 @@ def main() -> None:
     run_dir = run_root / cfg.experiment_name
     run_dir.mkdir(parents=True, exist_ok=True)
     save_config(cfg, run_dir / 'resolved_config.json')
+    metrics_path = run_dir / 'metrics.jsonl'
+    metrics_path.write_text('', encoding='utf-8')
+    eval_metrics_path = run_dir / 'eval_metrics.json'
+    if eval_metrics_path.exists():
+        eval_metrics_path.unlink()
+
+    # Initialize wandb if enabled
+    _wandb_enabled = cfg.wandb.enabled and wandb is not None
+    if cfg.wandb.enabled and wandb is None:
+        print('WARNING: wandb enabled in config but not installed. Skipping.')
+    if _wandb_enabled:
+        wandb.init(
+            project=cfg.wandb.project,
+            entity=cfg.wandb.entity,
+            group=cfg.wandb.group,
+            name=cfg.experiment_name,
+            tags=cfg.wandb.tags,
+            config=asdict(cfg),
+        )
 
     device = infer_device(cfg.train.device)
     model, image_processor = build_model_and_processor(cfg)
@@ -128,7 +153,6 @@ def main() -> None:
     optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.train.lr, weight_decay=cfg.train.weight_decay)
 
     history = []
-    metrics_path = run_dir / 'metrics.jsonl'
     for epoch in range(cfg.train.epochs):
         epoch_start = time.time()
         model.train()
@@ -149,6 +173,16 @@ def main() -> None:
                     f'ce={losses["loss_ce"].item():.4f} '
                     f'bg={losses["loss_background"].item():.4f}'
                 )
+                if _wandb_enabled:
+                    wandb.log({
+                        'train/loss': losses['loss'].item(),
+                        'train/loss_ce': losses['loss_ce'].item(),
+                        'train/loss_bbox': losses['loss_bbox'].item(),
+                        'train/loss_giou': losses['loss_giou'].item(),
+                        'train/loss_background': losses['loss_background'].item(),
+                        'train/lr': optimizer.param_groups[0]['lr'],
+                        'epoch': epoch,
+                    })
 
         epoch_metrics = {
             'epoch': epoch,
@@ -161,10 +195,22 @@ def main() -> None:
         with open(metrics_path, 'a', encoding='utf-8') as handle:
             handle.write(json.dumps(epoch_metrics) + '\n')
         print(json.dumps(epoch_metrics, indent=2))
+        if _wandb_enabled:
+            wandb.log({
+                'epoch/train_loss': epoch_metrics['train_loss'],
+                'epoch/epoch_time_s': epoch_metrics['epoch_time_s'],
+                'epoch/val_loss': epoch_metrics.get('val_loss'),
+                'epoch/map': epoch_metrics.get('map'),
+                'epoch/map_50': epoch_metrics.get('map_50'),
+                'epoch/map_75': epoch_metrics.get('map_75'),
+                'epoch': epoch,
+            })
         if (epoch + 1) % cfg.train.save_every_epochs == 0:
             save_checkpoint(run_dir, model, optimizer, epoch, history)
 
     save_checkpoint(run_dir, model, optimizer, cfg.train.epochs - 1, history)
+    if _wandb_enabled:
+        wandb.finish()
     print(f'Run artifacts written to {run_dir}')
 
 
