@@ -1,0 +1,47 @@
+{
+  "experiment_name": "coco_detr_hungarian_medium_20ep",
+  "output_dir": "benchmarks/coco_detr/runs",
+  "seed": 42,
+  "backbone": "resnet50",
+  "notes": "Medium subset, 20 epochs, separate backbone LR, cosine schedule.",
+  "data": {
+    "coco_root": "data/coco",
+    "train_split": "train2017",
+    "val_split": "val2017",
+    "num_workers": 4,
+    "smoke": true,
+    "smoke_train_images": 512,
+    "smoke_val_images": 256
+  },
+  "train": {
+    "model_name": "facebook/detr-resnet-50",
+    "batch_size": 2,
+    "eval_batch_size": 2,
+    "epochs": 20,
+    "lr": 1e-04,
+    "backbone_lr_factor": 0.1,
+    "lr_schedule": "cosine",
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 0.1,
+    "log_every_steps": 50,
+    "eval_every_epochs": 2,
+    "device": "auto",
+    "cache_dir": null,
+    "save_every_epochs": 5
+  },
+  "matcher": {
+    "name": "hungarian",
+    "classification_cost": 1.0,
+    "bbox_l1_cost": 5.0,
+    "giou_cost": 2.0,
+    "eos_coefficient": 0.1,
+    "pm3_temperature": 0.12,
+    "pm3_power": 3.0
+  },
+  "wandb": {
+    "enabled": true,
+    "project": "coco-detr-benchmark",
+    "group": "improved-recipe",
+    "tags": ["hungarian", "medium", "20ep", "cosine", "backbone-lr"]
+  }
+}

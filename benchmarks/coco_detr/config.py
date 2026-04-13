@@ -31,6 +31,7 @@ class MatcherConfig:
     eos_coefficient: float = 0.1
     pm3_temperature: float = 0.12
     pm3_power: float = 3.0
+    pm3_normalize: bool = False
 
 
 @dataclass
@@ -84,6 +85,8 @@ class TrainConfig:
     eval_batch_size: int = 2
     epochs: int = 12
     lr: float = 1e-4
+    backbone_lr_factor: float = 1.0
+    lr_schedule: str = 'constant'
     weight_decay: float = 1e-4
     gradient_clip_norm: float = 0.1
     log_every_steps: int = 10

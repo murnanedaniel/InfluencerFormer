@@ -94,24 +94,34 @@ class DetrCriterion(nn.Module):
         coverage_weights = torch.softmax(-match_cost / tau, dim=0)
         precision_weights = torch.softmax(-match_cost / tau, dim=1)
 
-        # Apply power per-component, then combine (matches PowerSoftMinLoss pattern)
+        # Apply power per-component, then combine.
+        # When pm3_normalize is true, take the p-th root (Lp norm) so loss
+        # scale matches Hungarian (~units of cost, not cost^p).
         sm_ce_cov = (coverage_weights * class_ce).sum(dim=0)
         sm_bbox_cov = (coverage_weights * bbox_l1).sum(dim=0)
         sm_giou_cov = (coverage_weights * giou_cost).sum(dim=0)
-        loss_cov = (
+        raw_cov = (
             self.cfg.classification_cost * sm_ce_cov.pow(power)
             + self.cfg.bbox_l1_cost * sm_bbox_cov.pow(power)
             + self.cfg.giou_cost * sm_giou_cov.pow(power)
-        ).mean()
+        )
+        if getattr(self.cfg, 'pm3_normalize', False):
+            loss_cov = raw_cov.pow(1.0 / power).mean()
+        else:
+            loss_cov = raw_cov.mean()
 
         sm_ce_prec = (precision_weights * class_ce).sum(dim=1)
         sm_bbox_prec = (precision_weights * bbox_l1).sum(dim=1)
         sm_giou_prec = (precision_weights * giou_cost).sum(dim=1)
-        loss_prec = (
+        raw_prec = (
             self.cfg.classification_cost * sm_ce_prec.pow(power)
             + self.cfg.bbox_l1_cost * sm_bbox_prec.pow(power)
             + self.cfg.giou_cost * sm_giou_prec.pow(power)
-        ).mean()
+        )
+        if getattr(self.cfg, 'pm3_normalize', False):
+            loss_prec = raw_prec.pow(1.0 / power).mean()
+        else:
+            loss_prec = raw_prec.mean()
         matched_strength = precision_weights.max(dim=1).values.detach().clamp(0.0, 1.0)
         bg_targets = torch.full((logits.shape[0],), no_object, dtype=torch.long, device=logits.device)
         bg_ce = F.cross_entropy(logits, bg_targets, reduction='none')

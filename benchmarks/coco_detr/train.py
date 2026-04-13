@@ -150,7 +150,31 @@ def main() -> None:
     model.to(device)
     criterion = DetrCriterion(cfg.matcher)
     train_loader, val_loader = make_dataloaders(cfg, image_processor)
-    optimizer = torch.optim.AdamW(model.parameters(), lr=cfg.train.lr, weight_decay=cfg.train.weight_decay)
+
+    # Separate backbone and head parameter groups
+    backbone_params = []
+    head_params = []
+    for name, param in model.named_parameters():
+        if 'backbone' in name or 'model.backbone' in name:
+            backbone_params.append(param)
+        else:
+            head_params.append(param)
+    backbone_lr = cfg.train.lr * cfg.train.backbone_lr_factor
+    param_groups = [
+        {'params': head_params, 'lr': cfg.train.lr},
+        {'params': backbone_params, 'lr': backbone_lr},
+    ]
+    optimizer = torch.optim.AdamW(param_groups, weight_decay=cfg.train.weight_decay)
+    print(f'Optimizer: head_lr={cfg.train.lr}, backbone_lr={backbone_lr} '
+          f'({len(head_params)} head, {len(backbone_params)} backbone params)')
+
+    # LR scheduler
+    scheduler = None
+    if cfg.train.lr_schedule == 'cosine':
+        total_steps = len(train_loader) * cfg.train.epochs
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=total_steps)
+    elif cfg.train.lr_schedule == 'step':
+        scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=len(train_loader) * (cfg.train.epochs // 3), gamma=0.1)
 
     history = []
     for epoch in range(cfg.train.epochs):
@@ -165,6 +189,8 @@ def main() -> None:
             losses['loss'].backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), cfg.train.gradient_clip_norm)
             optimizer.step()
+            if scheduler is not None:
+                scheduler.step()
             running.append(float(losses['loss'].item()))
             if step % cfg.train.log_every_steps == 0:
                 print(
