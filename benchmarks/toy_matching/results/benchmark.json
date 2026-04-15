@@ -1,0 +1,110 @@
+{
+  "configs": {
+    "sinkhorn_degenerate_tau0.2": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2
+    },
+    "sinkhorn_degenerate_tau0.3": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.3
+    },
+    "sinkhorn_degenerate_tau0.2_p1.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 1.0
+    },
+    "sinkhorn_degenerate_tau0.2_p2.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 2.0
+    },
+    "sinkhorn_degenerate_tau0.2_p3.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 3.0
+    },
+    "sinkhorn_degenerate_tau0.2_p5.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 5.0
+    }
+  },
+  "results": {
+    "sinkhorn_degenerate_tau0.2": {
+      "ml2_mean": 0.055232385580893606,
+      "ml2_std": 0.05472379695856944,
+      "npred_mean": 5.0,
+      "npred_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "f1_perfect": 2,
+      "n_seeds": 2
+    },
+    "sinkhorn_degenerate_tau0.3": {
+      "ml2_mean": 0.10264361277222633,
+      "ml2_std": 0.060872580856084824,
+      "npred_mean": 5.0,
+      "npred_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "f1_perfect": 2,
+      "n_seeds": 2
+    },
+    "sinkhorn_degenerate_tau0.2_p1.0": {
+      "ml2_mean": 0.055232385580893606,
+      "ml2_std": 0.05472379695856944,
+      "npred_mean": 5.0,
+      "npred_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "f1_perfect": 2,
+      "n_seeds": 2
+    },
+    "sinkhorn_degenerate_tau0.2_p2.0": {
+      "ml2_mean": 0.0004536123014986515,
+      "ml2_std": 3.0228489777073264e-05,
+      "npred_mean": 5.0,
+      "npred_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "f1_perfect": 2,
+      "n_seeds": 2
+    },
+    "sinkhorn_degenerate_tau0.2_p3.0": {
+      "ml2_mean": 8.5489187767962e-05,
+      "ml2_std": 1.155059362645261e-05,
+      "npred_mean": 5.0,
+      "npred_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "f1_perfect": 2,
+      "n_seeds": 2
+    },
+    "sinkhorn_degenerate_tau0.2_p5.0": {
+      "ml2_mean": 0.08612188324332237,
+      "ml2_std": 0.010234784334897995,
+      "npred_mean": 6.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.9090909090909091,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 2
+    }
+  },
+  "args": {
+    "seeds": 2,
+    "n_target": 5,
+    "n_pred": 20,
+    "n_steps": 2000,
+    "lr": 0.005,
+    "workers": 1,
+    "filter": "sinkhorn_degen",
+    "output": "results/benchmark.json"
+  }
+}

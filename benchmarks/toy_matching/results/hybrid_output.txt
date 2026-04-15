@@ -1,0 +1,70 @@
+Hybrid Product Loss Experiment
+N_target=5, N_pred=20, steps=8000, lr=0.005, seeds=5
+Running 26 configurations
+=====================================================================================
+
+  baseline_pm3                                  ... F1=0.42+-0.01  ml2=0.0004  (0/5 perfect)  [93s]
+  baseline_sinkhorn10                           ... F1=0.76+-0.19  ml2=0.0062  (0/5 perfect)  [94s]
+  baseline_product                              ... F1=0.40+-0.01  ml2=0.2605  (0/5 perfect)  [17s]
+  baseline_hungarian                            ... F1=0.40+-0.00  ml2=0.0004  (0/5 perfect)  [15s]
+  hybrid_product_normalized                     ... F1=0.40+-0.00  ml2=0.1327  (0/5 perfect)  [25s]
+  hybrid_cross_product                          ... F1=0.40+-0.00  ml2=0.1109  (0/5 perfect)  [17s]
+  hybrid_ratio                                  ... F1=0.41+-0.02  ml2=0.0047  (0/5 perfect)  [22s]
+  hybrid_attention_product                      ... F1=0.41+-0.02  ml2=0.0048  (0/5 perfect)  [20s]
+  hybrid_permanent_bethe                        ... F1=0.44+-0.02  ml2=0.0004  (0/5 perfect)  [19s]
+  hybrid_geometric_coupling                     ... F1=0.40+-0.00  ml2=0.0004  (0/5 perfect)  [20s]
+  hybrid_product_sinkhorn1                      ... F1=0.42+-0.00  ml2=0.0042  (0/5 perfect)  [22s]
+  hybrid_entropic_product                       ... F1=0.40+-0.01  ml2=0.2607  (0/5 perfect)  [23s]
+  hybrid_softmax_product                        ... F1=0.40+-0.01  ml2=0.2608  (0/5 perfect)  [19s]
+  hybrid_doubly_weighted                        ... F1=0.41+-0.01  ml2=0.0071  (0/5 perfect)  [18s]
+  hybrid_geometric_coupling_tau0.05             ... F1=0.42+-0.03  ml2=0.0005  (0/5 perfect)  [20s]
+  hybrid_doubly_weighted_tau0.05                ... F1=0.40+-0.00  ml2=0.0628  (0/5 perfect)  [18s]
+  hybrid_permanent_bethe_tau0.05                ... F1=0.41+-0.01  ml2=0.0003  (0/5 perfect)  [19s]
+  hybrid_geometric_coupling_tau0.2              ... F1=0.40+-0.00  ml2=0.0003  (0/5 perfect)  [20s]
+  hybrid_doubly_weighted_tau0.2                 ... F1=0.40+-0.00  ml2=0.0004  (0/5 perfect)  [18s]
+  hybrid_permanent_bethe_tau0.2                 ... F1=0.51+-0.06  ml2=0.0220  (0/5 perfect)  [19s]
+  hybrid_geometric_coupling_tau0.3              ... F1=0.40+-0.00  ml2=0.0159  (0/5 perfect)  [20s]
+  hybrid_doubly_weighted_tau0.3                 ... F1=0.40+-0.00  ml2=0.0003  (0/5 perfect)  [18s]
+  hybrid_permanent_bethe_tau0.3                 ... F1=0.44+-0.08  ml2=0.2058  (0/5 perfect)  [19s]
+  hybrid_entropic_product_lam0.01               ... F1=0.40+-0.01  ml2=0.2605  (0/5 perfect)  [23s]
+  hybrid_entropic_product_lam0.5                ... F1=0.40+-0.01  ml2=0.2617  (0/5 perfect)  [23s]
+  hybrid_entropic_product_lam1.0                ... F1=0.40+-0.01  ml2=0.2629  (0/5 perfect)  [23s]
+
+=====================================================================================
+Config                                                    F1          ml2   perf
+-------------------------------------------------------------------------------------
+baseline_sinkhorn10                           0.76+-0.19  0.0062+-0.011   0/5
+hybrid_permanent_bethe_tau0.2                 0.51+-0.06  0.0220+-0.025   0/5
+hybrid_permanent_bethe_tau0.3                 0.44+-0.08  0.2058+-0.147   0/5
+hybrid_permanent_bethe                        0.44+-0.02  0.0004+-0.000   0/5
+hybrid_geometric_coupling_tau0.05             0.42+-0.03  0.0005+-0.000   0/5
+baseline_pm3                                  0.42+-0.01  0.0004+-0.000   0/5
+hybrid_product_sinkhorn1                      0.42+-0.00  0.0042+-0.002   0/5
+hybrid_ratio                                  0.41+-0.02  0.0047+-0.009   0/5
+hybrid_attention_product                      0.41+-0.02  0.0048+-0.009   0/5
+hybrid_permanent_bethe_tau0.05                0.41+-0.01  0.0003+-0.000   0/5
+hybrid_doubly_weighted                        0.41+-0.01  0.0071+-0.009   0/5
+baseline_product                              0.40+-0.01  0.2605+-0.048   0/5
+hybrid_entropic_product                       0.40+-0.01  0.2607+-0.048   0/5
+hybrid_softmax_product                        0.40+-0.01  0.2608+-0.056   0/5
+hybrid_entropic_product_lam0.01               0.40+-0.01  0.2605+-0.048   0/5
+hybrid_entropic_product_lam0.5                0.40+-0.01  0.2617+-0.048   0/5
+hybrid_entropic_product_lam1.0                0.40+-0.01  0.2629+-0.047   0/5
+baseline_hungarian                            0.40+-0.00  0.0004+-0.000   0/5
+hybrid_product_normalized                     0.40+-0.00  0.1327+-0.022   0/5
+hybrid_cross_product                          0.40+-0.00  0.1109+-0.053   0/5
+hybrid_geometric_coupling                     0.40+-0.00  0.0004+-0.000   0/5
+hybrid_doubly_weighted_tau0.05                0.40+-0.00  0.0628+-0.063   0/5
+hybrid_geometric_coupling_tau0.2              0.40+-0.00  0.0003+-0.000   0/5
+hybrid_doubly_weighted_tau0.2                 0.40+-0.00  0.0004+-0.000   0/5
+hybrid_geometric_coupling_tau0.3              0.40+-0.00  0.0159+-0.015   0/5
+hybrid_doubly_weighted_tau0.3                 0.40+-0.00  0.0003+-0.000   0/5
+=====================================================================================
+
+Total time: 663s
+
+Best hybrid: hybrid_permanent_bethe_tau0.2
+  F1=0.51+-0.06  ml2=0.0220
+  Description: Bethe permanent tau=0.2
+
+Saved to results/hybrid_product.json

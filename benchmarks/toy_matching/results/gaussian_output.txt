@@ -1,0 +1,111 @@
+Gaussian Product Dustbin Experiment
+  27 configs x 5 seeds
+  N_target=5, N_pred=20, 8000 steps, lr=0.005
+
+Progress log: results/gaussian_product.log
+[  144.4s] sinkhorn_degenerate                            ml2=0.0746+-0.061  F1=0.978+-0.044  (4/5 perfect)
+[  160.5s] hungarian_degenerate                           ml2=0.0004+-0.000  F1=1.000+-0.000  (5/5 perfect)
+[  178.8s] product_degenerate                             ml2=0.2605+-0.048  F1=0.421+-0.013  (0/5 perfect)
+[  199.2s] product_gaussian_learned                       ml2=0.2727+-0.043  F1=0.425+-0.019  (0/5 perfect)
+[  216.6s] product_learned_set                            ml2=0.3442+-0.064  F1=0.428+-0.015  (0/5 perfect)
+[  234.5s] product_gaussian_fixstd0.01                    ml2=0.2608+-0.048  F1=0.421+-0.013  (0/5 perfect)
+[  252.7s] product_gaussian_fixstd0.05                    ml2=0.2661+-0.047  F1=0.421+-0.013  (0/5 perfect)
+[  271.0s] product_gaussian_fixstd0.1                     ml2=0.2801+-0.042  F1=0.425+-0.019  (0/5 perfect)
+[  289.4s] product_gaussian_fixstd0.3                     ml2=0.3768+-0.048  F1=0.464+-0.022  (0/5 perfect)
+[  308.0s] product_gaussian_fixstd0.5                     ml2=0.4854+-0.053  F1=0.536+-0.045  (0/5 perfect)
+[  326.0s] product_gaussian_fixstd1.0                     ml2=0.7020+-0.069  F1=0.710+-0.149  (0/5 perfect)
+[  346.0s] product_gaussian_loc_neg1                      ml2=0.2727+-0.043  F1=0.425+-0.019  (0/5 perfect)
+[  366.3s] product_gaussian_loc_pos2                      ml2=0.2981+-0.016  F1=0.432+-0.021  (0/5 perfect)
+[  386.5s] product_gaussian_loc_half                      ml2=0.2109+-0.054  F1=0.475+-0.063  (0/5 perfect)
+[  400.7s] product_fixed_circle                           ml2=0.7649+-0.050  F1=0.507+-0.033  (0/5 perfect)
+[  415.3s] product_fixed_circle_r02                       ml2=0.6480+-0.056  F1=0.478+-0.028  (0/5 perfect)
+[  429.5s] product_fixed_grid                             ml2=0.6746+-0.055  F1=0.483+-0.033  (0/5 perfect)
+[  443.6s] product_fixed_grid_tight                       ml2=0.6158+-0.061  F1=0.460+-0.022  (0/5 perfect)
+[  462.6s] product_lognorm_degenerate                     ml2=0.2352+-0.112  F1=0.512+-0.306  (0/5 perfect)
+[  483.4s] product_lognorm_gaussian_learned               ml2=0.3068+-0.072  F1=0.000+-0.000  (0/5 perfect)
+[  501.0s] product_lognorm_learned_set                    ml2=0.3155+-0.066  F1=0.067+-0.133  (0/5 perfect)
+[  515.9s] product_lognorm_fixed_circle                   ml2=0.1434+-0.074  F1=0.659+-0.079  (0/5 perfect)
+[  530.7s] product_lognorm_fixed_grid                     ml2=0.1321+-0.066  F1=0.643+-0.083  (0/5 perfect)
+[  549.6s] product_lognorm_gaussian_fixstd0.05            ml2=0.2945+-0.073  F1=0.325+-0.193  (0/5 perfect)
+[  568.6s] product_lognorm_gaussian_fixstd0.1             ml2=0.2903+-0.080  F1=0.356+-0.207  (0/5 perfect)
+[  587.3s] product_lognorm_gaussian_fixstd0.3             ml2=0.2565+-0.075  F1=0.390+-0.086  (0/5 perfect)
+[  605.9s] product_lognorm_gaussian_fixstd0.5             ml2=0.1634+-0.061  F1=0.456+-0.034  (0/5 perfect)
+
+====================================================================================================
+Config                                                   ml2             F1   perf
+----------------------------------------------------------------------------------------------------
+hungarian_degenerate                          0.0004+-0.000  1.000+-0.000    5/5
+sinkhorn_degenerate                           0.0746+-0.061  0.978+-0.044    4/5
+product_gaussian_fixstd1.0                    0.7020+-0.069  0.710+-0.149    0/5
+product_lognorm_fixed_circle                  0.1434+-0.074  0.659+-0.079    0/5
+product_lognorm_fixed_grid                    0.1321+-0.066  0.643+-0.083    0/5
+product_gaussian_fixstd0.5                    0.4854+-0.053  0.536+-0.045    0/5
+product_lognorm_degenerate                    0.2352+-0.112  0.512+-0.306    0/5
+product_fixed_circle                          0.7649+-0.050  0.507+-0.033    0/5
+product_fixed_grid                            0.6746+-0.055  0.483+-0.033    0/5
+product_fixed_circle_r02                      0.6480+-0.056  0.478+-0.028    0/5
+product_gaussian_loc_half                     0.2109+-0.054  0.475+-0.063    0/5
+product_gaussian_fixstd0.3                    0.3768+-0.048  0.464+-0.022    0/5
+product_fixed_grid_tight                      0.6158+-0.061  0.460+-0.022    0/5
+product_lognorm_gaussian_fixstd0.5            0.1634+-0.061  0.456+-0.034    0/5
+product_gaussian_loc_pos2                     0.2981+-0.016  0.432+-0.021    0/5
+product_learned_set                           0.3442+-0.064  0.428+-0.015    0/5
+product_gaussian_learned                      0.2727+-0.043  0.425+-0.019    0/5
+product_gaussian_fixstd0.1                    0.2801+-0.042  0.425+-0.019    0/5
+product_gaussian_loc_neg1                     0.2727+-0.043  0.425+-0.019    0/5
+product_degenerate                            0.2605+-0.048  0.421+-0.013    0/5
+product_gaussian_fixstd0.01                   0.2608+-0.048  0.421+-0.013    0/5
+product_gaussian_fixstd0.05                   0.2661+-0.047  0.421+-0.013    0/5
+product_lognorm_gaussian_fixstd0.3            0.2565+-0.075  0.390+-0.086    0/5
+product_lognorm_gaussian_fixstd0.1            0.2903+-0.080  0.356+-0.207    0/5
+product_lognorm_gaussian_fixstd0.05           0.2945+-0.073  0.325+-0.193    0/5
+product_lognorm_learned_set                   0.3155+-0.066  0.067+-0.133    0/5
+product_lognorm_gaussian_learned              0.3068+-0.072  0.000+-0.000    0/5
+====================================================================================================
+
+--- Summary by category ---
+
+  Baselines (Sinkhorn/Hungarian):
+    hungarian_degenerate                        F1=1.000+-0.000  ml2=0.0004
+    sinkhorn_degenerate                         F1=0.978+-0.044  ml2=0.0746
+
+  Product + degenerate:
+    product_degenerate                          F1=0.421+-0.013  ml2=0.2605
+
+  Product + Gaussian (learned):
+    product_gaussian_learned                    F1=0.425+-0.019  ml2=0.2727
+
+  Product + Gaussian (fixed std):
+    product_gaussian_fixstd1.0                  F1=0.710+-0.149  ml2=0.7020
+    product_gaussian_fixstd0.5                  F1=0.536+-0.045  ml2=0.4854
+    product_gaussian_fixstd0.3                  F1=0.464+-0.022  ml2=0.3768
+    product_gaussian_fixstd0.1                  F1=0.425+-0.019  ml2=0.2801
+    product_gaussian_fixstd0.01                 F1=0.421+-0.013  ml2=0.2608
+    product_gaussian_fixstd0.05                 F1=0.421+-0.013  ml2=0.2661
+
+  Product + Gaussian (location):
+    product_gaussian_loc_half                   F1=0.475+-0.063  ml2=0.2109
+    product_gaussian_loc_pos2                   F1=0.432+-0.021  ml2=0.2981
+    product_gaussian_loc_neg1                   F1=0.425+-0.019  ml2=0.2727
+
+  Product + learned set:
+    product_learned_set                         F1=0.428+-0.015  ml2=0.3442
+
+  Product + fixed spread:
+    product_fixed_circle                        F1=0.507+-0.033  ml2=0.7649
+    product_fixed_grid                          F1=0.483+-0.033  ml2=0.6746
+    product_fixed_circle_r02                    F1=0.478+-0.028  ml2=0.6480
+    product_fixed_grid_tight                    F1=0.460+-0.022  ml2=0.6158
+
+  Log-norm variants:
+    product_lognorm_fixed_circle                F1=0.659+-0.079  ml2=0.1434
+    product_lognorm_fixed_grid                  F1=0.643+-0.083  ml2=0.1321
+    product_lognorm_degenerate                  F1=0.512+-0.306  ml2=0.2352
+    product_lognorm_gaussian_fixstd0.5          F1=0.456+-0.034  ml2=0.1634
+    product_lognorm_gaussian_fixstd0.3          F1=0.390+-0.086  ml2=0.2565
+    product_lognorm_gaussian_fixstd0.1          F1=0.356+-0.207  ml2=0.2903
+    product_lognorm_gaussian_fixstd0.05         F1=0.325+-0.193  ml2=0.2945
+    product_lognorm_learned_set                 F1=0.067+-0.133  ml2=0.3155
+    product_lognorm_gaussian_learned            F1=0.000+-0.000  ml2=0.3068
+
+Saved to results/gaussian_product.json

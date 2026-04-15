@@ -1,0 +1,406 @@
+{
+  "configs": {
+    "sinkhorn_degenerate_tau0.2": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2
+    },
+    "sinkhorn_degenerate_tau0.3": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.3
+    },
+    "sinkhorn_gaussian_tau0.2": {
+      "matching": "sinkhorn",
+      "dustbin": "gaussian",
+      "tau": 0.2
+    },
+    "sinkhorn_gaussian_tau0.3": {
+      "matching": "sinkhorn",
+      "dustbin": "gaussian",
+      "tau": 0.3
+    },
+    "sinkhorn_learned_set_tau0.2": {
+      "matching": "sinkhorn",
+      "dustbin": "learned_set",
+      "tau": 0.2
+    },
+    "sinkhorn_learned_set_tau0.3": {
+      "matching": "sinkhorn",
+      "dustbin": "learned_set",
+      "tau": 0.3
+    },
+    "sinkhorn_none_tau0.2": {
+      "matching": "sinkhorn",
+      "dustbin": "none",
+      "tau": 0.2
+    },
+    "sinkhorn_none_tau0.3": {
+      "matching": "sinkhorn",
+      "dustbin": "none",
+      "tau": 0.3
+    },
+    "softmax_degenerate_tau0.2": {
+      "matching": "softmax",
+      "dustbin": "degenerate",
+      "tau": 0.2
+    },
+    "softmax_degenerate_tau0.3": {
+      "matching": "softmax",
+      "dustbin": "degenerate",
+      "tau": 0.3
+    },
+    "softmax_gaussian_tau0.2": {
+      "matching": "softmax",
+      "dustbin": "gaussian",
+      "tau": 0.2
+    },
+    "softmax_gaussian_tau0.3": {
+      "matching": "softmax",
+      "dustbin": "gaussian",
+      "tau": 0.3
+    },
+    "softmax_learned_set_tau0.2": {
+      "matching": "softmax",
+      "dustbin": "learned_set",
+      "tau": 0.2
+    },
+    "softmax_learned_set_tau0.3": {
+      "matching": "softmax",
+      "dustbin": "learned_set",
+      "tau": 0.3
+    },
+    "softmax_none_tau0.2": {
+      "matching": "softmax",
+      "dustbin": "none",
+      "tau": 0.2
+    },
+    "softmax_none_tau0.3": {
+      "matching": "softmax",
+      "dustbin": "none",
+      "tau": 0.3
+    },
+    "sinkhorn_superglue_tau0.2": {
+      "matching": "sinkhorn",
+      "dustbin": "superglue_score",
+      "tau": 0.2
+    },
+    "sinkhorn_superglue_tau0.3": {
+      "matching": "sinkhorn",
+      "dustbin": "superglue_score",
+      "tau": 0.3
+    },
+    "chamfer_none": {
+      "matching": "chamfer",
+      "dustbin": "none"
+    },
+    "chamfer_degenerate": {
+      "matching": "chamfer",
+      "dustbin": "degenerate"
+    },
+    "hungarian_none": {
+      "matching": "hungarian",
+      "dustbin": "none"
+    },
+    "hungarian_degenerate": {
+      "matching": "hungarian",
+      "dustbin": "degenerate"
+    },
+    "sinkhorn_degenerate_tau0.2_p1.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 1.0
+    },
+    "sinkhorn_degenerate_tau0.2_p2.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 2.0
+    },
+    "sinkhorn_degenerate_tau0.2_p3.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 3.0
+    },
+    "sinkhorn_degenerate_tau0.2_p5.0": {
+      "matching": "sinkhorn",
+      "dustbin": "degenerate",
+      "tau": 0.2,
+      "power": 5.0
+    }
+  },
+  "results": {
+    "sinkhorn_degenerate_tau0.2": {
+      "ml2_mean": 0.0252231971884612,
+      "ml2_std": 0.0358559795701143,
+      "npred_mean": 5.1,
+      "npred_std": 0.3,
+      "f1_mean": 0.990909090909091,
+      "f1_std": 0.02727272727272728,
+      "f1_perfect": 9,
+      "n_seeds": 10
+    },
+    "sinkhorn_degenerate_tau0.3": {
+      "ml2_mean": 0.06994873835938051,
+      "ml2_std": 0.06335810046261167,
+      "npred_mean": 5.1,
+      "npred_std": 0.5385164807134504,
+      "f1_mean": 0.9707070707070707,
+      "f1_std": 0.045048693173692436,
+      "f1_perfect": 7,
+      "n_seeds": 10
+    },
+    "sinkhorn_gaussian_tau0.2": {
+      "ml2_mean": 0.02212957782903686,
+      "ml2_std": 0.03062574048733226,
+      "npred_mean": 9.5,
+      "npred_std": 6.960603422117942,
+      "f1_mean": 0.7012987012987014,
+      "f1_std": 0.2761834194161518,
+      "f1_perfect": 2,
+      "n_seeds": 10
+    },
+    "sinkhorn_gaussian_tau0.3": {
+      "ml2_mean": 0.07296043006354011,
+      "ml2_std": 0.07123398782425404,
+      "npred_mean": 8.0,
+      "npred_std": 6.099180272790763,
+      "f1_mean": 0.7812987012987014,
+      "f1_std": 0.27869246303516326,
+      "f1_perfect": 4,
+      "n_seeds": 10
+    },
+    "sinkhorn_learned_set_tau0.2": {
+      "ml2_mean": 0.035693319066194815,
+      "ml2_std": 0.03877448883175936,
+      "npred_mean": 6.8,
+      "npred_std": 2.3151673805580453,
+      "f1_mean": 0.8733877233877234,
+      "f1_std": 0.1349356929508155,
+      "f1_perfect": 4,
+      "n_seeds": 10
+    },
+    "sinkhorn_learned_set_tau0.3": {
+      "ml2_mean": 0.09061026017880067,
+      "ml2_std": 0.061881151950612494,
+      "npred_mean": 7.4,
+      "npred_std": 3.693237062523877,
+      "f1_mean": 0.8415204678362572,
+      "f1_std": 0.17857718849260412,
+      "f1_perfect": 4,
+      "n_seeds": 10
+    },
+    "sinkhorn_none_tau0.2": {
+      "ml2_mean": 0.0012896879081381485,
+      "ml2_std": 0.0028256152731271074,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "sinkhorn_none_tau0.3": {
+      "ml2_mean": 0.0024653892120113595,
+      "ml2_std": 0.004334455089086984,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_degenerate_tau0.2": {
+      "ml2_mean": 0.009123391671164428,
+      "ml2_std": 0.023189183880160155,
+      "npred_mean": 17.7,
+      "npred_std": 0.9,
+      "f1_mean": 0.4412290607942781,
+      "f1_std": 0.017683690178563916,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_degenerate_tau0.3": {
+      "ml2_mean": 0.03771205016528256,
+      "ml2_std": 0.041822048218410596,
+      "npred_mean": 17.1,
+      "npred_std": 1.1357816691600546,
+      "f1_mean": 0.4537549407114625,
+      "f1_std": 0.024655288812254043,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_gaussian_tau0.2": {
+      "ml2_mean": 0.002522662759292871,
+      "ml2_std": 0.004273820395712165,
+      "npred_mean": 16.4,
+      "npred_std": 1.0198039027185568,
+      "f1_mean": 0.4683418031244118,
+      "f1_std": 0.022099789736686706,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_gaussian_tau0.3": {
+      "ml2_mean": 0.021741336217382924,
+      "ml2_std": 0.032498566391158036,
+      "npred_mean": 14.9,
+      "npred_std": 4.346262762420146,
+      "f1_mean": 0.4508658008658008,
+      "f1_std": 0.05684075000157008,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_learned_set_tau0.2": {
+      "ml2_mean": 0.023920165821618867,
+      "ml2_std": 0.039426669056231683,
+      "npred_mean": 17.4,
+      "npred_std": 1.3564659966250538,
+      "f1_mean": 0.44815546772068515,
+      "f1_std": 0.028558356982529686,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_learned_set_tau0.3": {
+      "ml2_mean": 0.052738839155063034,
+      "ml2_std": 0.07000230567645492,
+      "npred_mean": 16.9,
+      "npred_std": 1.0440306508910548,
+      "f1_mean": 0.45770750988142284,
+      "f1_std": 0.022812180285388253,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_none_tau0.2": {
+      "ml2_mean": 0.0026655047404346988,
+      "ml2_std": 0.004761307893262313,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "softmax_none_tau0.3": {
+      "ml2_mean": 0.014468929496069904,
+      "ml2_std": 0.021603753225214763,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "sinkhorn_superglue_tau0.2": {
+      "ml2_mean": 0.0017174753011204302,
+      "ml2_std": 0.004188338120320517,
+      "npred_mean": 0.7,
+      "npred_std": 2.1,
+      "f1_mean": 0.06666666666666667,
+      "f1_std": 0.19999999999999998,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "sinkhorn_superglue_tau0.3": {
+      "ml2_mean": 0.006928698781121056,
+      "ml2_std": 0.013243741247761417,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "chamfer_none": {
+      "ml2_mean": 0.0007866219151765108,
+      "ml2_std": 0.0002802246238235696,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "chamfer_degenerate": {
+      "ml2_mean": 0.0004367073473986238,
+      "ml2_std": 0.00015979962823989226,
+      "npred_mean": 19.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.4166666666666667,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "hungarian_none": {
+      "ml2_mean": 0.0003293242101790383,
+      "ml2_std": 5.2515068671032315e-05,
+      "npred_mean": 0.0,
+      "npred_std": 0.0,
+      "f1_mean": 0.0,
+      "f1_std": 0.0,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    },
+    "hungarian_degenerate": {
+      "ml2_mean": 0.00037543444195762274,
+      "ml2_std": 8.127613603371623e-05,
+      "npred_mean": 5.0,
+      "npred_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "f1_perfect": 10,
+      "n_seeds": 10
+    },
+    "sinkhorn_degenerate_tau0.2_p1.0": {
+      "ml2_mean": 0.0252231971884612,
+      "ml2_std": 0.0358559795701143,
+      "npred_mean": 5.1,
+      "npred_std": 0.3,
+      "f1_mean": 0.990909090909091,
+      "f1_std": 0.02727272727272728,
+      "f1_perfect": 9,
+      "n_seeds": 10
+    },
+    "sinkhorn_degenerate_tau0.2_p2.0": {
+      "ml2_mean": 0.006918238193611615,
+      "ml2_std": 0.013891119222978135,
+      "npred_mean": 5.0,
+      "npred_std": 0.7745966692414834,
+      "f1_mean": 0.9368181818181818,
+      "f1_std": 0.0889435237283926,
+      "f1_perfect": 6,
+      "n_seeds": 10
+    },
+    "sinkhorn_degenerate_tau0.2_p3.0": {
+      "ml2_mean": 0.00795181845605839,
+      "ml2_std": 0.008584341454874633,
+      "npred_mean": 5.1,
+      "npred_std": 0.7000000000000001,
+      "f1_mean": 0.9105050505050505,
+      "f1_std": 0.07027893468416246,
+      "f1_perfect": 3,
+      "n_seeds": 10
+    },
+    "sinkhorn_degenerate_tau0.2_p5.0": {
+      "ml2_mean": 0.008037528835848207,
+      "ml2_std": 0.00900269253094924,
+      "npred_mean": 6.1,
+      "npred_std": 0.3,
+      "f1_mean": 0.9015151515151514,
+      "f1_std": 0.02272727272727274,
+      "f1_perfect": 0,
+      "n_seeds": 10
+    }
+  },
+  "args": {
+    "seeds": 10,
+    "n_target": 5,
+    "n_pred": 20,
+    "n_steps": 8000,
+    "lr": 0.005,
+    "workers": 4,
+    "filter": null,
+    "output": "results/full_benchmark.json"
+  }
+}

@@ -1,0 +1,317 @@
+Product Loss Failure Diagnosis
+======================================================================
+
+Running N_pred=7, N_target=5 ...
+Running N_pred=20, N_target=5 ...
+
+======================================================================
+  MATHEMATICAL ANALYSIS: WHY GM GRADIENTS DILUTE WITH N
+======================================================================
+
+    Product Loss coverage for target j:
+      L_j = GM_i(D_ij) = exp( (1/N) * sum_i log(D_ij) )
+
+    Gradient for pred k toward target j:
+      dL_j/dD_kj = (1/N) * GM_i(D_ij) / D_kj * (dD_kj/dpred_k)
+
+    The critical factor is (1/N) * GM / D_kj:
+    - The 1/N factor DIRECTLY dilutes the gradient as N grows
+    - The GM is dominated by the MANY far predictions, not the ONE close one
+    
+
+  --- N_pred = 7 (n_dustbin = 2) ---
+    Distances: 1@0.05, 4@0.8, 2@1.5
+    GM = 0.644278
+    Grad for close pred (d=0.05): 1.840794
+    Grad for far pred   (d=0.8):   0.115050
+    Ratio close/far grad:              16.0000
+    1/N factor:                        0.1429
+    Signal (coverage grad for close pred): 1.840794
+
+  --- N_pred = 20 (n_dustbin = 15) ---
+    Distances: 1@0.05, 4@0.8, 15@1.5
+    GM = 1.115925
+    Grad for close pred (d=0.05): 1.115925
+    Grad for far pred   (d=0.8):   0.069745
+    Ratio close/far grad:              16.0000
+    1/N factor:                        0.0500
+    Signal (coverage grad for close pred): 1.115925
+
+  CONCLUSION:
+    Gradient signal at N=7:  1.840794
+    Gradient signal at N=20: 1.115925
+    Signal ratio (N=7 / N=20): 1.6x
+    The signal at N=20 is 60.6% of N=7
+
+    Two compounding effects:
+      1. 1/N dilution: 7/20 = 0.35x
+      2. GM inflation from dustbin: GM_7=0.6443 vs GM_20=1.1159 (ratio=1.73x)
+    Combined: the useful gradient is 60.6% as strong
+    With Adam's adaptive LR this might partially compensate,
+    but the DIRECTION becomes increasingly uniform (all preds
+    get nearly equal gradient) so no pred is preferentially
+    pulled toward its correct target.
+
+======================================================================
+  GRADIENT LANDSCAPE: Product Loss (N_pred=7, N_target=5)
+======================================================================
+
+--- Step 0 ---
+  Grad magnitude:  min=5.16e-02  max=2.52e-01  mean=1.58e-01  std=6.16e-02  ratio_max/min=4.9
+  Coverage GM (per target): ['0.6142', '0.6105', '0.3907', '0.4751', '0.4772']
+  Coverage GM (dustbin):    ['2.1436', '2.1436']...
+  D_real: min=0.1776  max=0.9976  mean=0.5603
+    Target 0: min=0.3094 (pred 2)  mean=0.6483  GM=0.6142  min/GM=0.5037  n_close(<0.1)=0
+    Target 1: min=0.3818 (pred 3)  mean=0.6392  GM=0.6105  min/GM=0.6254  n_close(<0.1)=0
+    Target 2: min=0.2201 (pred 4)  mean=0.4200  GM=0.3907  min/GM=0.5634  n_close(<0.1)=0
+    Target 3: min=0.1776 (pred 3)  mean=0.5503  GM=0.4751  min/GM=0.3738  n_close(<0.1)=0
+    Target 4: min=0.2263 (pred 1)  mean=0.5436  GM=0.4772  min/GM=0.4742  n_close(<0.1)=0
+  Grad direction cos-sim: mean=0.0878  std=0.7254
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 500 ---
+  Grad magnitude:  min=6.75e-02  max=4.47e+00  mean=1.24e+00  std=1.40e+00  ratio_max/min=66.2
+  Coverage GM (per target): ['0.6215', '0.3404', '0.0722', '0.1065', '0.3804']
+  Coverage GM (dustbin):    ['2.1641', '2.1641']...
+  D_real: min=0.0041  max=0.9980  mean=0.4314
+    Target 0: min=0.5676 (pred 1)  mean=0.6251  GM=0.6215  min/GM=0.9134  n_close(<0.1)=0
+    Target 1: min=0.2044 (pred 3)  mean=0.3922  GM=0.3404  min/GM=0.6006  n_close(<0.1)=0
+    Target 2: min=0.0135 (pred 5)  mean=0.1852  GM=0.0722  min/GM=0.1874  n_close(<0.1)=4
+    Target 3: min=0.0051 (pred 3)  mean=0.2567  GM=0.1065  min/GM=0.0478  n_close(<0.1)=2
+    Target 4: min=0.0041 (pred 0)  mean=0.6980  GM=0.3804  min/GM=0.0108  n_close(<0.1)=1
+  Grad direction cos-sim: mean=-0.0412  std=0.7007
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 1000 ---
+  Grad magnitude:  min=1.96e-01  max=3.61e+00  mean=1.58e+00  std=1.19e+00  ratio_max/min=18.4
+  Coverage GM (per target): ['0.6289', '0.3639', '0.0316', '0.1908', '0.3869']
+  Coverage GM (dustbin):    ['2.1520', '2.1520']...
+  D_real: min=0.0025  max=1.0013  mean=0.4388
+    Target 0: min=0.5857 (pred 6)  mean=0.6329  GM=0.6289  min/GM=0.9312  n_close(<0.1)=0
+    Target 1: min=0.1888 (pred 3)  mean=0.4143  GM=0.3639  min/GM=0.5188  n_close(<0.1)=0
+    Target 2: min=0.0025 (pred 2)  mean=0.1747  GM=0.0316  min/GM=0.0801  n_close(<0.1)=4
+    Target 3: min=0.0488 (pred 3)  mean=0.2881  GM=0.1908  min/GM=0.2558  n_close(<0.1)=2
+    Target 4: min=0.0053 (pred 0)  mean=0.6841  GM=0.3869  min/GM=0.0138  n_close(<0.1)=1
+  Grad direction cos-sim: mean=0.3560  std=0.5609
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 2000 ---
+  Grad magnitude:  min=8.44e-02  max=1.74e+01  mean=3.05e+00  std=5.89e+00  ratio_max/min=206.2
+  Coverage GM (per target): ['0.5980', '0.3197', '0.0459', '0.1310', '0.5031']
+  Coverage GM (dustbin):    ['2.1829', '2.1829']...
+  D_real: min=0.0003  max=0.9660  mean=0.4247
+    Target 0: min=0.5202 (pred 6)  mean=0.6017  GM=0.5980  min/GM=0.8700  n_close(<0.1)=0
+    Target 1: min=0.1578 (pred 3)  mean=0.3761  GM=0.3197  min/GM=0.4937  n_close(<0.1)=0
+    Target 2: min=0.0003 (pred 5)  mean=0.1859  GM=0.0459  min/GM=0.0074  n_close(<0.1)=4
+    Target 3: min=0.0054 (pred 4)  mean=0.2646  GM=0.1310  min/GM=0.0412  n_close(<0.1)=2
+    Target 4: min=0.0310 (pred 0)  mean=0.6952  GM=0.5031  min/GM=0.0617  n_close(<0.1)=1
+  Grad direction cos-sim: mean=0.4758  std=0.4743
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 4999 ---
+  Grad magnitude:  min=5.17e-02  max=1.35e+00  mean=5.67e-01  std=4.27e-01  ratio_max/min=26.1
+  Coverage GM (per target): ['0.6211', '0.3268', '0.0600', '0.2047', '0.5861']
+  Coverage GM (dustbin):    ['2.1594', '2.1594']...
+  D_real: min=0.0066  max=1.0359  mean=0.4437
+    Target 0: min=0.5493 (pred 4)  mean=0.6277  GM=0.6211  min/GM=0.8844  n_close(<0.1)=0
+    Target 1: min=0.1157 (pred 4)  mean=0.4017  GM=0.3268  min/GM=0.3539  n_close(<0.1)=0
+    Target 2: min=0.0066 (pred 2)  mean=0.1934  GM=0.0600  min/GM=0.1101  n_close(<0.1)=4
+    Target 3: min=0.0428 (pred 3)  mean=0.3000  GM=0.2047  min/GM=0.2091  n_close(<0.1)=2
+    Target 4: min=0.1005 (pred 0)  mean=0.6957  GM=0.5861  min/GM=0.1715  n_close(<0.1)=0
+  Grad direction cos-sim: mean=-0.1337  std=0.7264
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+======================================================================
+  GRADIENT LANDSCAPE: Product Loss (N_pred=20, N_target=5)
+======================================================================
+
+--- Step 0 ---
+  Grad magnitude:  min=2.27e-02  max=8.09e-02  mean=5.44e-02  std=1.42e-02  ratio_max/min=3.6
+  Coverage GM (per target): ['0.6965', '0.6283', '0.4142', '0.5263', '0.5046']
+  Coverage GM (dustbin):    ['2.0265', '2.0265', '2.0265']...
+  D_real: min=0.1776  max=1.1928  mean=0.5996
+    Target 0: min=0.3094 (pred 2)  mean=0.7370  GM=0.6965  min/GM=0.4442  n_close(<0.1)=0
+    Target 1: min=0.1974 (pred 17)  mean=0.6755  GM=0.6283  min/GM=0.3141  n_close(<0.1)=0
+    Target 2: min=0.2201 (pred 4)  mean=0.4366  GM=0.4142  min/GM=0.5314  n_close(<0.1)=0
+    Target 3: min=0.1776 (pred 3)  mean=0.5790  GM=0.5263  min/GM=0.3374  n_close(<0.1)=0
+    Target 4: min=0.2263 (pred 1)  mean=0.5699  GM=0.5046  min/GM=0.4485  n_close(<0.1)=0
+  Grad direction cos-sim: mean=0.6930  std=0.4499
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 500 ---
+  Grad magnitude:  min=3.05e-02  max=4.39e+00  mean=6.40e-01  std=9.14e-01  ratio_max/min=144.1
+  Coverage GM (per target): ['1.8583', '1.4177', '0.7640', '0.9358', '1.7467']
+  Coverage GM (dustbin):    ['0.0221', '0.0221', '0.0221']...
+  D_real: min=0.0010  max=2.7008  mean=1.8468
+    Target 0: min=0.5826 (pred 17)  mean=2.1691  GM=1.8583  min/GM=0.3135  n_close(<0.1)=0
+    Target 1: min=0.2054 (pred 10)  mean=1.8749  GM=1.4177  min/GM=0.1449  n_close(<0.1)=0
+    Target 2: min=0.0010 (pred 17)  mean=1.6189  GM=0.7640  min/GM=0.0014  n_close(<0.1)=3
+    Target 3: min=0.0044 (pred 10)  mean=1.6784  GM=0.9358  min/GM=0.0047  n_close(<0.1)=2
+    Target 4: min=0.7123 (pred 2)  mean=1.8928  GM=1.7467  min/GM=0.4078  n_close(<0.1)=0
+  Grad direction cos-sim: mean=-0.0395  std=0.7054
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 1000 ---
+  Grad magnitude:  min=6.93e-02  max=3.76e+00  mean=7.02e-01  std=8.78e-01  ratio_max/min=54.2
+  Coverage GM (per target): ['1.8638', '1.4443', '0.8304', '0.9111', '1.7317']
+  Coverage GM (dustbin):    ['0.0234', '0.0234', '0.0234']...
+  D_real: min=0.0013  max=2.6919  mean=1.8458
+    Target 0: min=0.5710 (pred 17)  mean=2.1682  GM=1.8638  min/GM=0.3064  n_close(<0.1)=0
+    Target 1: min=0.2092 (pred 0)  mean=1.8788  GM=1.4443  min/GM=0.1448  n_close(<0.1)=0
+    Target 2: min=0.0037 (pred 3)  mean=1.6163  GM=0.8304  min/GM=0.0044  n_close(<0.1)=3
+    Target 3: min=0.0013 (pred 0)  mean=1.6823  GM=0.9111  min/GM=0.0015  n_close(<0.1)=2
+    Target 4: min=0.7062 (pred 17)  mean=1.8833  GM=1.7317  min/GM=0.4078  n_close(<0.1)=0
+  Grad direction cos-sim: mean=0.0123  std=0.6926
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 2000 ---
+  Grad magnitude:  min=7.73e-02  max=2.94e+00  mean=5.23e-01  std=5.89e-01  ratio_max/min=38.0
+  Coverage GM (per target): ['1.8409', '1.4015', '0.9042', '0.9757', '1.7321']
+  Coverage GM (dustbin):    ['0.0149', '0.0149', '0.0149']...
+  D_real: min=0.0179  max=2.7031  mean=1.8407
+    Target 0: min=0.5692 (pred 2)  mean=2.1591  GM=1.8409  min/GM=0.3092  n_close(<0.1)=0
+    Target 1: min=0.1924 (pred 0)  mean=1.8685  GM=1.4015  min/GM=0.1373  n_close(<0.1)=0
+    Target 2: min=0.0179 (pred 17)  mean=1.6157  GM=0.9042  min/GM=0.0198  n_close(<0.1)=3
+    Target 3: min=0.0179 (pred 0)  mean=1.6769  GM=0.9757  min/GM=0.0183  n_close(<0.1)=2
+    Target 4: min=0.6521 (pred 2)  mean=1.8835  GM=1.7321  min/GM=0.3765  n_close(<0.1)=0
+  Grad direction cos-sim: mean=-0.0485  std=0.6924
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+--- Step 4999 ---
+  Grad magnitude:  min=3.40e-02  max=1.32e+01  mean=1.40e+00  std=2.91e+00  ratio_max/min=388.9
+  Coverage GM (per target): ['1.8547', '1.3652', '1.0941', '0.5786', '1.7711']
+  Coverage GM (dustbin):    ['0.0187', '0.0187', '0.0187']...
+  D_real: min=0.0003  max=2.7241  mean=1.8490
+    Target 0: min=0.5278 (pred 17)  mean=2.1697  GM=1.8547  min/GM=0.2846  n_close(<0.1)=0
+    Target 1: min=0.2085 (pred 10)  mean=1.8663  GM=1.3652  min/GM=0.1528  n_close(<0.1)=0
+    Target 2: min=0.0614 (pred 17)  mean=1.6364  GM=1.0941  min/GM=0.0561  n_close(<0.1)=2
+    Target 3: min=0.0003 (pred 10)  mean=1.6670  GM=0.5786  min/GM=0.0005  n_close(<0.1)=3
+    Target 4: min=0.6839 (pred 17)  mean=1.9058  GM=1.7711  min/GM=0.3862  n_close(<0.1)=0
+  Grad direction cos-sim: mean=0.0311  std=0.6958
+    (1.0 = all parallel, 0.0 = random, -1.0 = opposed)
+
+======================================================================
+  COMPARATIVE SUMMARY: N=7 vs N=20
+======================================================================
+
+  Final F1:          N=7: 0.833    N=20: 1.000
+  Final n_exist:     N=7: 7        N=20: 5
+  Matched L2:        N=7: 0.1689  N=20: 0.3255
+
+  Gradient magnitude (mean) at key steps:
+    Step     0:  N=7: 1.58e-01   N=20: 5.44e-02   ratio: 2.89
+    Step   500:  N=7: 1.24e+00   N=20: 6.40e-01   ratio: 1.94
+    Step  1000:  N=7: 1.58e+00   N=20: 7.02e-01   ratio: 2.25
+    Step  2000:  N=7: 3.05e+00   N=20: 5.23e-01   ratio: 5.83
+    Step  4999:  N=7: 5.67e-01   N=20: 1.40e+00   ratio: 0.40
+
+  Gradient uniformity (std/mean, lower = more uniform/less discriminative):
+    Step     0:  N=7: 0.4224   N=20: 0.2668
+    Step   500:  N=7: 1.2202   N=20: 1.4643
+    Step  1000:  N=7: 0.8131   N=20: 1.2842
+    Step  2000:  N=7: 2.0873   N=20: 1.1569
+    Step  4999:  N=7: 0.8143   N=20: 2.1291
+
+  Gradient direction similarity (mean pairwise cosine):
+    Step     0:  N=7: 0.0878   N=20: 0.6930
+    Step   500:  N=7: -0.0412   N=20: -0.0395
+    Step  1000:  N=7: 0.3560   N=20: 0.0123
+    Step  2000:  N=7: 0.4758   N=20: -0.0485
+    Step  4999:  N=7: -0.1337   N=20: 0.0311
+
+  Unique targets claimed (out of 5):
+    Step     0:  N=7: 4   N=20: 5
+    Step   500:  N=7: 3   N=20: 2
+    Step  1000:  N=7: 3   N=20: 2
+    Step  2000:  N=7: 3   N=20: 2
+    Step  4999:  N=7: 3   N=20: 2
+
+  Fraction of preds closer to real targets than dustbin:
+    Step     0:  N=7: 1.000   N=20: 1.000
+    Step   500:  N=7: 1.000   N=20: 0.250
+    Step  1000:  N=7: 1.000   N=20: 0.250
+    Step  2000:  N=7: 1.000   N=20: 0.250
+    Step  4999:  N=7: 1.000   N=20: 0.250
+
+  Mean coverage GM over real targets (lower = better matched):
+    Step     0:  N=7: 0.513548   N=20: 0.553990
+    Step   500:  N=7: 0.304206   N=20: 1.344490
+    Step  1000:  N=7: 0.320411   N=20: 1.356255
+    Step  2000:  N=7: 0.319535   N=20: 1.370874
+    Step  4999:  N=7: 0.359753   N=20: 1.332731
+
+======================================================================
+  CRITICAL: GRADIENT DIRECTION UNIFORMITY AT N=20
+======================================================================
+
+  At initialization (step 0), N=20:
+  Each target's coverage GM depends on ALL 20 predictions.
+  The gradient for pred k from target j is proportional to:
+    (1/20) * GM_j / D_kj * direction_kj
+
+  Since GM_j involves product of 19 OTHER distances,
+  ALL predictions get nearly equal GM factor.
+  The ONLY discriminating factor is 1/D_kj, but this is
+  summed over ALL targets, creating a ~uniform pull.
+
+  Grad magnitudes for first 10 preds: ['0.0732', '0.0574', '0.0735', '0.0393', '0.0227', '0.0577', '0.0518', '0.0468', '0.0487', '0.0477']
+  Coefficient of variation: 0.2600
+
+  Compare N=7:
+  Grad magnitudes for all 7 preds: ['0.1382', '0.0516', '0.1746', '0.2523', '0.2213', '0.1469', '0.1182']
+  Coefficient of variation: 0.3911
+
+======================================================================
+  SINKHORN COMPARISON AT N=20
+======================================================================
+  Sinkhorn grad magnitudes (first 10): ['1.0285', '0.8208', '1.2435', '0.6810', '0.9255', '0.9213', '1.0101', '1.0901', '1.0481', '1.0569']
+  Sinkhorn CV: 0.1148
+  Sinkhorn direction cos-sim: mean=0.6012
+
+  Product grad magnitudes (first 10): ['0.0732', '0.0574', '0.0735', '0.0393', '0.0227', '0.0577', '0.0518', '0.0468', '0.0487', '0.0477']
+  Product CV: 0.2668
+  Product direction cos-sim: mean=0.6930
+
+  KEY: Sinkhorn gives DIFFERENTIATED gradients (high CV, low cos-sim)
+       Product gives UNIFORM gradients (low CV, high cos-sim)
+       Uniform gradients mean no pred is preferentially assigned.
+
+======================================================================
+  DIAGNOSIS SUMMARY
+======================================================================
+
+    The Product Loss fails at large N due to TWO compounding mechanisms:
+
+    1. GRADIENT MAGNITUDE DILUTION (1/N factor):
+       The GM gradient for pred k toward target j contains a 1/N factor
+       from the chain rule through mean(log(D)). At N=7 this is 0.143;
+       at N=20 this is 0.050 -- a 2.86x reduction.
+
+    2. GRADIENT DIRECTION UNIFORMITY (the killer):
+       The GM for target j = exp(mean(log(D_ij))) depends on ALL N preds.
+       At large N, the GM is dominated by the (N-1) far predictions,
+       making it nearly identical for all targets. The gradient for each
+       pred is a sum of terms (1/N)*GM_j/D_kj*(direction to j), where
+       GM_j is nearly the same constant for all j.
+
+       This means EVERY prediction gets pulled toward the CENTROID of
+       all targets, not toward its specific assigned target. The gradient
+       directions become highly correlated (cosine similarity -> 1).
+
+       At N=7, there are only 2 dustbin slots, so the GM still has some
+       discriminative power. At N=20, there are 15 dustbin slots, and
+       the GM is overwhelmed by the dustbin distances.
+
+    3. DUSTBIN AMPLIFICATION:
+       Dustbin targets at [-1,-1] are far from all predictions. Their
+       large distances dominate the log-mean, inflating GM_j for real
+       targets. This further homogenizes the gradient landscape.
+
+    WHY SINKHORN WORKS:
+       Sinkhorn computes a SOFT PERMUTATION MATRIX P via iterative
+       normalization. Each pred gets a clear assignment weight to one
+       target. The gradient dL/dpred_k = sum_j P_kj * d(D_kj)/dpred_k
+       is DOMINATED by the single target j where P_kj is large.
+       This gives each pred a UNIQUE direction, enabling parallel
+       convergence of all assignments.
+    
